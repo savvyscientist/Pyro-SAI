@@ -1,0 +1,1 @@
+lat_band_dict = {"Global": [-90, 90], "Tropics": [-20, 20], "NH_Boreal": [50, 70], "SH_Extratropics": [-90, -35]}
