@@ -885,16 +885,29 @@ def member_sign_agreement(delta_members, dim="member"):
 # Grids, masks, regions
 # -----------------------------------------------------------------------------
 def to_common_grid(da, res=1.0):
-    """Bilinear interpolation to a global res x res grid (cell centres), periodic in lon."""
+    """Bilinear interpolation to a global res x res grid (cell centres). Longitude is treated as
+    periodic only for (near-)global grids; no extrapolation beyond the data (regional boxes stay
+    regional; cells outside the source grid are NaN)."""
     lat = np.arange(-90 + res / 2, 90, res)
     lon = np.arange(-180 + res / 2, 180, res)
     dt = da.dtype
     if dt == bool:
         da = da.astype("float32")
-    left = da.isel(lon=slice(-2, None)).assign_coords(lon=lambda d: d.lon - 360)
-    right = da.isel(lon=slice(0, 2)).assign_coords(lon=lambda d: d.lon + 360)
-    ext = xr.concat([left, da, right], "lon")
-    out = ext.interp(lat=lat, lon=lon, method="linear", kwargs={"fill_value": None})
+    dlon = float(np.median(np.diff(da.lon.values))) if da.lon.size > 1 else 360.0
+    is_global = (float(da.lon.max() - da.lon.min()) + dlon) >= 359.0
+    if is_global:
+        left = da.isel(lon=slice(-2, None)).assign_coords(lon=lambda d: d.lon - 360)
+        right = da.isel(lon=slice(0, 2)).assign_coords(lon=lambda d: d.lon + 360)
+        da = xr.concat([left, da, right], "lon")
+        # allow filling only the polar caps beyond the outermost latitude rows
+        lat_lo, lat_hi = float(da.lat.min()), float(da.lat.max())
+        out = da.interp(lat=lat, lon=lon, method="linear")
+        edge = (out.lat < lat_lo) | (out.lat > lat_hi)
+        if bool(edge.any()):
+            filled = out.ffill("lat").bfill("lat")        # copy outermost row into the polar caps only
+            out = out.where(~edge, filled)
+    else:
+        out = da.interp(lat=lat, lon=lon, method="linear")    # NaN outside the box
     return out > 0.5 if dt == bool else out
 
 
