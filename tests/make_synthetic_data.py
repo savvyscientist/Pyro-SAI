@@ -71,7 +71,7 @@ def fields(times, scen, member, lat, lon):
 
 def write_model_a(root):
     names = dict(tasmax="TREFHTMX", tas="TREFHT", hurs="RHREFHT", sfcWind="U10", pr="PRECT")
-    units = dict(tasmax="K", tas="K", hurs="percent", sfcWind="m/s", pr="m/s")
+    units = dict(tasmax="K", tas="K", hurs="fraction", sfcWind="m/s", pr="m/s")  # CAM labels RHREFHT "fraction" but stores percent
     runs = {"ssp245": ("SSP245", "b.e21.BWSSP245cmip6.f09_g17.CMIP6-SSP2-4.5-WACCM", [(2019, 2039), (2062, 2084)]),
             "G6-1.5K-SAI": ("G6-1.5K-SAI", "b.e21.BW.f09_g17.SSP245-G6-1p5K-SAI", [(2062, 2084)]),
             "G6-1.5K-HiLLA": ("G6-1.5k-HiLLA", "b.e21.BW.f09_g17.SSP245-G6-1p5K-HiLLA", [(2062, 2084)])}
