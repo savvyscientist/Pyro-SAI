@@ -419,7 +419,7 @@ def _sample(da, n=5):
 
 def to_target_units(da, canon):
     u = str(da.attrs.get("units", "")).strip()
-    ul = u.lower().replace(" ", "")
+    ul = u.lower().replace(" ", "").replace("**", "").replace("^", "").replace(".", "")
     s = _sample(da)
     med = float(np.nanmedian(s))
     if canon in ("tas", "tasmax"):
@@ -430,11 +430,11 @@ def to_target_units(da, canon):
             da = da * 100.0
         da = da.clip(0, 100)
     elif canon == "pr":
-        if ul in ("m/s", "ms-1", "m.s-1", "m/sec", "ms**-1"):
+        if ul in ("m/s", "ms-1", "m/sec"):
             da = da * 1000.0
         elif ul in ("mm/day", "mmd-1", "mm/d", "mmday-1", "kgm-2d-1"):
             da = da / 86400.0
-        elif ul in ("kgm-2s-1", "kg/m2/s", "kgm**-2s**-1", "kg/m^2/s", "mm/s", "mms-1"):
+        elif ul in ("kgm-2s-1", "kg/m2/s", "kg/m2s", "kgm-2/s", "mm/s", "mms-1"):
             pass
         else:
             warnings.warn(f"pr units '{u}' not recognised; assuming kg m-2 s-1")
@@ -598,15 +598,35 @@ def open_store(path, space_chunk=48, storage_options=None):
 # -----------------------------------------------------------------------------
 # FWI
 # -----------------------------------------------------------------------------
+_FWI_ORDER = ("DC", "DMC", "FFMC", "ISI", "BUI", "FWI")   # order returned by xclim.cffwis_indices
+
+
+def _prepend_pseudo_spinup(ds, year):
+    """Prepend a copy of `year` relabelled as year-1 (used as FWI spin-up when the model
+    output starts at the analysis start year). Feb 29 is dropped if year-1 has none."""
+    first = ds.sel(time=str(year))
+    keep, times = [], []
+    for i, t in enumerate(first.indexes["time"]):
+        try:
+            times.append(t.replace(year=t.year - 1))
+            keep.append(i)
+        except ValueError:
+            pass
+    sp = first.isel(time=keep).assign_coords(time=times)
+    return xr.concat([sp, ds], "time")
+
+
 def compute_fwi(ds, temp="tasmax", rh="hursmin", rh_fallback="hurs", spinup_years=SPINUP_YEARS,
-                keep=("FWI", "ISI", "BUI", "DC", "DMC", "FFMC"), space_chunk=48, season_method=None):
+                keep=("FWI", "ISI", "BUI", "DC", "DMC", "FFMC"), space_chunk=48, season_method=None,
+                analysis_start=None):
     """Canadian FWI system (xclim) from daily model output.
 
     Inputs used ("noon-equivalent" proxies, standard for daily GCM output):
       temperature: daily max (tasmax), humidity: daily min RH if available, else daily mean,
       wind: daily mean 10 m speed, precipitation: daily total.
-    The first `spinup_years` are computed (moisture codes spin up from default start values)
-    and dropped from the output.
+    Spin-up: output before `analysis_start` is discarded. If the data start at
+    `analysis_start` (no spin-up year available), the first year is duplicated as a
+    pseudo spin-up year. Without `analysis_start`, the first `spinup_years` are dropped.
     """
     import xclim
     from xclim.indices import cffwis_indices
@@ -615,24 +635,39 @@ def compute_fwi(ds, temp="tasmax", rh="hursmin", rh_fallback="hurs", spinup_year
     tv = temp if temp in ds else "tas"
     if tv != temp:
         warnings.warn(f"{temp} not available; FWI uses {tv}")
+    y_first = int(ds.time.dt.year.values[0])
+    spin_note = f"{spinup_years} year(s) of model data"
+    if analysis_start is not None and y_first >= analysis_start:
+        log(f"  [spin-up] data start in {y_first}: using a copy of {y_first} as spin-up year")
+        ds = _prepend_pseudo_spinup(ds, y_first)
+        spin_note = f"pseudo spin-up (copy of {y_first})"
     ds = ds.chunk({"time": -1, "lat": space_chunk, "lon": space_chunk})
     # explicit mm/day avoids flux->rate conversion differences between xclim versions
     pr_mmd = (ds["pr"] * 86400.0).assign_attrs(units="mm/d", standard_name="precipitation_amount")
     with xclim.set_options(data_validation="log", cf_compliance="log"):
         out = cffwis_indices(tas=ds[tv], pr=pr_mmd, sfcWind=ds["sfcWind"], hurs=ds[rhv],
-                             lat=ds["lat"], season_method=season_method)
+                             lat=ds["lat"].assign_attrs(units="degrees_north"), season_method=season_method)
+    named = {k: (getattr(out, k) if hasattr(out, "_fields") else out[i]) for i, k in enumerate(_FWI_ORDER)}
+    # xclim < ~0.56: BUI = 0.8*DC*DMC/(DMC+0.4*DC) gives 0/0 = NaN when DMC = DC = 0 (cold/wet
+    # high latitudes), which propagates to FWI. Correct value: BUI = 0, and FWI from ISI
+    # (Van Wagner 1987: f(D)=2 for BUI=0; B=0.1*ISI*f(D); FWI = exp(2.72*(0.434 ln B)^0.647) if B>1 else B).
+    zero = (named["DMC"] + 0.4 * named["DC"]) == 0
+    B = 0.1 * named["ISI"] * 2.0
+    S = xr.where(B > 1, np.exp(2.72 * (0.434 * np.log(B.where(B > 1, 1.0))) ** 0.647), B)
+    named["BUI"] = named["BUI"].where(~zero, 0.0)
+    named["FWI"] = named["FWI"].where(~zero, S)
     res = {}
     for k in keep:
-        v = getattr(out, k).astype("float32").transpose("time", "lat", "lon")
+        v = named[k].astype("float32").transpose("time", "lat", "lon")
         v.attrs = {"units": "1", "long_name": f"Canadian FWI system: {k}"}
         res[k] = v
     res = xr.Dataset(res)
-    y_first = int(ds.time.dt.year.values[0])
-    res = res.isel(time=(res.time.dt.year >= y_first + spinup_years).values)
+    start = analysis_start if analysis_start is not None else int(ds.time.dt.year.values[0]) + spinup_years
+    res = res.isel(time=(res.time.dt.year >= start).values)
     res.attrs.update(
         fwi_temperature=tv, fwi_humidity=rhv, fwi_wind="sfcWind (daily mean)",
         fwi_precip="pr (daily total)", xclim_version=xclim.__version__,
-        spinup_years_dropped=spinup_years, season_method=str(season_method),
+        spinup=spin_note, season_method=str(season_method),
         **{k: v for k, v in ds.attrs.items() if isinstance(v, (str, int, float))})
     return res
 
@@ -985,7 +1020,8 @@ class Workspace:
             raise ValueError(f"{model}: grid offset {off:.4f} deg between runs - regrid needed")
         if off > 0:
             log(f"  [grid] {model}: snapping coordinates (max offset {off:.2e} deg)")
-        return obj.assign_coords(lat=lat, lon=lon)
+        return obj.assign_coords(lat=("lat", lat, {"units": "degrees_north", "standard_name": "latitude"}),
+                                 lon=("lon", lon, {"units": "degrees_east", "standard_name": "longitude"}))
 
     def models(self, required):
         out = []
@@ -1028,7 +1064,8 @@ class Workspace:
             yrs_in = (years[0] - spinup_years, years[1])
             ds = self.inputs(model, scen, member, yrs_in, input_vars)
             log(f"  computing FWI {model}/{scen}/{member} {years[0]}-{years[1]}")
-            f = compute_fwi(ds, spinup_years=spinup_years, keep=keep, space_chunk=self.sc, **fwi_kw)
+            f = compute_fwi(ds, spinup_years=spinup_years, keep=keep, space_chunk=self.sc,
+                            analysis_start=years[0], **fwi_kw)
             write_zarr(f, p, self.sc, storage_options=self.so)
         return self.snap(model, open_store(p, self.sc, self.so))
 
@@ -1180,14 +1217,48 @@ def readiness_table(catalog, required, max_members=None):
     return pd.DataFrame(rows)
 
 
-def choose_fwi_temp(ws, model, rh="hurs", override=None):
-    """'tasmax' if every scenario has it (>=1 member with all FWI inputs), else 'tas'.
-    Using the same variable in every scenario keeps the comparison consistent."""
+# Known data problems: (model, variable) -> reason. These variables are never used.
+KNOWN_BAD_VARIABLES = {
+    ("E3SMv3", "tasmax"): "E3SMv3 G6 TREFHTMX/TREFHTMN were written from TREFHT (model-version bug; "
+                          "Reflective Slack, Oct 2026) - no corrected data will be produced",
+}
+
+
+def tasmax_is_genuine(ws, model, scen, member, ndays=60, min_diff=0.5):
+    """Quick check on the first `ndays` that daily tasmax exceeds daily-mean tas on average."""
+    e = ws.catalog[model][scen][member]
+    if "tas" not in e:
+        return True
+    try:
+        def first(v):
+            ds = normalize_time(harmonize_coords(open_entry(e[v], ALIASES[v] + [e[v].get("var", v)])))
+            da = ds[_find_var(ds, v, e[v].get("var"))].isel(time=slice(0, ndays))
+            return to_target_units(da, v).mean().compute()
+        d = float(first("tasmax") - first("tas"))
+    except Exception as ex:
+        log(f"  [tasmax check] {model}/{scen}/{member}: could not check ({type(ex).__name__})")
+        return True
+    if d < min_diff:
+        log(f"  [tasmax check] {model}/{scen}/{member}: tasmax - tas = {d:.2f} K -> tasmax looks like tas!")
+        return False
+    return True
+
+
+def choose_fwi_temp(ws, model, rh="hurs", override=None, check=True):
+    """'tasmax' if every scenario has a genuine daily tasmax (>=1 member with all FWI inputs),
+    else 'tas'. Using the same variable in every scenario keeps the comparison consistent."""
     if override:
         return override
-    if all(ws.members(model, s, ["tasmax", rh, "sfcWind", "pr"]) for s in SCENARIOS):
-        return "tasmax"
-    return "tas"
+    if (model, "tasmax") in KNOWN_BAD_VARIABLES:
+        log(f"[temp] {model}: using tas - {KNOWN_BAD_VARIABLES[(model, 'tasmax')]}")
+        return "tas"
+    req = ["tasmax", rh, "sfcWind", "pr"]
+    if not all(ws.members(model, s, req) for s in SCENARIOS):
+        return "tas"
+    if check and not all(tasmax_is_genuine(ws, model, s, ws.members(model, s, req)[0]) for s in SCENARIOS):
+        log(f"[temp] {model}: using tas in all scenarios (suspicious tasmax)")
+        return "tas"
+    return "tasmax"
 
 
 def prepare_wind_corrections(ws, models, cache_dir, years=TARGET_PERIOD):
@@ -1227,6 +1298,52 @@ def prepare_wind_corrections(ws, models, cache_dir, years=TARGET_PERIOD):
             r.attrs.update(donor=f"{m}/{s}/{mem} {yrs}", meaning="mean(sfcWind)/mean(hypot(uas,vas))")
             os.makedirs(cache_dir, exist_ok=True)
             r.to_netcdf(path)
+        med = float(r.median())
+        if not (0.95 <= med <= 2.0):
+            log(f"[wind] WARNING {m}: sfcWind/|uv| ratio median {med:.2f} is physically implausible "
+                f"(expected ~1.1-1.6). NOT applying a correction - run P.wind_diagnostics(ws, '{m}') "
+                f"and check variables/units before trusting wind for this model.")
+            continue
         WIND_UV_RATIO[m] = r
         log(f"[wind] {m}: uas/vas-derived wind will be scaled by sfcWind/|uv| "
-            f"(median {float(r.median()):.2f}; donor {r.attrs.get('donor')})")
+            f"(median {med:.2f}; donor {r.attrs.get('donor')})")
+
+
+def wind_diagnostics(ws, model, years=(2020, 2021)):
+    """Print what the wind variables of a model really contain (units, names, magnitudes,
+    day-to-day correlation between sfcWind and hypot(uas, vas)) for each scenario/member 1."""
+    rows = []
+    for s in SCENARIOS:
+        mems = ws.catalog.get(model, {}).get(s, {})
+        if not mems:
+            continue
+        mem = sorted(mems)[0]
+        e = mems[mem]
+        yrs = years if s == "ssp245" else (ASSESS_PERIOD[0], ASSESS_PERIOD[0] + 1)
+        got = {}
+        for v in ("sfcWind", "uas", "vas"):
+            if v not in e:
+                continue
+            ds = normalize_time(harmonize_coords(open_entry(e[v], ALIASES[v] + [e[v].get("var", v)])))
+            name = _find_var(ds, v, e[v].get("var"))
+            da = _year_slice(ds[[name]], yrs)[name]
+            if ws.bbox is not None:
+                da = _subset_bbox(da.to_dataset(), ws.bbox)[name]
+            got[v] = da.load()
+            dt = np.diff(np.array([t.toordinal() for t in da.indexes["time"][:10]]))
+            rows.append(dict(scenario=s, member=mem, var=v, file_var=name,
+                             units=da.attrs.get("units"), long_name=da.attrs.get("long_name", "")[:40],
+                             mean=float(da.mean()), mean_abs=float(abs(da).mean()), max=float(da.max()),
+                             step_days=float(np.median(dt)) if len(dt) else np.nan,
+                             n_days=da.sizes["time"], file=e[v]["paths"][0].split("/")[-1] if "paths" in e[v] else ""))
+        if all(k in got for k in ("sfcWind", "uas", "vas")):
+            uv = np.hypot(got["uas"], got["vas"])
+            sp, uv = xr.align(got["sfcWind"], uv, join="inner")
+            corr = float(xr.corr(sp.mean(("lat", "lon")), uv.mean(("lat", "lon"))))
+            rows.append(dict(scenario=s, member=mem, var="sfcWind / hypot(uas,vas)",
+                             mean=float(sp.mean() / uv.mean()), long_name=f"daily corr {corr:.2f}",
+                             n_days=sp.sizes["time"]))
+    df = pd.DataFrame(rows)
+    with pd.option_context("display.width", 250, "display.max_columns", 20):
+        print(df.to_string(index=False))
+    return df
