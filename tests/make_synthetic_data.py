@@ -98,8 +98,15 @@ def write_model_a(root):
             os.makedirs(os.path.join(root, "CESM2-WACCM", folder, f"r{m}", "AMON"), exist_ok=True)
 
 
+def uv_from_speed(w, r):
+    """daily-mean wind components; |mean vector| < mean speed (factor ~0.8)"""
+    th = r.uniform(0, 2 * np.pi, w.shape)
+    return 0.8 * w * np.cos(th), 0.8 * w * np.sin(th)
+
+
 def write_model_b(root):
-    units = dict(tasmax="K", tas="K", hurs="%", sfcWind="m s-1", pr="kg m-2 s-1")
+    """UKESM-like: no sfcWind anywhere (uas/vas), no tasmax for G6-1.5K-SAI."""
+    units = dict(tasmax="K", tas="K", hurs="%", uas="m s-1", vas="m s-1", pr="kg m-2 s-1")
     runs = {"ssp245": ("SSP245", [(2019, 2039), (2062, 2084)]),
             "G6-1.5K-SAI": ("G6-1.5K-SAI", [(2062, 2084)]),
             "G6-1.5K-HiLLA": ("G6-1p5K-HiLLA", [(2062, 2084)])}
@@ -114,7 +121,10 @@ def write_model_b(root):
                     days = xr.date_range(f"{y0}-01-01", f"{y1}-12-30", freq="D", calendar="360_day", use_cftime=True)
                     days12 = [cftime.Datetime360Day(t.year, t.month, t.day, 12) for t in days]
                     f = fields(list(days), scen, m + 10, lat_desc, LON)
+                    f["uas"], f["vas"] = uv_from_speed(f["sfcWind"], np.random.default_rng(y0 + m))
                     for v in units:
+                        if v == "tasmax" and scen == "G6-1.5K-SAI":
+                            continue
                         data = f[v] / 86400.0 if v == "pr" else f[v]
                         ds = xr.Dataset({v: (("time", "latitude", "longitude"), data.astype("float32"), {"units": units[v]})},
                                         coords={"time": days12, "latitude": lat_desc, "longitude": LON})
@@ -123,8 +133,54 @@ def write_model_b(root):
                                      encoding={"time": {"units": "days since 1850-01-01", "calendar": "360_day"}})
 
 
+def write_model_c(root):
+    """MIROC-like: one file per member/variable, no dates in names, standard calendar,
+    descending lat; HiLLA has only uas/vas, SAI only sfcWind, SSP2-4.5 both."""
+    units = dict(tasmax="K", tas="K", hurs="%", sfcWind="m s-1", uas="m s-1", vas="m s-1", pr="kg m-2 s-1")
+    runs = {"ssp245": ("G6-1.5K-HiLLA", "baseline", [(2019, 2039), (2062, 2084)], ["sfcWind", "uas", "vas"]),
+            "G6-1.5K-SAI": ("G6-1.5K-SAI", "G6-1.5K-SAI", [(2062, 2084)], ["sfcWind"]),
+            "G6-1.5K-HiLLA": ("G6-1.5K-HiLLA", "G6-1.5K-HiLLA", [(2062, 2084)], ["uas", "vas"])}
+    lat_desc = LAT[::-1]
+    for scen, (folder, tag, spans, winds) in runs.items():
+        d = os.path.join(root, "MIROC-ES2H", folder, "day")
+        os.makedirs(d, exist_ok=True)
+        for m in (1, 2, 3):
+            for k, (y0, y1) in enumerate(spans):
+                days = xr.date_range(f"{y0}-01-01", f"{y1}-12-31", freq="D", calendar="standard", use_cftime=True)
+                days12 = [t.replace(hour=12) for t in days]
+                f = fields(list(days), scen, m + 20, lat_desc, LON)
+                f["uas"], f["vas"] = uv_from_speed(f["sfcWind"], np.random.default_rng(y0 + m + 7))
+                for v in units:
+                    if v in ("sfcWind", "uas", "vas") and v not in winds:
+                        continue
+                    data = f[v] / 86400.0 if v == "pr" else f[v]
+                    ds = xr.Dataset({v: (("time", "lat", "lon"), data.astype("float32"), {"units": units[v]})},
+                                    coords={"time": days12, "lat": lat_desc, "lon": LON})
+                    suffix = "" if len(spans) == 1 else f"_part{k + 1}"
+                    ds.to_netcdf(os.path.join(d, f"{v}_{tag}_r0{m}{suffix}.nc"),
+                                 encoding={"time": {"units": "days since 1850-01-01", "calendar": "standard"}})
+
+
+def write_extras(root):
+    """duplicate (overlapping) copy of one CESM file, and 3-hourly files that must be ignored"""
+    import shutil
+    src = os.path.join(root, "CESM2-WACCM", "SSP245", "r1", "DAY")
+    dst = os.path.join(root, "CESM2-WACCM", "SSP245", "r1", "DAY_copy")
+    os.makedirs(dst, exist_ok=True)
+    f = sorted(x for x in os.listdir(src) if "TREFHTMX.2024" in x)[0]
+    shutil.copy(os.path.join(src, f), os.path.join(dst, f))
+    d3 = os.path.join(root, "UKESM1-1", "G6-1p5K-HiLLA", "r1i1p1f2", "ap8", "3hr", "tas")
+    os.makedirs(d3, exist_ok=True)
+    t = xr.date_range("2063-01-01", periods=16, freq="3h", calendar="360_day", use_cftime=True)
+    xr.Dataset({"tas": (("time", "latitude", "longitude"), np.full((16, len(LAT), len(LON)), 290, "f4"))},
+               coords={"time": t, "latitude": LAT, "longitude": LON}).to_netcdf(
+        os.path.join(d3, "tas_3hr_UKESM1-1-LL_g6-1p5-hilla_r1i1p1f2_gn_206301010300-206301030000.nc"))
+
+
 if __name__ == "__main__":
     os.makedirs(ROOT, exist_ok=True)
     write_model_a(ROOT)
     write_model_b(ROOT)
+    write_model_c(ROOT)
+    write_extras(ROOT)
     print("synthetic data written to", ROOT)
