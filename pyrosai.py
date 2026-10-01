@@ -132,7 +132,17 @@ DAY_TOKENS = {"day", "DAY", "Day", "daily", "Daily", "h1", "day_mean"}
 SUBDAILY_TOKENS = {"3hr", "6hr", "1hr", "E3hr", "CF3hr", "E1hr", "6hrPlev", "6hrLev", "3hrPt",
                    "1hrPt", "hourly", "3h", "6h", "1h", "ap8"}
 MODEL_ALIASES = {"E3SM": "E3SMv3", "UKESM1-1-LL": "UKESM1-1"}
-MON_TOKENS = {"Amon", "AMON", "Mon", "mon", "h0", "monthly", "Emon", "Lmon"}
+# Output of non-atmosphere model components (land, ocean, sea ice, coupler). Their files can
+# carry the same variable names (e.g. CLM TREFMXAV/U10, h1 = MONTHLY in CLM) and must never be
+# mixed into atmospheric daily series.
+NON_ATMOS_TOKENS = {"LDAY", "LMON", "ODAY", "OMON", "IDAY", "IMON", "Lmon", "Omon", "SImon", "SIday",
+                    "Oday", "clm2", "pop", "cice", "elm", "mpaso", "mpassi", "cpl", "mosart", "rtm"}
+
+
+def is_non_atmos(path):
+    toks = set(re.split(r"[/._\-]", path))
+    return bool(toks & NON_ATMOS_TOKENS)
+MON_TOKENS = {"Amon", "AMON", "Mon", "mon", "h0", "monthly", "Emon", "Lmon", "LMON", "OMON", "IMON"}
 _ALIAS_TO_CANON = {a: c for c, al in ALIASES.items() for a in al}
 
 
@@ -201,7 +211,7 @@ def classify_path(path):
     y0, y1 = (int(yrs.group(1)), int(yrs.group(2))) if yrs else (np.nan, np.nan)
     return dict(path=path, model=model, scenario=scenario, member=member, var=var,
                 var_name=next((t for t in toks_base if t in _ALIAS_TO_CANON), var), freq=freq,
-                y0=y0, y1=y1)
+                y0=y0, y1=y1, component="other" if is_non_atmos(p) else "atm")
 
 
 def list_archive(roots, suffixes=(".nc", ".nc4"), storage_options=None):
@@ -241,6 +251,10 @@ def probe_frequency(path, storage_options=None):
 def build_catalog(listing, freq="day", scenarios=SCENARIOS):
     """Catalog dict from a list_archive() DataFrame (daily files only by default)."""
     df = listing[(listing.freq == freq) & listing["var"].notnull() & listing.scenario.isin(scenarios)]
+    if "component" in df:
+        df = df[df.component == "atm"]
+    else:
+        df = df[~df.path.map(is_non_atmos)]
     cat = {}
     for (model, scen, mem, var), g in df.groupby(["model", "scenario", "member", "var"]):
         cat.setdefault(model, {}).setdefault(scen, {}).setdefault(mem, {})[var] = {
@@ -1297,6 +1311,24 @@ def apply_known_issues(catalog, wind_climatology_models=None):
     import copy
     wcm = WIND_CLIMATOLOGY_MODELS if wind_climatology_models is None else set(wind_climatology_models)
     cat = copy.deepcopy(catalog)
+    # never mix land/ocean/ice-model files into atmospheric series (older catalogs may contain them)
+    for m, scens in cat.items():
+        if m.startswith("_"):
+            continue
+        dropped = 0
+        for s, mems in scens.items():
+            for mem, vs in mems.items():
+                for v in list(vs):
+                    e = vs[v]
+                    if e.get("kind", "netcdf") == "netcdf" and "paths" in e:
+                        keep = [p for p in e["paths"] if not is_non_atmos(p)]
+                        dropped += len(e["paths"]) - len(keep)
+                        if keep:
+                            e["paths"] = keep
+                        else:
+                            vs.pop(v)
+        if dropped:
+            log(f"[catalog] {m}: ignored {dropped} land/ocean/ice-model file(s) (e.g. CLM LDAY/LMON)")
     for (m, v), why in KNOWN_BAD_VARIABLES.items():
         n = 0
         for s, mems in cat.get(m, {}).items():
