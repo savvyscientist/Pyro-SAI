@@ -71,6 +71,11 @@ ALIASES = OrderedDict(
 TARGET_UNITS = {"tasmax": "K", "tas": "K", "hurs": "%", "hursmin": "%", "sfcWind": "m s-1",
                 "pr": "kg m-2 s-1", "huss": "1", "ps": "Pa", "uas": "m s-1", "vas": "m s-1"}
 
+# Monthly climatological ratio mean(sfcWind)/|mean-vector wind| per model, applied when
+# daily wind has to be derived from daily-mean uas/vas (which underestimates mean speed).
+# Filled by prepare_wind_corrections().
+WIND_UV_RATIO: dict = {}
+
 # Custom openers (e.g. paste the Earthmover example code into a function and
 # register it:  pyrosai.CUSTOM_OPENERS["earthmover"] = my_open_fn ).
 CUSTOM_OPENERS: dict = {}
@@ -122,6 +127,9 @@ def catalog_inventory(catalog, needed=("tasmax", "hurs", "sfcWind", "pr", "tas")
 KNOWN_MODELS = ["CESM2-WACCM", "UKESM1-1", "UKESM1-0-LL", "MIROC-ES2H", "E3SMv3", "E3SM",
                 "MPI-ESM1-2-LR", "MPI-ESM1-2-HR", "GISS-E2-1-G", "IPSL-CM6A-LR", "CNRM-ESM2-1"]
 DAY_TOKENS = {"day", "DAY", "Day", "daily", "Daily", "h1", "day_mean"}
+SUBDAILY_TOKENS = {"3hr", "6hr", "1hr", "E3hr", "CF3hr", "E1hr", "6hrPlev", "6hrLev", "3hrPt",
+                   "1hrPt", "hourly", "3h", "6h", "1h", "ap8"}
+MODEL_ALIASES = {"E3SM": "E3SMv3", "UKESM1-1-LL": "UKESM1-1"}
 MON_TOKENS = {"Amon", "AMON", "Mon", "mon", "h0", "monthly", "Emon", "Lmon"}
 _ALIAS_TO_CANON = {a: c for c, al in ALIASES.items() for a in al}
 
@@ -156,7 +164,7 @@ def classify_path(path):
     member = None
     for pat, fmt in [(r"(r\d+i\d+p\d+f\d+)", "{}"), (r"/(r\d+)/", "{}"),
                      (r"\.0*(\d{1,3})\.cam\.", "r{}"), (r"\.0*(\d{1,3})\.(?:eam|elm|clm2)\.", "r{}"),
-                     (r"_r0*(\d+)\.nc$", "r{}"), (r"[._](0101|0151|0201|0251|0301)[._/]", "e3sm{}")]:
+                     (r"_r0*(\d+)(?:[._-][^/_]*)*\.nc4?$", "r{}"), (r"[._](0101|0151|0201|0251|0301)[._/]", "e3sm{}")]:
         mm = re.search(pat, p)
         if mm:
             member = fmt.format(mm.group(1))
@@ -176,9 +184,20 @@ def classify_path(path):
             if s in _ALIAS_TO_CANON:
                 var = _ALIAS_TO_CANON[s]
                 break
-    freq = "day" if all_toks & DAY_TOKENS else ("mon" if all_toks & MON_TOKENS else "unknown")
+    if all_toks & SUBDAILY_TOKENS:
+        freq = "subdaily"
+    elif all_toks & DAY_TOKENS:
+        freq = "day"
+    elif all_toks & MON_TOKENS:
+        freq = "mon"
+    else:
+        freq = "unknown"
+    model = MODEL_ALIASES.get(model, model)
+    yrs = re.search(r"(?<!\d)(\d{4})(?:\d{2}){1,4}[-_](\d{4})(?:\d{2}){1,4}(?!\d)", base)
+    y0, y1 = (int(yrs.group(1)), int(yrs.group(2))) if yrs else (np.nan, np.nan)
     return dict(path=path, model=model, scenario=scenario, member=member, var=var,
-                var_name=next((t for t in toks_base if t in _ALIAS_TO_CANON), var), freq=freq)
+                var_name=next((t for t in toks_base if t in _ALIAS_TO_CANON), var), freq=freq,
+                y0=y0, y1=y1)
 
 
 def list_archive(roots, suffixes=(".nc", ".nc4"), storage_options=None):
@@ -203,7 +222,9 @@ def list_archive(roots, suffixes=(".nc", ".nc4"), storage_options=None):
 def probe_frequency(path, storage_options=None):
     """Median time step (days) of one file; to resolve 'unknown' frequency."""
     try:
-        ds = open_entry({"kind": "netcdf", "paths": [path], "storage_options": storage_options})
+        ds = harmonize_coords(open_entry({"kind": "netcdf", "paths": [path], "storage_options": storage_options}))
+        if "time" not in ds.dims:
+            return np.nan
         t = ds.indexes["time"]
         dt = np.median(np.diff(np.array([x.toordinal() if hasattr(x, "toordinal") else
                                          pd.Timestamp(x).toordinal() for x in t[:50]])))
@@ -254,31 +275,47 @@ def _keep_vars(ds, keep):
 
 
 def _open_netcdf(entry, var_candidates):
+    """Open (possibly many, possibly overlapping) NetCDF files lazily.
+
+    Remote files: h5netcdf (netCDF-4/HDF5) -> scipy (netCDF-3 classic/64-bit offset) ->
+    download to a local cache and use netCDF4 (handles CDF-5, e.g. E3SM output).
+    Cache dir: $PYROSAI_NC_CACHE (default <tmp>/pyrosai_nc_cache).
+    """
     import fsspec
+    import tempfile
     so = entry.get("storage_options") or {}
     files = _expand_paths(entry["paths"], so)
-    keep = set(var_candidates) | {"time_bnds", "time_bounds", "time_bnd", "lat", "lon",
-                                  "latitude", "longitude", "t"}
+    keep = set(var_candidates) | {"time_bnds", "time_bounds", "time_bnd"}
 
     def pre(ds):
         dv = [v for v in ds.data_vars if v in keep]
-        return ds[dv]
+        ds = ds[dv]
+        if "t" in ds.dims and "time" not in ds.dims:
+            ds = ds.rename(t="time")
+        return ds
 
-    chunks = {"time": 365}
+    # nested concat along time; overlaps/duplicates are removed later in normalize_time
+    kw = dict(combine="nested", concat_dim="time", preprocess=pre, chunks={"time": 365},
+              data_vars="minimal", coords="minimal", compat="override", join="override")
     local = all(not re.match(r"^[a-z0-9]+://", f) or f.startswith("file://") for f in files)
-    kw = dict(combine="by_coords", preprocess=pre, chunks=chunks, data_vars="minimal",
-              coords="minimal", compat="override", join="outer")
     if local:
         return xr.open_mfdataset(files, **kw)
     fs, _ = fsspec.core.url_to_fs(files[0], **so)
-    last_err = None
+    errs = []
     for engine in ("h5netcdf", "scipy"):
         try:
-            fobjs = [fs.open(f, "rb") for f in files]
-            return xr.open_mfdataset(fobjs, engine=engine, **kw)
-        except Exception as e:  # netCDF3 files (e.g. some UKESM) need scipy
-            last_err = e
-    raise last_err
+            return xr.open_mfdataset([fs.open(f, "rb") for f in files], engine=engine, **kw)
+        except Exception as e:
+            errs.append(f"{engine}: {type(e).__name__}: {e}")
+    cache = os.environ.get("PYROSAI_NC_CACHE", os.path.join(tempfile.gettempdir(), "pyrosai_nc_cache"))
+    proto = files[0].split("://")[0]
+    try:
+        loc = [fsspec.open_local(f"simplecache::{f}", simplecache={"cache_storage": cache},
+                                 **({proto: so} if so else {})) for f in files]
+        return xr.open_mfdataset(loc, engine="netcdf4", **kw)
+    except Exception as e:
+        errs.append(f"netcdf4 (cached download): {type(e).__name__}: {e}")
+    raise IOError("could not open " + files[0] + "\n  " + "\n  ".join(errs))
 
 
 def _open_zarr(entry):
@@ -481,8 +518,15 @@ def load_inputs(catalog, model, scenario, member, variables, years, bbox=None,
         elif v == "sfcWind" and "uas" in entries and "vas" in entries:
             u = load_variable(entries["uas"], "uas", years, bbox, label)
             w = load_variable(entries["vas"], "vas", years, bbox, label)
-            out[v] = np.hypot(u, w).rename("sfcWind").assign_attrs(units="m s-1")
-            log(f"  {label}sfcWind derived from uas/vas")
+            spd = np.hypot(u, w)
+            r = WIND_UV_RATIO.get(model)
+            if r is not None:
+                r = r.reindex(lat=spd.lat, lon=spd.lon, method="nearest")
+                spd = spd * r.sel(month=spd.time.dt.month).drop_vars("month")
+                log(f"  {label}sfcWind derived from uas/vas, bias-corrected with sfcWind/|uv| ratio")
+            else:
+                log(f"  {label}sfcWind derived from uas/vas (no correction available)")
+            out[v] = spd.astype("float32").rename("sfcWind").assign_attrs(units="m s-1", derived="hypot(uas,vas)")
         elif v in ("hurs",) and all(k in entries for k in ("huss", "ps", "tas")):
             q = load_variable(entries["huss"], "huss", years, bbox, label)
             p = load_variable(entries["ps"], "ps", years, bbox, label)
@@ -948,7 +992,8 @@ class Workspace:
                 ds = load_inputs(self.catalog, model, scen, member, variables, years, self.bbox)
                 write_zarr(ds, p, self.sc, storage_options=self.so)
             ds = open_store(p, self.sc, self.so)
-            missing = [v for v in variables if v not in ds and v not in ("hursmin",)]
+            entries = self.catalog[model][scen][member]
+            missing = [v for v in variables if v not in ds and _has(entries, v)]
             if missing:
                 raise KeyError(f"staged store {p} lacks {missing}; delete it to re-stage")
             return ds
@@ -957,7 +1002,7 @@ class Workspace:
     def fwi(self, model, scen, member, years, input_vars, spinup_years=SPINUP_YEARS,
             keep=("FWI",), **fwi_kw):
         """Daily FWI for `years` (inputs start `spinup_years` earlier)."""
-        p = self._path("fwi", model, scen, member, years)
+        p = self._path(f"fwi_{fwi_kw.get('temp', 'tasmax')}", model, scen, member, years)
         if not store_exists(p, self.so):
             yrs_in = (years[0] - spinup_years, years[1])
             ds = self.inputs(model, scen, member, yrs_in, input_vars)
@@ -1090,3 +1135,77 @@ def area_fractions(cls, land):
     w = np.cos(np.deg2rad(cls.lat)) * land
     tot = float(w.where(cls.notnull()).sum())
     return pd.Series({k: float(w.where(cls == k).sum()) / tot if tot else np.nan for k in OFFSET_CLASSES})
+
+
+# -----------------------------------------------------------------------------
+# Model readiness and wind consistency
+# -----------------------------------------------------------------------------
+def _has(entries, v):
+    return (v in entries or (v == "sfcWind" and "uas" in entries and "vas" in entries)
+            or (v == "hurs" and all(k in entries for k in ("huss", "ps", "tas"))))
+
+
+def readiness_table(catalog, required, max_members=None):
+    """Which required variables are missing, per model/scenario/member."""
+    rows = []
+    for m, scens in catalog.items():
+        for s in SCENARIOS:
+            mems = scens.get(s, {})
+            if not mems:
+                rows.append(dict(model=m, scenario=s, member="-", missing="NO DAILY DATA"))
+            for mem in sorted(mems)[:max_members] if max_members else sorted(mems):
+                miss = [v for v in required if not _has(mems[mem], v)]
+                rows.append(dict(model=m, scenario=s, member=mem, missing=", ".join(miss) or "ok"))
+    return pd.DataFrame(rows)
+
+
+def choose_fwi_temp(ws, model, rh="hurs", override=None):
+    """'tasmax' if every scenario has it (>=1 member with all FWI inputs), else 'tas'.
+    Using the same variable in every scenario keeps the comparison consistent."""
+    if override:
+        return override
+    if all(ws.members(model, s, ["tasmax", rh, "sfcWind", "pr"]) for s in SCENARIOS):
+        return "tasmax"
+    return "tas"
+
+
+def prepare_wind_corrections(ws, models, cache_dir, years=TARGET_PERIOD):
+    """For models where some members only have uas/vas, derive a monthly climatological
+    correction ratio sfcWind / hypot(uas, vas) from a member that has all three
+    (preferably SSP2-4.5) and register it in WIND_UV_RATIO."""
+    for m in models:
+        need = any(("sfcWind" not in e and "uas" in e) for s in SCENARIOS
+                   for e in ws.catalog.get(m, {}).get(s, {}).values())
+        if not need:
+            continue
+        donor = None
+        for s in ["ssp245"] + SCENARIOS[1:]:
+            for mem, e in sorted(ws.catalog[m].get(s, {}).items()):
+                if all(k in e for k in ("sfcWind", "uas", "vas")):
+                    donor = (s, mem)
+                    break
+            if donor:
+                break
+        if donor is None:
+            uv_everywhere = all(("sfcWind" not in e) for s in SCENARIOS for e in ws.catalog[m].get(s, {}).values())
+            log(f"[wind] {m}: no member has sfcWind+uas+vas; wind from uas/vas "
+                + ("in ALL scenarios (consistent; absolute speeds biased low)" if uv_everywhere
+                   else "in SOME scenarios only - inconsistent! consider dropping sfcWind entries"))
+            continue
+        path = os.path.join(cache_dir, f"wind_uv_ratio_{m}{ws.tag}.nc")
+        if os.path.exists(path):
+            r = xr.open_dataarray(path).load()
+        else:
+            s, mem = donor
+            yrs = years if s == "ssp245" else ASSESS_PERIOD
+            e = ws.catalog[m][s][mem]
+            sp = load_variable(e["sfcWind"], "sfcWind", yrs, ws.bbox)
+            uv = np.hypot(load_variable(e["uas"], "uas", yrs, ws.bbox), load_variable(e["vas"], "vas", yrs, ws.bbox))
+            r = (monthly_climatology(sp) / monthly_climatology(uv).where(lambda x: x > 0.1)).clip(0.8, 3.0)
+            r = r.fillna(1.0).astype("float32").compute().rename("wind_uv_ratio")
+            r.attrs.update(donor=f"{m}/{s}/{mem} {yrs}", meaning="mean(sfcWind)/mean(hypot(uas,vas))")
+            os.makedirs(cache_dir, exist_ok=True)
+            r.to_netcdf(path)
+        WIND_UV_RATIO[m] = r
+        log(f"[wind] {m}: uas/vas-derived wind will be scaled by sfcWind/|uv| "
+            f"(median {float(r.median()):.2f}; donor {r.attrs.get('donor')})")
