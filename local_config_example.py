@@ -16,3 +16,6 @@ RUN_ATTRIBUTION = False
 # MAX_MEMBERS     = 3
 # BBOX            = None
 # RUN_ATTRIBUTION = True
+
+# --- durable backup of OUT_DIR after every headless run (Hub home files can be lost) ---
+# BACKUP_ROOT     = "s3://reflective-persistent-prod/<your-username>/pyrosai_backup"
