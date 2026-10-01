@@ -83,6 +83,8 @@ CUSTOM_OPENERS: dict = {}
 
 warnings.filterwarnings("ignore", message=".*Compilation requested for previously compiled.*")
 warnings.filterwarnings("ignore", message=".*Consolidated metadata is currently not part.*")
+warnings.filterwarnings("ignore", message=".*specified chunks separate the stored chunks.*")
+warnings.filterwarnings("ignore", message=".*invalid value encountered in divide.*")
 
 
 def log(msg):
@@ -276,6 +278,40 @@ def _keep_vars(ds, keep):
     return ds[[v for v in keep if v in ds.data_vars]] if any(v in ds.data_vars for v in keep) else ds
 
 
+def _per_file_midpoints(ds):
+    """Within ONE file: label each step with the midpoint of its time bounds and drop the
+    bounds. Bounds that were left undecoded (missing 'bounds' link) are decoded with the time
+    axis' own units/calendar; if that is impossible the bounds are just dropped."""
+    if "time" not in ds.coords:
+        return ds
+    bname = ds["time"].attrs.get("bounds")
+    if bname not in ds.variables:
+        bname = next((b for b in ("time_bnds", "time_bounds", "time_bnd") if b in ds.variables), None)
+    if bname is None:
+        return ds
+    b = ds[bname]
+    t_is_num = np.issubdtype(ds["time"].dtype, np.number)
+    try:
+        if np.issubdtype(b.dtype, np.number) and not t_is_num:
+            import cftime
+            enc = ds["time"].encoding
+            units = b.attrs.get("units") or enc.get("units")
+            cal = b.attrs.get("calendar") or enc.get("calendar", "standard")
+            vals = cftime.num2date(b.values, units, cal, only_use_cftime_datetimes=True)
+            if np.issubdtype(ds["time"].dtype, np.datetime64):
+                vals = np.array([np.datetime64(v.isoformat()) for v in vals.ravel()]).reshape(vals.shape)
+            b = xr.DataArray(vals, dims=b.dims)
+        if not np.issubdtype(b.dtype, np.number) and not t_is_num:
+            bdim = [d for d in b.dims if d != "time"][0]
+            lo, hi = b.isel({bdim: 0}).values, b.isel({bdim: 1}).values
+            mid = np.array([l + (h - l) / 2 for l, h in zip(lo, hi)])
+            ds = ds.assign_coords(time=("time", mid, ds["time"].attrs))
+    except Exception as e:
+        log(f"  [time] could not use time bounds in {str(ds.encoding.get('source', '?')).split('/')[-1]}: "
+            f"{type(e).__name__}")
+    return ds.drop_vars(bname)
+
+
 def _open_netcdf(entry, var_candidates):
     """Open (possibly many, possibly overlapping) NetCDF files lazily.
 
@@ -294,6 +330,17 @@ def _open_netcdf(entry, var_candidates):
         ds = ds[dv]
         if "t" in ds.dims and "time" not in ds.dims:
             ds = ds.rename(t="time")
+        ds = _per_file_midpoints(ds)
+        if "time" in ds.coords and np.issubdtype(ds["time"].dtype, np.number):
+            src = ds.encoding.get("source", "?")
+            try:
+                ds = xr.decode_cf(ds, use_cftime=True)
+            except Exception:
+                pass
+            if np.issubdtype(ds["time"].dtype, np.number):
+                log(f"  [time] skipping file with undecodable time axis: {str(src).split('/')[-1]} "
+                    f"(units={ds['time'].attrs.get('units')!r})")
+                ds = ds.isel(time=slice(0, 0))
         return ds
 
     # nested concat along time; overlaps/duplicates are removed later in normalize_time
@@ -443,6 +490,9 @@ def to_target_units(da, canon):
         if m > 1e-2:
             warnings.warn(f"pr mean {m:.3g} kg m-2 s-1 looks too large - check units ('{u}')")
     elif canon in ("sfcWind", "uas", "vas"):
+        if ul and not any(k in ul for k in ("m/s", "ms-1", "m/sec", "km/h", "kmh-1", "km/hr", "knot")):
+            raise ValueError(f"'{canon}' has units '{u}' - not a wind speed; check the file "
+                             f"(add it to KNOWN_BAD_VARIABLES)")
         if ul in ("km/h", "kmh-1", "km/hr"):
             da = da / 3.6
         if canon == "sfcWind":
@@ -515,6 +565,8 @@ def load_inputs(catalog, model, scenario, member, variables, years, bbox=None,
     label = f"{model}/{scenario}/{member}: "
     out = {}
     for v in variables:
+        if v in entries and entries[v].get("kind") == "wind_climatology":
+            continue                                   # filled below, once the time axis is known
         if v in entries:
             out[v] = load_variable(entries[v], v, years, bbox, label)
         elif v == "sfcWind" and "uas" in entries and "vas" in entries:
@@ -543,6 +595,14 @@ def load_inputs(catalog, model, scenario, member, variables, years, bbox=None,
     n0 = {k: v.sizes["time"] for k, v in out.items()}
     ds = xr.merge(list(out.values()), join="inner", compat="override")
     ds.attrs = {}
+    if "sfcWind" in variables and entries.get("sfcWind", {}).get("kind") == "wind_climatology":
+        if model not in WIND_CLIM:
+            raise RuntimeError(f"{model}: run prepare_wind_climatology() before loading inputs")
+        wc = WIND_CLIM[model].reindex(lat=ds.lat, lon=ds.lon, method="nearest")
+        wc = wc.reindex(dayofyear=np.arange(1, 367), method="nearest")
+        ds["sfcWind"] = wc.sel(dayofyear=ds.time.dt.dayofyear).drop_vars("dayofyear").astype("float32").assign_attrs(
+            units="m s-1", derived="SSP2-4.5 day-of-year climatology of hypot(uas,vas)")
+        log(f"  {label}sfcWind = SSP2-4.5 day-of-year wind climatology")
     if len(set(n0.values())) > 1 or ds.sizes["time"] < max(n0.values()):
         log(f"  {label}time lengths {n0} -> {ds.sizes['time']} common days kept")
     ds.attrs.update(model=model, scenario=scenario, member=member,
@@ -1221,7 +1281,68 @@ def readiness_table(catalog, required, max_members=None):
 KNOWN_BAD_VARIABLES = {
     ("E3SMv3", "tasmax"): "E3SMv3 G6 TREFHTMX/TREFHTMN were written from TREFHT (model-version bug; "
                           "Reflective Slack, Oct 2026) - no corrected data will be produced",
+    ("MIROC-ES2H", "sfcWind"): "MIROC-ES2H 'sfcWind' files contain a radiative flux (units W/m**2, "
+                               "mean ~160-200), not wind speed (found 2026-10-01)",
 }
+# Models whose FWI uses the SSP2-4.5 day-of-year climatology of hypot(uas, vas) as wind in ALL
+# scenarios (because at least one scenario has no usable daily wind). Wind is then not a driver.
+WIND_CLIMATOLOGY_MODELS = {"MIROC-ES2H"}
+WIND_CLIM: dict = {}
+
+
+def apply_known_issues(catalog, wind_climatology_models=None):
+    """Remove known-bad variables from a catalog and, for wind-climatology models, replace
+    every member's sfcWind by a 'wind_climatology' pseudo-entry (filled by
+    prepare_wind_climatology). Returns a new catalog."""
+    import copy
+    wcm = WIND_CLIMATOLOGY_MODELS if wind_climatology_models is None else set(wind_climatology_models)
+    cat = copy.deepcopy(catalog)
+    for (m, v), why in KNOWN_BAD_VARIABLES.items():
+        n = 0
+        for s, mems in cat.get(m, {}).items():
+            for e in mems.values():
+                if v in e and v != "tasmax":          # tasmax is handled by choose_fwi_temp
+                    e.pop(v); n += 1
+        if n:
+            log(f"[known issue] {m}: removed '{v}' from {n} member(s) - {why}")
+    for m in wcm:
+        for s, mems in cat.get(m, {}).items():
+            for e in mems.values():
+                e.pop("sfcWind", None)
+                e["sfcWind"] = {"kind": "wind_climatology", "model": m}
+        if m in cat:
+            log(f"[wind] {m}: FWI wind = SSP2-4.5 day-of-year climatology of hypot(uas,vas) in ALL scenarios")
+    return cat
+
+
+def prepare_wind_climatology(ws, models, cache_dir, years=TARGET_PERIOD, window=31):
+    """Smoothed day-of-year climatology of hypot(uas, vas) from the first SSP2-4.5 member
+    that has uas/vas (target period), for models flagged in the catalog with wind_climatology."""
+    for m in models:
+        if not any(e.get("sfcWind", {}).get("kind") == "wind_climatology"
+                   for mems in ws.catalog.get(m, {}).values() for e in mems.values()):
+            continue
+        path = os.path.join(cache_dir, f"wind_climatology_{m}{ws.tag}.nc")
+        if os.path.exists(path):
+            WIND_CLIM[m] = xr.open_dataarray(path).load()
+            continue
+        donor = next(((mem, e) for mem, e in sorted(ws.catalog[m].get("ssp245", {}).items())
+                      if "uas" in e and "vas" in e), None)
+        if donor is None:
+            raise KeyError(f"{m}: no SSP2-4.5 member with uas/vas for the wind climatology")
+        mem, e = donor
+        spd = np.hypot(load_variable(e["uas"], "uas", years, ws.bbox), load_variable(e["vas"], "vas", years, ws.bbox))
+        clim = spd.groupby("time.dayofyear").mean("time").compute()
+        n = clim.sizes["dayofyear"]
+        ext = xr.concat([clim.isel(dayofyear=slice(-window, None)), clim, clim.isel(dayofyear=slice(0, window))], "dayofyear")
+        ext = ext.assign_coords(dayofyear=np.arange(ext.sizes["dayofyear"]))
+        sm = ext.rolling(dayofyear=window, center=True).mean().isel(dayofyear=slice(window, window + n))
+        sm = sm.assign_coords(dayofyear=clim.dayofyear.values).astype("float32").rename("wind_climatology")
+        sm.attrs.update(units="m s-1", donor=f"{m}/ssp245/{mem} {years}", method=f"hypot(uas,vas) doy mean, {window}-day smoothing")
+        os.makedirs(cache_dir, exist_ok=True)
+        sm.to_netcdf(path)
+        WIND_CLIM[m] = sm
+        log(f"[wind] {m}: wind climatology ready (donor {m}/ssp245/{mem}; mean {float(sm.mean()):.2f} m/s)")
 
 
 def tasmax_is_genuine(ws, model, scen, member, ndays=60, min_diff=0.5):

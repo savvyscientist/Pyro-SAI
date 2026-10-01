@@ -1,3 +1,11 @@
-.ipynb_checkpoints/
-*.nc
+# large / regenerable outputs (keep runs/ for sharing logs and figures)
+pyrosai_output*/
+pyrosai_work*/
+test_output/
+test_work/
 *.zarr
+*.nc
+!pyrosai_sample_*.nc
+.ipynb_checkpoints/
+__pycache__/
+dask-worker-space/
