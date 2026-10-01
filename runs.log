@@ -1,0 +1,5 @@
+nohup: ignoring input
+[16:54] running Task1_FWI_P95_Extremes -> runs/20261001_1654_Task1_FWI_P95_Extremes
+[17:37] done Task1_FWI_P95_Extremes: 0 error(s)
+[17:37] running Task2_VPD_Evaporative_Demand -> runs/20261001_1654_Task2_VPD_Evaporative_Demand
+[17:38] done Task2_VPD_Evaporative_Demand: 0 error(s)
