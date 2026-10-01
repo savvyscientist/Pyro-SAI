@@ -151,8 +151,10 @@ def classify_path(path):
         s = s.lower()
         if "baseline" in s:
             return "ssp245"
-        if "hilla" in s:
+        if "hilla" in s or re.search(r"ds27[5]|ds28[67]", s):     # UKESM HiLLA suites ds275/ds286/ds287
             return "G6-1.5K-HiLLA"
+        if re.search(r"di189|di86[45]", s):                     # UKESM SAI suites di189/di864/di865
+            return "G6-1.5K-SAI"
         if re.search(r"g6.{0,12}(sai|sulfur)|[._\-]sai[._\-/]|g6sulfur", s):
             return "G6-1.5K-SAI"
         if re.search(r"ssp2-?4\.?5|ssp245", s):
@@ -965,6 +967,25 @@ class Workspace:
         self.stage = stage_inputs
         self.bbox = bbox
         self.tag = "" if bbox is None else "_bbox" + "_".join(str(int(b)) for b in bbox)
+        self.grids = {}
+
+    def snap(self, model, obj, tol=0.01):
+        """Put every dataset of a model on identical lat/lon coordinates (e.g. SSP2-4.5 from
+        Pangeo vs G6 from the Hub), so arithmetic between runs never silently drops rows.
+        Raises if grids really differ (shape mismatch or offsets > tol degrees)."""
+        if model not in self.grids:
+            self.grids[model] = (obj.lat.values.copy(), obj.lon.values.copy())
+            return obj
+        lat, lon = self.grids[model]
+        if obj.lat.size != lat.size or obj.lon.size != lon.size:
+            raise ValueError(f"{model}: grid {obj.lat.size}x{obj.lon.size} differs from first run "
+                             f"{lat.size}x{lon.size} - regrid needed")
+        off = max(float(np.abs(obj.lat.values - lat).max()), float(np.abs(obj.lon.values - lon).max()))
+        if off > tol:
+            raise ValueError(f"{model}: grid offset {off:.4f} deg between runs - regrid needed")
+        if off > 0:
+            log(f"  [grid] {model}: snapping coordinates (max offset {off:.2e} deg)")
+        return obj.assign_coords(lat=lat, lon=lon)
 
     def models(self, required):
         out = []
@@ -991,13 +1012,13 @@ class Workspace:
                 log(f"  staging inputs -> {p}")
                 ds = load_inputs(self.catalog, model, scen, member, variables, years, self.bbox)
                 write_zarr(ds, p, self.sc, storage_options=self.so)
-            ds = open_store(p, self.sc, self.so)
+            ds = self.snap(model, open_store(p, self.sc, self.so))
             entries = self.catalog[model][scen][member]
             missing = [v for v in variables if v not in ds and _has(entries, v)]
             if missing:
                 raise KeyError(f"staged store {p} lacks {missing}; delete it to re-stage")
             return ds
-        return load_inputs(self.catalog, model, scen, member, variables, years, self.bbox)
+        return self.snap(model, load_inputs(self.catalog, model, scen, member, variables, years, self.bbox))
 
     def fwi(self, model, scen, member, years, input_vars, spinup_years=SPINUP_YEARS,
             keep=("FWI",), **fwi_kw):
@@ -1009,7 +1030,7 @@ class Workspace:
             log(f"  computing FWI {model}/{scen}/{member} {years[0]}-{years[1]}")
             f = compute_fwi(ds, spinup_years=spinup_years, keep=keep, space_chunk=self.sc, **fwi_kw)
             write_zarr(f, p, self.sc, storage_options=self.so)
-        return open_store(p, self.sc, self.so)
+        return self.snap(model, open_store(p, self.sc, self.so))
 
 
 def cached_netcdf(path, fn, overwrite=False):
