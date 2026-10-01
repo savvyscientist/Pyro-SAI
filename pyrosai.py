@@ -474,20 +474,43 @@ def normalize_time(ds):
     return ds.sortby("time")
 
 
-def _sample(da, n=5):
-    return da.isel(time=slice(0, n)).values
+def _sample(da, n=31):
+    """First n time steps that are not all-NaN (overlapping/mixed files can leave NaN rows)."""
+    v = da.isel(time=slice(0, n)).values
+    if not np.isfinite(v).any() and da.sizes.get("time", 0) > n:
+        v = da.isel(time=slice(n, 5 * n)).values
+    return v
 
 
 def to_target_units(da, canon):
     u = str(da.attrs.get("units", "")).strip()
     ul = u.lower().replace(" ", "").replace("**", "").replace("^", "").replace(".", "")
     s = _sample(da)
-    med = float(np.nanmedian(s))
+    finite = np.isfinite(s).any()
+    med = float(np.nanmedian(s)) if finite else np.nan
     if canon in ("tas", "tasmax"):
-        if ul in ("c", "degc", "celsius", "°c", "deg_c") or (ul == "" and med < 150):
+        # decide from the VALUES (labels are sometimes wrong); K never < 150 for near-surface air
+        if finite:
+            celsius = med < 150
+            if celsius != (ul in ("c", "degc", "celsius", "°c", "deg_c")) and ul:
+                log(f"  [units] {canon}: label '{u}' but values (median {med:.1f}) say "
+                    f"{'Celsius' if celsius else 'Kelvin'} - using the values")
+        else:
+            celsius = ul in ("c", "degc", "celsius", "°c", "deg_c")
+        if celsius:
             da = da + 273.15
     elif canon in ("hurs", "hursmin"):
-        if ul in ("1", "fraction", "0-1") or float(np.nanmax(s)) <= 1.5:
+        # decide from the VALUES: CAM labels RHREFHT 'fraction' although it is stored in percent
+        frac_label = ul in ("1", "fraction", "0-1")
+        if finite:
+            mx = float(np.nanmax(s))
+            is_fraction = mx <= 1.5
+            if is_fraction != frac_label:
+                log(f"  [units] {canon}: label '{u}' but values (max {mx:.2f}) are in "
+                    f"{'fraction' if is_fraction else 'percent'} - using the values")
+        else:
+            is_fraction = frac_label
+        if is_fraction:
             da = da * 100.0
         da = da.clip(0, 100)
     elif canon == "pr":
@@ -1500,3 +1523,36 @@ def wind_diagnostics(ws, model, years=(2020, 2021)):
     with pd.option_context("display.width", 250, "display.max_columns", 20):
         print(df.to_string(index=False))
     return df
+
+
+def input_sanity(ws, runs, members, variables=("tasmax", "tas", "hurs", "sfcWind", "pr"), ndays=365):
+    """Land-mean of each staged input (first member, first `ndays`) per model/run, with
+    plausibility flags. Catches unit/label problems before they reach FWI/VPD."""
+    ranges = {"tasmax": (240, 320, "K"), "tas": (235, 315, "K"), "hurs": (20, 98, "%"),
+              "sfcWind": (0.5, 15, "m/s"), "pr": (0.05, 20, "mm/d")}
+    rows = []
+    for m in members:
+        for run, (scen, years) in runs.items():
+            mems = members[m].get(scen) or []
+            if not mems:
+                continue
+            ds = ws.inputs(m, scen, mems[0], (years[0] - SPINUP_YEARS, years[1]),
+                           ["tasmax", "hursmin", "hurs", "sfcWind", "pr", "tas"])
+            land = land_mask(ds.lon, ds.lat)
+            w = np.cos(np.deg2rad(ds.lat))
+            row = {"model": m, "run": run, "member": mems[0]}
+            flags = []
+            for v in variables:
+                if v not in ds:
+                    continue
+                x = ds[v].isel(time=slice(0, ndays)).mean("time")
+                if v == "pr":
+                    x = x * 86400.0
+                val = float(x.where(land).weighted(w).mean().compute())
+                row[f"{v} [{ranges[v][2]}]"] = round(val, 2)
+                lo, hi, _ = ranges[v]
+                if not (lo <= val <= hi):
+                    flags.append(v)
+            row["check"] = "ok" if not flags else "IMPLAUSIBLE: " + ", ".join(flags)
+            rows.append(row)
+    return pd.DataFrame(rows)
