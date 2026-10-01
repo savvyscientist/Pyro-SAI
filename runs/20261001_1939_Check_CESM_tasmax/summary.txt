@@ -1,0 +1,18 @@
+
+======== # Check: is CESM2-WACCM SSP2-4.5 (Pangeo CMIP6) daily `tasmax` identical to `tas`?
+--- cell 1
+member      mean_tasmax  mean_tas  max|diff|  tasmax cell_methods                 t0_tasmax   t0_tas
+r2i1p1f1        278.59    278.59      0.000  area: mean time: maximum            2015-01-01  2015-01-01
+r3i1p1f1        278.28    278.28      0.000  area: mean time: maximum            2015-01-01  2015-01-01
+r4i1p1f1        278.57    278.57      0.000  area: mean time: maximum            2015-01-01  2015-01-01
+r5i1p1f1        278.24    278.24      0.000  area: mean time: maximum            2015-01-01  2015-01-01
+--- cell 2
+[catalog] CESM2-WACCM: ignored 298 land/ocean/ice-model file(s) (e.g. CLM LDAY/LMON)
+--- cell 2
+[known issue] MIROC-ES2H: removed 'sfcWind' from 6 member(s) - MIROC-ES2H 'sfcWind' files contain a radiative flux (units W/m**2, mean ~160-200), not wind speed (found 2026-10-01)
+--- cell 2
+[wind] MIROC-ES2H: FWI wind = SSP2-4.5 day-of-year climatology of hypot(uas,vas) in ALL scenarios
+--- cell 2
+G6-1.5K-SAI mean tasmax 280.16  mean tas 278.69  max|diff| 18.270
+--- cell 2
+G6-1.5K-HiLLA mean tasmax 280.15  mean tas 278.69  max|diff| 18.326
