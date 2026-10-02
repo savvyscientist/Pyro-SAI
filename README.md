@@ -22,5 +22,11 @@ git add runs/ local_config.py && git commit -m "run outputs" && git push
 Each run writes `runs/<date>_<notebook>/` with `summary.txt` (all outputs and errors), `log.txt`,
 the executed notebook, figures and regional CSVs. Large outputs (`*.zarr`, `*.nc`, work folders) are git-ignored.
 
+## Extra data: UKESM daily tasmax
+`python prep_ukesm_tasmax.py` adds UKESM1-1 daily tasmax from A. Duffey's `daily_Tmaxmin` files
+(identifies the max variable, matches each file to its ensemble member, copies tasmax to your
+persistent bucket, writes `pyrosai_catalog_extra.json`, which `load_catalog` merges in). Run it when
+no other heavy job is running (each file is ~6 GB, read whole). `--check` only reports.
+
 ## Tests
 `bash tests/run_tests.sh` runs the whole chain on a synthetic archive (no cloud access needed).

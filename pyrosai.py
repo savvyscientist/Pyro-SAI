@@ -105,6 +105,23 @@ def load_catalog(path):
     """
     with open(path) as f:
         cat = json.load(f)
+    # hand-added entries (e.g. files the discovery notebook cannot classify) live next to the
+    # catalog as <name>_extra.json and are merged in; they never overwrite existing variables
+    extra = os.path.splitext(path)[0] + "_extra.json"
+    if os.path.exists(extra):
+        with open(extra) as f:
+            add = json.load(f)
+        n = 0
+        for m, scens in add.items():
+            if m.startswith("_"):
+                continue
+            for s, mems in scens.items():
+                for mem, vs in mems.items():
+                    tgt = cat.setdefault(m, {}).setdefault(s, {}).setdefault(mem, {})
+                    for v, e in vs.items():
+                        if v not in tgt:
+                            tgt[v] = e; n += 1
+        log(f"[catalog] merged {n} extra entr{'y' if n == 1 else 'ies'} from {os.path.basename(extra)}")
     return cat
 
 
@@ -1162,7 +1179,18 @@ class Workspace:
             entries = self.catalog[model][scen][member]
             missing = [v for v in variables if v not in ds and _has(entries, v)]
             if missing:
-                raise KeyError(f"staged store {p} lacks {missing}; delete it to re-stage")
+                # variables added to the catalog after staging (e.g. UKESM tasmax): stage them
+                # into a sibling store instead of re-staging everything
+                px = p[:-len(".zarr")] + "_" + "-".join(sorted(missing)) + ".zarr"
+                if not store_exists(px, self.so):
+                    log(f"  staging added variable(s) {missing} -> {px}")
+                    dx = load_inputs(self.catalog, model, scen, member, missing, years, self.bbox)
+                    write_zarr(dx[[v for v in missing if v in dx]], px, self.sc, storage_options=self.so)
+                dx = self.snap(model, open_store(px, self.sc, self.so))
+                n0 = ds.sizes["time"]
+                ds = xr.merge([ds, dx], join="inner", compat="override")
+                if ds.sizes["time"] < n0 - 2:
+                    raise ValueError(f"{px}: only {ds.sizes['time']} of {n0} days match the staged inputs")
             return ds
         return self.snap(model, load_inputs(self.catalog, model, scen, member, variables, years, self.bbox))
 
@@ -1411,6 +1439,23 @@ def prepare_wind_climatology(ws, models, cache_dir, years=TARGET_PERIOD, window=
         sm.to_netcdf(path)
         WIND_CLIM[m] = sm
         log(f"[wind] {m}: wind climatology ready (donor {m}/ssp245/{mem}; mean {float(sm.mean()):.2f} m/s)")
+
+
+def metrics_temp_guard(metrics_dir, temp, patterns=("*_q[0-9]*.nc", "attribution_*.nc")):
+    """Task 1 metric caches do not encode which temperature drove the FWI. Remember it in
+    <metrics_dir>/fwi_temp.txt and drop the FWI-based caches when it changes (VPD caches stay)."""
+    import glob
+    os.makedirs(metrics_dir, exist_ok=True)
+    marker = os.path.join(metrics_dir, "fwi_temp.txt")
+    if os.path.exists(marker):
+        old = open(marker).read().strip()
+        if old != temp:
+            gone = sorted({f for pat in patterns for f in glob.glob(os.path.join(metrics_dir, pat))})
+            for f in gone:
+                os.remove(f)
+            log(f"[cache] {metrics_dir}: FWI temperature {old} -> {temp}; removed {len(gone)} cached file(s)")
+    with open(marker, "w") as f:
+        f.write(temp)
 
 
 def tasmax_is_genuine(ws, model, scen, member, ndays=60, min_diff=0.5):
