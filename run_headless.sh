@@ -16,5 +16,17 @@ for nb in "$@"; do
   outdir=$(python -c "import re,sys;s=open('local_config.py').read() if __import__('os').path.exists('local_config.py') else '';m=re.search(r'^OUT_DIR\s*=\s*[\"\\'](.+?)[\"\\']',s,re.M);print(m.group(1) if m else './pyrosai_output')")
   if [ -d "$outdir/figures" ]; then mkdir -p "$d/figures"; cp "$outdir"/figures/*.png "$d/figures/" 2>/dev/null; fi
   for f in "$outdir"/*.csv; do [ -f "$f" ] && cp "$f" "$d/"; done
+  # durable backup of the results folder (Hub home files can be lost): BACKUP_ROOT in local_config.py
+  python - "$outdir" <<'PYEOF'
+import os, re, sys
+cfg = open("local_config.py").read() if os.path.exists("local_config.py") else ""
+m = re.search(r'^BACKUP_ROOT\s*=\s*["\'](.+?)["\']', cfg, re.M)
+if m and os.path.isdir(sys.argv[1]):
+    import fsspec
+    dest = m.group(1).rstrip("/") + "/" + os.path.basename(os.path.normpath(sys.argv[1]))
+    fs, path = fsspec.core.url_to_fs(dest)
+    fs.put(sys.argv[1].rstrip("/") + "/", path, recursive=True)
+    print(f"backed up {sys.argv[1]} -> {dest}")
+PYEOF
   echo "[$(date +%H:%M)] done $nb: $(grep -c '^### ERROR' "$d/summary.txt") error(s)"
 done
