@@ -368,7 +368,8 @@ def _note_renamed(ds, name, var_candidates):
     key = (name, tuple(var_candidates))
     if key not in _RENAMED_SEEN:
         _RENAMED_SEEN.add(key)
-        log(f"  [vars] using '{name}' (standard_name={ds[name].attrs.get('standard_name')!r}) "
+        log(f"  [vars] using '{name}' (standard_name={ds[name].attrs.get('standard_name')!r}, "
+            f"cell_methods={ds[name].attrs.get('cell_methods')!r}) "
             f"for {list(var_candidates)[:1]}: no variable with an expected name in "
             f"{str(ds.encoding.get('source', '?')).split('/')[-1]}")
 
@@ -385,6 +386,7 @@ def _open_netcdf(entry, var_candidates):
     so = entry.get("storage_options") or {}
     files = _expand_paths(entry["paths"], so)
     keep = set(var_candidates) | {"time_bnds", "time_bounds", "time_bnd"}
+    canon = next((c for c, names in ALIASES.items() if var_candidates and var_candidates[0] in names), None)
 
     def pre(ds):
         dv = [v for v in ds.data_vars if v in keep]
@@ -393,6 +395,12 @@ def _open_netcdf(entry, var_candidates):
             # saved as 'air_temperature'): use the standard_name, else the file's only field
             std = {STANDARD_NAMES.get(c) for c in var_candidates} - {None}
             dv = [v for v in ds.data_vars if ds[v].attrs.get("standard_name") in std]
+            if len(dv) > 1:
+                # several fields of one quantity (UKESM 'tas' files hold daily max, min and mean
+                # air_temperature): pick by cell_methods
+                want = {"tasmax": "maximum", "hursmin": "minimum"}.get(canon, "mean")
+                pick = [v for v in dv if f"time: {want}" in str(ds[v].attrs.get("cell_methods", ""))]
+                dv = pick if len(pick) == 1 else dv
             fields = [v for v in ds.data_vars if ds[v].ndim >= 3]
             if not dv and len(fields) == 1:
                 dv = fields
