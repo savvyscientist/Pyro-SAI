@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Run notebooks in the background and collect everything Claude needs in runs/<stamp>_<notebook>/:
-#   log.txt, <notebook>_executed.ipynb, summary.txt (all text outputs + errors), figures/
+#   progress.txt (live), log.txt, <notebook>_executed.ipynb, summary.txt (all text outputs + errors), figures/
 # Usage (from a Hub terminal, in this folder):
 #   nohup bash run_headless.sh Task1_FWI_P95_Extremes Task2_VPD_Evaporative_Demand > runs.log 2>&1 &
 # Then:  git add runs/ && git commit -m "run outputs" && git push
@@ -10,6 +10,7 @@ for nb in "$@"; do
   nb=${nb%.ipynb}
   d="runs/${stamp}_${nb}"; mkdir -p "$d"
   echo "[$(date +%H:%M)] running $nb -> $d"
+  export PYROSAI_PROGRESS="$PWD/$d/progress.txt"      # live progress:  tail runs/*/progress.txt
   jupyter nbconvert --to notebook --execute --allow-errors --ExecutePreprocessor.timeout=-1 \
       "${nb}.ipynb" --output-dir "$d" --output "${nb}_executed.ipynb" > "$d/log.txt" 2>&1
   python summarize_run.py "$d/${nb}_executed.ipynb" > "$d/summary.txt" 2>&1

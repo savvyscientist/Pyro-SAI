@@ -16,7 +16,7 @@ Task 1/2 apply it after their CONFIG cell, so updating the notebooks never reset
 ## Running and sharing results
 ```bash
 nohup bash run_headless.sh Task1_FWI_P95_Extremes Task2_VPD_Evaporative_Demand > runs.log 2>&1 &
-tail -f runs.log                       # progress; safe to close the browser
+tail -3 runs/*/progress.txt            # live progress (one line per FWI member, metrics per model)
 git add runs/ local_config.py && git commit -m "run outputs" && git push
 ```
 Each run writes `runs/<date>_<notebook>/` with `summary.txt` (all outputs and errors), `log.txt`,

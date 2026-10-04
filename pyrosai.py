@@ -88,7 +88,17 @@ warnings.filterwarnings("ignore", message=".*invalid value encountered in divide
 
 
 def log(msg):
+    """Print, and (headless runs) append a time-stamped copy to $PYROSAI_PROGRESS, so progress
+    is visible while nbconvert holds back the notebook outputs until the end."""
     print(msg, flush=True)
+    f = os.environ.get("PYROSAI_PROGRESS")
+    if f:
+        try:
+            import datetime
+            with open(f, "a") as fh:
+                fh.write(f"{datetime.datetime.now():%Y-%m-%d %H:%M} {msg}\n")
+        except OSError:
+            pass
 
 
 # -----------------------------------------------------------------------------
