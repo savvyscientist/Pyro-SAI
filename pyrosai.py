@@ -353,6 +353,26 @@ def _per_file_midpoints(ds):
     return ds.drop_vars(bname)
 
 
+# CF standard names of the canonical variables (tas/tasmax share one; files hold a single field)
+STANDARD_NAMES = {"tasmax": "air_temperature", "tas": "air_temperature", "hurs": "relative_humidity",
+                  "hursmin": "relative_humidity", "huss": "specific_humidity",
+                  "pr": "precipitation_flux", "sfcWind": "wind_speed", "uas": "eastward_wind",
+                  "vas": "northward_wind", "ps": "surface_air_pressure"}
+for _c, _names in ALIASES.items():
+    for _a in _names:
+        STANDARD_NAMES.setdefault(_a, STANDARD_NAMES.get(_c))
+_RENAMED_SEEN: set = set()
+
+
+def _note_renamed(ds, name, var_candidates):
+    key = (name, tuple(var_candidates))
+    if key not in _RENAMED_SEEN:
+        _RENAMED_SEEN.add(key)
+        log(f"  [vars] using '{name}' (standard_name={ds[name].attrs.get('standard_name')!r}) "
+            f"for {list(var_candidates)[:1]}: no variable with an expected name in "
+            f"{str(ds.encoding.get('source', '?')).split('/')[-1]}")
+
+
 def _open_netcdf(entry, var_candidates):
     """Open (possibly many, possibly overlapping) NetCDF files lazily.
 
@@ -368,6 +388,16 @@ def _open_netcdf(entry, var_candidates):
 
     def pre(ds):
         dv = [v for v in ds.data_vars if v in keep]
+        if not dv:
+            # files named by variable but with a different internal name (e.g. UKESM output
+            # saved as 'air_temperature'): use the standard_name, else the file's only field
+            std = {STANDARD_NAMES.get(c) for c in var_candidates} - {None}
+            dv = [v for v in ds.data_vars if ds[v].attrs.get("standard_name") in std]
+            fields = [v for v in ds.data_vars if ds[v].ndim >= 3]
+            if not dv and len(fields) == 1:
+                dv = fields
+            if dv:
+                _note_renamed(ds, dv[0], var_candidates)
         ds = ds[dv]
         if "t" in ds.dims and "time" not in ds.dims:
             ds = ds.rename(t="time")
