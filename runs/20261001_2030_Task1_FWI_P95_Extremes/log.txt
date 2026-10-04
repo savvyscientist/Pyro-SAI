@@ -1,0 +1,374 @@
+[NbConvertApp] Converting notebook Task1_FWI_P95_Extremes.ipynb to notebook
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:509: RuntimeWarning: overflow encountered in exp
+  0.1 * isi * (1000.0 / (25.0 + 108.64 / np.exp(0.023 * bui))),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:509: RuntimeWarning: overflow encountered in exp
+  0.1 * isi * (1000.0 / (25.0 + 108.64 / np.exp(0.023 * bui))),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:509: RuntimeWarning: overflow encountered in exp
+  0.1 * isi * (1000.0 / (25.0 + 108.64 / np.exp(0.023 * bui))),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:509: RuntimeWarning: overflow encountered in exp
+  0.1 * isi * (1000.0 / (25.0 + 108.64 / np.exp(0.023 * bui))),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:509: RuntimeWarning: overflow encountered in exp
+  0.1 * isi * (1000.0 / (25.0 + 108.64 / np.exp(0.023 * bui))),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:509: RuntimeWarning: overflow encountered in exp
+  0.1 * isi * (1000.0 / (25.0 + 108.64 / np.exp(0.023 * bui))),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:509: RuntimeWarning: overflow encountered in exp
+  0.1 * isi * (1000.0 / (25.0 + 108.64 / np.exp(0.023 * bui))),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:509: RuntimeWarning: overflow encountered in exp
+  0.1 * isi * (1000.0 / (25.0 + 108.64 / np.exp(0.023 * bui))),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:509: RuntimeWarning: overflow encountered in exp
+  0.1 * isi * (1000.0 / (25.0 + 108.64 / np.exp(0.023 * bui))),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:509: RuntimeWarning: overflow encountered in exp
+  0.1 * isi * (1000.0 / (25.0 + 108.64 / np.exp(0.023 * bui))),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:509: RuntimeWarning: overflow encountered in exp
+  0.1 * isi * (1000.0 / (25.0 + 108.64 / np.exp(0.023 * bui))),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:509: RuntimeWarning: overflow encountered in exp
+  0.1 * isi * (1000.0 / (25.0 + 108.64 / np.exp(0.023 * bui))),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+2026-10-01 23:49:28,482 - distributed.worker.memory - WARNING - Unmanaged memory use is high. This may indicate a memory leak or the memory may not be released to the OS; see https://distributed.dask.org/en/latest/worker-memory.html#memory-not-released-back-to-the-os for more information. -- Unmanaged memory: 4.62 GiB -- Worker memory limit: 6.50 GiB
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:509: RuntimeWarning: overflow encountered in exp
+  0.1 * isi * (1000.0 / (25.0 + 108.64 / np.exp(0.023 * bui))),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:509: RuntimeWarning: overflow encountered in exp
+  0.1 * isi * (1000.0 / (25.0 + 108.64 / np.exp(0.023 * bui))),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:509: RuntimeWarning: overflow encountered in exp
+  0.1 * isi * (1000.0 / (25.0 + 108.64 / np.exp(0.023 * bui))),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+2026-10-01 23:53:17,207 - distributed.worker.memory - WARNING - Worker is at 83% memory usage. Pausing worker.  Process memory: 5.42 GiB -- Worker memory limit: 6.50 GiB
+2026-10-01 23:54:34,345 - distributed.worker.memory - WARNING - Unmanaged memory use is high. This may indicate a memory leak or the memory may not be released to the OS; see https://distributed.dask.org/en/latest/worker-memory.html#memory-not-released-back-to-the-os for more information. -- Unmanaged memory: 5.21 GiB -- Worker memory limit: 6.50 GiB
