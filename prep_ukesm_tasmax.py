@@ -13,12 +13,15 @@ for one ensemble member, numbered 001-003 rather than by CMIP member id. This sc
   3. copies tasmax to Zarr in your persistent bucket (only for members that lack tasmax;
      for members that already have one it just reports the agreement as a validation),
   4. writes pyrosai_catalog_extra.json, which pyrosai.load_catalog merges in automatically.
-Each file is ~6 GB and is read whole into memory, one file at a time: run it when no other
-heavy job is running.
+Each file (~6 GB) is downloaded to local disk (/tmp, or $PYROSAI_TMP) and memory-mapped, one at a
+time; peak memory is ~3 GB (the tasmax copy).
 """
+import contextlib
 import json
 import os
+import shutil
 import sys
+import tempfile
 
 import numpy as np
 import s3fs
@@ -35,10 +38,38 @@ DEST = os.environ.get("PYROSAI_UKESM_DEST", f"s3://reflective-persistent-prod/{U
 CATALOG = "pyrosai_catalog.json"
 EXTRA = "pyrosai_catalog_extra.json"
 NDAYS = 60
+TMP = os.environ.get("PYROSAI_TMP")      # local scratch disk for one file at a time (default /tmp)
 
 fs = s3fs.S3FileSystem()
 cat = P.load_catalog(CATALOG)
 extra = json.load(open(EXTRA)) if os.path.exists(EXTRA) else {}
+
+
+def pick_tmp(size):
+    for d in [TMP, "/tmp", os.path.expanduser("~")]:
+        if d and os.path.isdir(d) and shutil.disk_usage(d).free > 1.15 * size:
+            return d
+    raise OSError(f"no local folder with {1.15 * size / 1e9:.1f} GB free; set PYROSAI_TMP")
+
+
+@contextlib.contextmanager
+def opened(f):
+    """Download one file to local disk and open it memory-mapped, so only the slices used are
+    read into memory (reading the ~6 GB files straight from S3 loads them whole and can
+    exhaust the Hub server's memory)."""
+    size = fs.info(f)["size"]
+    d = tempfile.mkdtemp(dir=pick_tmp(size), prefix="ukesm_tasmax_")
+    p = os.path.join(d, os.path.basename(f))
+    try:
+        print(f"    downloading {size / 1e9:.1f} GB to {d} ...")
+        fs.get(f, p)
+        ds = xr.open_dataset(p, engine="scipy")       # scipy backend memory-maps local files
+        try:
+            yield ds
+        finally:
+            ds.close()
+    finally:
+        shutil.rmtree(d, ignore_errors=True)
 
 
 def field(da):
@@ -57,8 +88,7 @@ for scen, sdir in SCEN_DIRS.items():
     print(f"\n=== {scen}: {len(files)} file(s) in {SRC}/{sdir}/daily_Tmaxmin")
     for f in files:
         print(f"\n--- {f}")
-        with fs.open(f) as fh:
-            ds = xr.open_dataset(fh, engine="scipy")
+        with opened(f) as ds:
             tvars = [v for v in ds.data_vars if ds[v].ndim >= 3]
             t = ds["t"]
             y0, y1 = int(t.dt.year[0]), int(t.dt.year[-1])
@@ -124,7 +154,6 @@ for scen, sdir in SCEN_DIRS.items():
             extra.setdefault(MODEL, {}).setdefault(scen, {}).setdefault(best, {})["tasmax"] = {
                 "kind": "zarr", "store": dest, "var": "tasmax", "source": f"s3://{f}:{vmax}"}
             summary.append((scen, f, best, f"copied -> {dest}"))
-            del ds
 
 print("\n=== summary")
 for r in summary:
