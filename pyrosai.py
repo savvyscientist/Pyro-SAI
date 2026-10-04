@@ -660,6 +660,36 @@ def load_variable(entry, canon, years, bbox=None, label=""):
     return da
 
 
+def _align_grids(das, label="", tol=1e-3):
+    """Put every variable on the grid of the first one before merging. An inner join on lat/lon
+    silently produced an EMPTY grid for UKESM, whose files do not share one grid (e.g. wind
+    on the staggered u/v grid): near-identical grids are snapped, others interpolated
+    bilinearly (edges filled from the nearest point)."""
+    names = list(das)
+    ref = das[names[0]]
+    out = {names[0]: ref}
+    for k in names[1:]:
+        da = das[k]
+        if "lat" not in da.dims or "lon" not in da.dims:
+            out[k] = da
+            continue
+        if da.sizes["lat"] == ref.sizes["lat"] and da.sizes["lon"] == ref.sizes["lon"]:
+            off = max(float(np.abs(da.lat.values - ref.lat.values).max()),
+                      float(np.abs(da.lon.values - ref.lon.values).max()))
+            if off < tol:
+                out[k] = da.assign_coords(lat=ref.lat, lon=ref.lon) if off > 0 else da
+                continue
+        log(f"  {label}{k}: grid {da.sizes['lat']}x{da.sizes['lon']} (lat {float(da.lat[0]):.3f}.., "
+            f"lon {float(da.lon[0]):.3f}..) differs from {names[0]} grid {ref.sizes['lat']}x"
+            f"{ref.sizes['lon']} (lat {float(ref.lat[0]):.3f}.., lon {float(ref.lon[0]):.3f}..) "
+            f"-> bilinear interpolation")
+        src = da.chunk({"lat": -1, "lon": -1}) if da.chunks else da
+        a = src.interp(lat=ref.lat, lon=ref.lon)
+        a = a.fillna(src.reindex(lat=ref.lat, lon=ref.lon, method="nearest"))
+        out[k] = a.astype("float32").assign_attrs(da.attrs, regridded_to=names[0])
+    return out
+
+
 def load_inputs(catalog, model, scenario, member, variables, years, bbox=None,
                 optional=("hursmin", "tasmax", "tas")):
     """Return Dataset of canonical daily variables for one model/scenario/member."""
@@ -695,6 +725,7 @@ def load_inputs(catalog, model, scenario, member, variables, years, bbox=None,
         else:
             raise KeyError(f"{label}required variable '{v}' not in catalog ({list(entries)})")
     n0 = {k: v.sizes["time"] for k, v in out.items()}
+    out = _align_grids(out, label)
     ds = xr.merge(list(out.values()), join="inner", compat="override")
     ds.attrs = {}
     if "sfcWind" in variables and entries.get("sfcWind", {}).get("kind") == "wind_climatology":
@@ -1216,9 +1247,20 @@ class Workspace:
     def _path(self, kind, model, scen, member, years):
         return f"{self.root}/{kind}/{model}/{scen}/{member}_{years[0]}-{years[1]}{self.tag}.zarr"
 
+    def _drop_if_empty(self, p):
+        """Stores staged before the v6.7 grid fix can have an empty (0 x 0) UKESM grid: remove them."""
+        if store_exists(p, self.so):
+            d = xr.open_zarr(p, storage_options=self.so, chunks={})
+            if d.sizes.get("lat", 1) == 0 or d.sizes.get("lon", 1) == 0:
+                import fsspec
+                fs, fp = fsspec.core.url_to_fs(p, **(self.so or {}))
+                fs.rm(fp, recursive=True)
+                log(f"  [cache] removed empty-grid store {p}")
+
     def inputs(self, model, scen, member, years, variables):
         p = self._path("inputs", model, scen, member, years)
         if self.stage:
+            self._drop_if_empty(p)
             if not store_exists(p, self.so):
                 log(f"  staging inputs -> {p}")
                 ds = load_inputs(self.catalog, model, scen, member, variables, years, self.bbox)
@@ -1246,6 +1288,7 @@ class Workspace:
             keep=("FWI",), **fwi_kw):
         """Daily FWI for `years` (inputs start `spinup_years` earlier)."""
         p = self._path(f"fwi_{fwi_kw.get('temp', 'tasmax')}", model, scen, member, years)
+        self._drop_if_empty(p)
         if not store_exists(p, self.so):
             yrs_in = (years[0] - spinup_years, years[1])
             ds = self.inputs(model, scen, member, yrs_in, input_vars)
