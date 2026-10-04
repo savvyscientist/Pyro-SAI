@@ -71,7 +71,8 @@ for scen, sdir in SCEN_DIRS.items():
             # compare on the first NDAYS of a year both the file and the catalog cover
             yr = max(y0 + 1, 2020) if scen == "ssp245" else y0 + 1
             sel = t.dt.year == yr
-            sl = {v: field(ds[v].isel(t=np.where(sel.values)[0][:NDAYS])) for v in tvars}
+            i0 = int(np.argmax(sel.values))     # first day of that year; slices only (the scipy
+            sl = {v: field(ds[v].isel(t=slice(i0, i0 + NDAYS)).load()) for v in tvars}   # backend has no fancy indexing)
             means = {v: float(sl[v].mean()) for v in tvars}
             order = sorted(tvars, key=means.get)          # low -> high
             vmin, vmid, vmax = order[0], order[len(order) // 2], order[-1]
@@ -114,7 +115,7 @@ for scen, sdir in SCEN_DIRS.items():
                 summary.append((scen, f, best, f"would copy {vmax} -> {dest}")); continue
             if not P.store_exists(dest):
                 da = ds[vmax].isel(ht=0, drop=True) if "ht" in ds[vmax].dims else ds[vmax]
-                da = da.rename({"t": "time", "latitude": "lat", "longitude": "lon"}).astype("float32")
+                da = da.rename({"t": "time", "latitude": "lat", "longitude": "lon"}).load().astype("float32")
                 da.attrs = {"units": "K", "standard_name": "air_temperature",
                             "long_name": "daily maximum near-surface air temperature",
                             "source": f"s3://{f} variable {vmax}", "member_match": f"RMS vs tas {scores[best]:.2f} K"}
