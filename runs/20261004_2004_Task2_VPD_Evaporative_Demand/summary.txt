@@ -1,0 +1,180 @@
+
+======== # Pyro SAI — Task 2: Evaporative demand (VPD) under G6-1.5K SAI
+--- cell 1
+{'numpy': '2.0.2', 'pandas': '2.2.3', 'xarray': '2025.1.1', 'dask': '2025.1.0', 'xclim': '0.54.0', 'regionmask': '0.13.0'}
+
+======== ## Configuration
+--- cell 3
+applied local_config.py
+--- cell 4
+Dask dashboard: /user/savvyscientist/proxy/8787/status
+[catalog] merged 4 extra entries from pyrosai_catalog_extra.json
+--- cell 4
+[catalog] CESM2-WACCM: ignored 298 land/ocean/ice-model file(s) (e.g. CLM LDAY/LMON)
+--- cell 4
+[known issue] MIROC-ES2H: removed 'sfcWind' from 6 member(s) - MIROC-ES2H 'sfcWind' files contain a radiative flux (units W/m**2, mean ~160-200), not wind speed (found 2026-10-01)
+--- cell 4
+[wind] MIROC-ES2H: FWI wind = SSP2-4.5 day-of-year climatology of hypot(uas,vas) in ALL scenarios
+--- cell 4
+Models ready for Task 2: ['MIROC-ES2H', 'CESM2-WACCM']
+  MIROC-ES2H: ssp245=['r1'], G6-1.5K-SAI=['r1'], G6-1.5K-HiLLA=['r1']
+  CESM2-WACCM: ssp245=['r1i1p1f1'], G6-1.5K-SAI=['r1'], G6-1.5K-HiLLA=['r1']
+
+======== ## 1. Daily VPD and per-member metrics
+--- cell 6
+[VPD metrics] MIROC-ES2H done
+--- cell 6
+[VPD metrics] CESM2-WACCM done
+
+======== ### Sanity checks
+--- cell 8
+model                               MIROC-ES2H  CESM2-WACCM
+expected P95 days/yr                    18.250       18.250
+target P95 days/yr                      18.300       18.250
+target mean VPD (kPa, land)              0.856        0.939
+ssp245 P95 days/yr                      26.450       30.825
+ssp245 mean VPD (kPa, land)              0.963        1.046
+G6-1.5K-SAI P95 days/yr                 19.764       14.902
+G6-1.5K-SAI mean VPD (kPa, land)         0.888        0.880
+G6-1.5K-HiLLA P95 days/yr               15.536       11.991
+G6-1.5K-HiLLA mean VPD (kPa, land)       0.846        0.891
+max member-mean VPD (kPa)                3.254        2.628
+--- cell 8
+[OK] MIROC-ES2H: target exceedance 18.30
+[OK] CESM2-WACCM: target exceedance 18.25
+
+======== ## 2. Fire season, VPD/precipitation changes and decomposition
+--- cell 10
+MIROC-ES2H: wrote ./pyrosai_output_dryrun/task2_MIROC-ES2H_summary.nc
+--- cell 10
+CESM2-WACCM: wrote ./pyrosai_output_dryrun/task2_CESM2-WACCM_summary.nc
+--- cell 10
+multi-model file written
+
+======== ## 3. Figures
+--- cell 12
+[figure]
+
+======== ### Figure 8 — Change in days per year above the P95 of VPD
+--- cell 14
+[figure]
+
+======== ### Figure 9 — Why does VPD change? Thermodynamic (cooling) and humidity terms, alongside precipitation
+--- cell 16
+[figure]
+
+======== ### Figure 10 — Risk-offset zones: does cooling offset drying?
+--- cell 18
+[figure]
+--- cell 18
+                                                    G6-1.5K-SAI  G6-1.5K-HiLLA
+Cooling + wetting: consistent mitigation                   27.3           39.8
+Risk offset: cooling outweighs drying (VPD↓, P↓...         51.3           45.9
+Fire-weather paradox: drying outweighs cooling ...         21.4           14.4
+Consistent exacerbation (VPD↑, P↓)                          0.0            0.0
+Higher demand, wetter (VPD↑, P↑)                            0.0            0.0
+
+======== ## 4. AR6 regional statistics and Figure 11 — regional VPD decomposition
+--- cell 20
+quantity  vpd_fs_target  vpd_fs_ssp245  d_vpd_fs_SAI_minus_ssp245  \
+region                                                              
+NWN               0.672          0.848                     -0.160   
+NEN               0.978          1.328                     -0.325   
+WSB                 NaN            NaN                        NaN   
+ESB                 NaN            NaN                        NaN   
+WNA               1.789          1.915                     -0.193   
+MED                 NaN            NaN                        NaN   
+NSA                 NaN            NaN                        NaN   
+SAM                 NaN            NaN                        NaN   
+NES                 NaN            NaN                        NaN   
+WAF                 NaN            NaN                        NaN   
+ESAF                NaN            NaN                        NaN   
+SEA                 NaN            NaN                        NaN   
+NAU                 NaN            NaN                        NaN   
+EAU                 NaN            NaN                        NaN   
+
+quantity  dvpd_fs_T_G6-1.5K-SAI  dvpd_fs_RH_G6-1.5K-SAI  \
+region                                                    
+NWN                      -0.117                  -0.043   
+NEN                      -0.205                  -0.125   
+WSB                         NaN                     NaN   
+ESB                         NaN                     NaN   
+WNA                      -0.194                   0.001   
+MED                         NaN                     NaN   
+NSA                         NaN                     NaN   
+SAM                         NaN                     NaN   
+NES                         NaN                     NaN   
+WAF                         NaN                     NaN   
+ESAF                        NaN                     NaN   
+SEA                         NaN                     NaN   
+NAU                         NaN                     NaN   
+EAU                         NaN                     NaN   
+
+quantity  dpct_pr_fs_SAI_minus_ssp245  d_vpd_fs_HiLLA_minus_ssp245  \
+region                                                               
+NWN                             0.774                       -0.185   
+NEN                            15.748                       -0.318   
+WSB                               NaN                          NaN   
+ESB                               NaN                          NaN   
+WNA                           -10.806                       -0.277   
+MED                               NaN                          NaN   
+NSA                               NaN                          NaN   
+SAM                               NaN                          NaN   
+NES                               NaN                          NaN   
+WAF                               NaN                          NaN   
+ESAF                              NaN                          NaN   
+SEA                               NaN                          NaN   
+NAU                               NaN                          NaN   
+EAU                               NaN                          NaN   
+
+quantity  dvpd_fs_T_G6-1.5K-HiLLA  dvpd_fs_RH_G6-1.5K-HiLLA  \
+region                                                        
+NWN                        -0.131                    -0.058   
+NEN                        -0.215                    -0.111   
+WSB                           NaN                       NaN   
+ESB                           NaN                       NaN   
+WNA                        -0.243                    -0.037   
+MED                           NaN                       NaN   
+NSA                           NaN                       NaN   
+SAM                           NaN                       NaN   
+NES                           NaN                       NaN   
+WAF                           NaN                       NaN   
+ESAF                          NaN                       NaN   
+SEA                           NaN                       NaN   
+NAU                           NaN                       NaN   
+EAU                           NaN                       NaN   
+
+quantity  dpct_pr_fs_HiLLA_minus_ssp245  
+region                                   
+NWN                               1.061  
+NEN                               8.057  
+WSB                                 NaN  
+ESB                                 NaN  
+WNA                              -7.532  
+MED                                 NaN  
+NSA                                 NaN  
+SAM                                 NaN  
+NES                                 NaN  
+WAF                                 NaN  
+ESAF                                NaN  
+SEA                                 NaN  
+NAU                                 NaN  
+EAU                                 NaN  
+--- cell 20
+[figure]
+
+======== ## 5. Outputs
+--- cell 22
+   fig10_risk_offset_zones.png
+   fig11_regional_vpd_decomposition.png
+   fig1_delta_p95_days.png
+   fig2_delta_fireseason_fwi.png
+   fig3a_delta_spell.png
+   fig3b_delta_abs_days.png
+   fig4_regional_delta_p95_days.png
+   fig5_seasonality_CESM2-WACCM.png
+   fig5_seasonality_MIROC-ES2H.png
+   fig7_delta_fireseason_vpd.png
+   fig8_delta_vpd_p95_days.png
+   fig9_vpd_decomposition.png
+   figS1_context.png

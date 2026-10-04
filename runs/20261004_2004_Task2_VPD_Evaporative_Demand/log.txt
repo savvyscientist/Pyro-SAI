@@ -1,0 +1,2 @@
+[NbConvertApp] Converting notebook Task2_VPD_Evaporative_Demand.ipynb to notebook
+[NbConvertApp] Writing 1929558 bytes to runs/20261004_2004_Task2_VPD_Evaporative_Demand/Task2_VPD_Evaporative_Demand_executed.ipynb

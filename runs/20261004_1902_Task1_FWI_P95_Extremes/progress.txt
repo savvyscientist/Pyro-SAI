@@ -1,0 +1,18 @@
+2026-10-04 19:03 [catalog] CESM2-WACCM: ignored 298 land/ocean/ice-model file(s) (e.g. CLM LDAY/LMON)
+2026-10-04 19:03 [known issue] MIROC-ES2H: removed 'sfcWind' from 6 member(s) - MIROC-ES2H 'sfcWind' files contain a radiative flux (units W/m**2, mean ~160-200), not wind speed (found 2026-10-01)
+2026-10-04 19:03 [wind] MIROC-ES2H: FWI wind = SSP2-4.5 day-of-year climatology of hypot(uas,vas) in ALL scenarios
+2026-10-04 19:05   [time] dropping 23742 duplicated time steps (overlapping files)
+2026-10-04 19:07   [time] dropping 23742 duplicated time steps (overlapping files)
+2026-10-04 19:10   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-04 19:10   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-04 19:10   [tasmax check] CESM2-WACCM/ssp245/r2i1p1f1: tasmax - tas = 0.00 K -> tasmax looks like tas!
+2026-10-04 19:10 [temp] CESM2-WACCM: using tas in all scenarios (suspicious tasmax)
+2026-10-04 19:10 Models ready for Task 1: ['MIROC-ES2H', 'CESM2-WACCM']
+2026-10-04 19:10 [FWI 1/8] MIROC-ES2H/target/r1 ready (0 min)
+2026-10-04 19:10 [FWI 2/8] MIROC-ES2H/ssp245/r1 ready (0 min)
+2026-10-04 19:10 [FWI 3/8] MIROC-ES2H/G6-1.5K-SAI/r1 ready (0 min)
+2026-10-04 19:10 [FWI 4/8] MIROC-ES2H/G6-1.5K-HiLLA/r1 ready (0 min)
+2026-10-04 19:10 [FWI 5/8] CESM2-WACCM/target/r1i1p1f1 ready (0 min)
+2026-10-04 19:10 [FWI 6/8] CESM2-WACCM/ssp245/r1i1p1f1 ready (0 min)
+2026-10-04 19:10 [FWI 7/8] CESM2-WACCM/G6-1.5K-SAI/r1 ready (0 min)
+2026-10-04 19:10 [FWI 8/8] CESM2-WACCM/G6-1.5K-HiLLA/r1 ready (0 min)
