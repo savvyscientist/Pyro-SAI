@@ -574,13 +574,17 @@ def to_target_units(da, canon):
         # decide from the VALUES: CAM labels RHREFHT 'fraction' although it is stored in percent
         frac_label = ul in ("1", "fraction", "0-1")
         if finite:
-            mx = float(np.nanmax(s))
-            is_fraction = mx <= 1.5
+            # median, not max: a few huge values (unmasked fill values, MIROC) made a global
+            # fraction field look like percent and gave RH ~0.65 %
+            sv = s[np.isfinite(s) & (np.abs(s) < 1e10)]
+            md = float(np.median(sv)) if sv.size else np.nan
+            is_fraction = md <= 1.5
             if is_fraction != frac_label:
-                log(f"  [units] {canon}: label '{u}' but values (max {mx:.2f}) are in "
+                log(f"  [units] {canon}: label '{u}' but values (median {md:.2f}) are in "
                     f"{'fraction' if is_fraction else 'percent'} - using the values")
         else:
             is_fraction = frac_label
+        da = da.where(np.abs(da) < 1e10)      # unmasked fill values -> missing
         if is_fraction:
             da = da * 100.0
         da = da.clip(0, 100)
@@ -1220,6 +1224,37 @@ def style_axes(ax):
 # -----------------------------------------------------------------------------
 # Workspace: caching of staged inputs, daily FWI and per-member metrics
 # -----------------------------------------------------------------------------
+class IncompleteInputs(Exception):
+    """A member's inputs lack whole years of the requested period."""
+
+
+def coverage_problems(ds, years, min_days=300):
+    """Years in `years` (inclusive) with fewer than `min_days` daily values."""
+    counts = pd.Series(ds.time.dt.year.values).value_counts()
+    return [y for y in range(years[0], years[1] + 1) if counts.get(y, 0) < min_days]
+
+
+def drop_incomplete(ws, models, members, runs, variables):
+    """Stage (or reuse) every model/scenario/member input store and drop members whose inputs
+    miss whole years of a run's period (e.g. UKESM SSP2-4.5 r2 humidity/wind lack 7 of the
+    target-period years). A member dropped in one run of a scenario is dropped from all runs
+    of that scenario, so target and SSP2-4.5 use the same members. Returns the models that
+    still have members in every scenario."""
+    for m in models:
+        for run, (scen, years) in runs.items():
+            for mem in list(members[m][scen]):
+                try:
+                    ws.inputs(m, scen, mem, (years[0] - SPINUP_YEARS, years[1]), variables)
+                except IncompleteInputs as e:
+                    members[m][scen].remove(mem)
+                    log(f"[skip] {m}/{scen}/{mem}: {e} - member dropped from {scen}")
+    keep = [m for m in models if all(members[m][s] for s in SCENARIOS)]
+    for m in models:
+        if m not in keep:
+            log(f"[skip] {m}: a scenario has no complete member left")
+    return keep
+
+
 class Workspace:
     """Keeps track of where intermediate products live and (re)uses them.
 
@@ -1309,6 +1344,9 @@ class Workspace:
                 ds = xr.merge([ds, dx], join="inner", compat="override")
                 if ds.sizes["time"] < n0 - 2:
                     raise ValueError(f"{px}: only {ds.sizes['time']} of {n0} days match the staged inputs")
+            bad = coverage_problems(ds, (years[0] + SPINUP_YEARS, years[1]))
+            if bad:
+                raise IncompleteInputs(f"inputs miss or have incomplete years {bad}")
             return ds
         return self.snap(model, load_inputs(self.catalog, model, scen, member, variables, years, self.bbox))
 
