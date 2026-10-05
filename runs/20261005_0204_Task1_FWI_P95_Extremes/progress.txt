@@ -1,0 +1,119 @@
+2026-10-05 02:04 [catalog] merged 4 extra entries from pyrosai_catalog_extra.json
+2026-10-05 02:04 [catalog] CESM2-WACCM: ignored 298 land/ocean/ice-model file(s) (e.g. CLM LDAY/LMON)
+2026-10-05 02:04 [known issue] MIROC-ES2H: removed 'sfcWind' from 6 member(s) - MIROC-ES2H 'sfcWind' files contain a radiative flux (units W/m**2, mean ~160-200), not wind speed (found 2026-10-01)
+2026-10-05 02:04 [wind] MIROC-ES2H: FWI wind = SSP2-4.5 day-of-year climatology of hypot(uas,vas) in ALL scenarios
+2026-10-05 02:04 [wind] UKESM1-1: no member has sfcWind+uas+vas; wind from uas/vas in ALL scenarios (consistent; absolute speeds biased low)
+2026-10-05 02:04   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-05 02:04   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-05 02:04   [tasmax check] CESM2-WACCM/ssp245/r2i1p1f1: tasmax - tas = 0.00 K -> tasmax looks like tas!
+2026-10-05 02:04 [temp] CESM2-WACCM: using tas in all scenarios (suspicious tasmax)
+2026-10-05 02:04 [temp] E3SMv3: using tas - E3SMv3 G6 TREFHTMX/TREFHTMN were written from TREFHT (model-version bug; Reflective Slack, Oct 2026) - no corrected data will be produced
+2026-10-05 02:06   [time] dropping 23742 duplicated time steps (overlapping files)
+2026-10-05 02:08   [time] dropping 23742 duplicated time steps (overlapping files)
+2026-10-05 02:15   [vars] using 'air_temperature' (standard_name='air_temperature', cell_methods='time: maximum (interval: 1 hour)') for ['tasmax']: no variable with an expected name in tas_day_UKESM1-1-LL_u-dp691_201501-210012.nc
+2026-10-05 02:15   [vars] using 'air_temperature_1' (standard_name='air_temperature', cell_methods='time: mean (interval: 1 hour)') for ['tas']: no variable with an expected name in tas_day_UKESM1-1-LL_u-dp691_201501-210012.nc
+2026-10-05 02:16   [time] dropping 330 duplicated time steps (overlapping files)
+2026-10-05 02:17   [time] dropping 330 duplicated time steps (overlapping files)
+2026-10-05 02:17 Models ready for Task 1: ['CESM2-WACCM', 'MIROC-ES2H', 'UKESM1-1']
+2026-10-05 02:17 [FWI 1/36] CESM2-WACCM/target/r1i1p1f1 ready (0 min)
+2026-10-05 02:17 [FWI 2/36] CESM2-WACCM/target/r2i1p1f1 ready (0 min)
+2026-10-05 02:17 [FWI 3/36] CESM2-WACCM/target/r3i1p1f1 ready (0 min)
+2026-10-05 02:17 [FWI 4/36] CESM2-WACCM/ssp245/r1i1p1f1 ready (0 min)
+2026-10-05 02:17 [FWI 5/36] CESM2-WACCM/ssp245/r2i1p1f1 ready (0 min)
+2026-10-05 02:17 [FWI 6/36] CESM2-WACCM/ssp245/r3i1p1f1 ready (0 min)
+2026-10-05 02:17 [FWI 7/36] CESM2-WACCM/G6-1.5K-SAI/r1 ready (0 min)
+2026-10-05 02:17 [FWI 8/36] CESM2-WACCM/G6-1.5K-SAI/r2 ready (0 min)
+2026-10-05 02:17 [FWI 9/36] CESM2-WACCM/G6-1.5K-SAI/r3 ready (0 min)
+2026-10-05 02:17 [FWI 10/36] CESM2-WACCM/G6-1.5K-HiLLA/r1 ready (0 min)
+2026-10-05 02:17 [FWI 11/36] CESM2-WACCM/G6-1.5K-HiLLA/r2 ready (0 min)
+2026-10-05 02:17 [FWI 12/36] CESM2-WACCM/G6-1.5K-HiLLA/r3 ready (0 min)
+2026-10-05 02:17 [FWI 13/36] MIROC-ES2H/target/r1 ready (0 min)
+2026-10-05 02:17 [FWI 14/36] MIROC-ES2H/target/r2 ready (0 min)
+2026-10-05 02:17 [FWI 15/36] MIROC-ES2H/target/r3 ready (0 min)
+2026-10-05 02:17 [FWI 16/36] MIROC-ES2H/ssp245/r1 ready (0 min)
+2026-10-05 02:17 [FWI 17/36] MIROC-ES2H/ssp245/r2 ready (0 min)
+2026-10-05 02:17 [FWI 18/36] MIROC-ES2H/ssp245/r3 ready (0 min)
+2026-10-05 02:17 [FWI 19/36] MIROC-ES2H/G6-1.5K-SAI/r1 ready (0 min)
+2026-10-05 02:17 [FWI 20/36] MIROC-ES2H/G6-1.5K-SAI/r2 ready (0 min)
+2026-10-05 02:17 [FWI 21/36] MIROC-ES2H/G6-1.5K-SAI/r3 ready (0 min)
+2026-10-05 02:17 [FWI 22/36] MIROC-ES2H/G6-1.5K-HiLLA/r1 ready (0 min)
+2026-10-05 02:17 [FWI 23/36] MIROC-ES2H/G6-1.5K-HiLLA/r2 ready (0 min)
+2026-10-05 02:17 [FWI 24/36] MIROC-ES2H/G6-1.5K-HiLLA/r3 ready (0 min)
+2026-10-05 02:17   [cache] removed empty-grid store s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/UKESM1-1/ssp245/r12i1p1f1_2019-2039.zarr
+2026-10-05 02:17   staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/UKESM1-1/ssp245/r12i1p1f1_2019-2039.zarr
+2026-10-05 02:22   UKESM1-1/ssp245/r12i1p1f1: uas/vas on staggered grids (144x192 vs 145x192) -> interpolated to cell centres 144x192
+2026-10-05 02:22   UKESM1-1/ssp245/r12i1p1f1: sfcWind derived from uas/vas (no correction available)
+2026-10-05 02:26   computing FWI UKESM1-1/ssp245/r12i1p1f1 2020-2039
+2026-10-05 02:28 [FWI 25/36] UKESM1-1/target/r12i1p1f1 ready (11 min)
+2026-10-05 02:28   staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/UKESM1-1/ssp245/r2i1p1f1_2019-2039.zarr
+2026-10-05 02:28   [vars] using 'air_temperature' (standard_name='air_temperature', cell_methods='time: maximum (interval: 1 hour)') for ['tasmax']: no variable with an expected name in tas_mean_min_max_day_UKESM1-0-LL_ssp245_r2i1p1f2_201501-210012.nc
+2026-10-05 02:31   UKESM1-1/ssp245/r2i1p1f1: uas/vas on staggered grids (144x192 vs 145x192) -> interpolated to cell centres 144x192
+2026-10-05 02:31   UKESM1-1/ssp245/r2i1p1f1: sfcWind derived from uas/vas (no correction available)
+2026-10-05 02:31   [vars] using 'precipitation_flux' (standard_name='precipitation_flux', cell_methods='time: mean (interval: 1 hour)') for ['pr']: no variable with an expected name in pr_day_UKESM1-1-LL_ssp245_r2i1p1f1_201501-210012.nc
+2026-10-05 02:32   UKESM1-1/ssp245/r2i1p1f1: time lengths {'tasmax': 7560, 'hurs': 5040, 'sfcWind': 5040, 'pr': 7560, 'tas': 7560} -> 5040 common days kept
+2026-10-05 02:33   computing FWI UKESM1-1/ssp245/r2i1p1f1 2020-2039
+2026-10-05 02:34 [FWI 26/36] UKESM1-1/target/r2i1p1f1 ready (17 min)
+2026-10-05 02:34   staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/UKESM1-1/ssp245/r3i1p1f1_2019-2039.zarr
+2026-10-05 02:39   UKESM1-1/ssp245/r3i1p1f1: uas/vas on staggered grids (144x192 vs 145x192) -> interpolated to cell centres 144x192
+2026-10-05 02:39   UKESM1-1/ssp245/r3i1p1f1: sfcWind derived from uas/vas (no correction available)
+2026-10-05 02:44   computing FWI UKESM1-1/ssp245/r3i1p1f1 2020-2039
+2026-10-05 02:45 [FWI 27/36] UKESM1-1/target/r3i1p1f1 ready (28 min)
+2026-10-05 02:45   staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/UKESM1-1/ssp245/r12i1p1f1_2063-2083.zarr
+2026-10-05 02:50   UKESM1-1/ssp245/r12i1p1f1: uas/vas on staggered grids (144x192 vs 145x192) -> interpolated to cell centres 144x192
+2026-10-05 02:50   UKESM1-1/ssp245/r12i1p1f1: sfcWind derived from uas/vas (no correction available)
+2026-10-05 02:54   computing FWI UKESM1-1/ssp245/r12i1p1f1 2064-2083
+2026-10-05 02:55 [FWI 28/36] UKESM1-1/ssp245/r12i1p1f1 ready (39 min)
+2026-10-05 02:55   staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/UKESM1-1/ssp245/r2i1p1f1_2063-2083.zarr
+2026-10-05 02:59   UKESM1-1/ssp245/r2i1p1f1: uas/vas on staggered grids (144x192 vs 145x192) -> interpolated to cell centres 144x192
+2026-10-05 02:59   UKESM1-1/ssp245/r2i1p1f1: sfcWind derived from uas/vas (no correction available)
+2026-10-05 03:01   computing FWI UKESM1-1/ssp245/r2i1p1f1 2064-2083
+2026-10-05 03:02 [FWI 29/36] UKESM1-1/ssp245/r2i1p1f1 ready (45 min)
+2026-10-05 03:02   staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/UKESM1-1/ssp245/r3i1p1f1_2063-2083.zarr
+2026-10-05 03:07   UKESM1-1/ssp245/r3i1p1f1: uas/vas on staggered grids (144x192 vs 145x192) -> interpolated to cell centres 144x192
+2026-10-05 03:07   UKESM1-1/ssp245/r3i1p1f1: sfcWind derived from uas/vas (no correction available)
+2026-10-05 03:12   computing FWI UKESM1-1/ssp245/r3i1p1f1 2064-2083
+2026-10-05 03:13 [FWI 30/36] UKESM1-1/ssp245/r3i1p1f1 ready (56 min)
+2026-10-05 03:13   staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/UKESM1-1/G6-1.5K-SAI/r12i1p1f2_2063-2083.zarr
+2026-10-05 03:15   UKESM1-1/G6-1.5K-SAI/r12i1p1f2: uas/vas on staggered grids (144x192 vs 145x192) -> interpolated to cell centres 144x192
+2026-10-05 03:15   UKESM1-1/G6-1.5K-SAI/r12i1p1f2: sfcWind derived from uas/vas (no correction available)
+2026-10-05 03:17   computing FWI UKESM1-1/G6-1.5K-SAI/r12i1p1f2 2064-2083
+2026-10-05 03:18 [FWI 31/36] UKESM1-1/G6-1.5K-SAI/r12i1p1f2 ready (61 min)
+2026-10-05 03:18   staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/UKESM1-1/G6-1.5K-SAI/r2i1p1f2_2063-2083.zarr
+2026-10-05 03:21   UKESM1-1/G6-1.5K-SAI/r2i1p1f2: uas/vas on staggered grids (144x192 vs 145x192) -> interpolated to cell centres 144x192
+2026-10-05 03:21   UKESM1-1/G6-1.5K-SAI/r2i1p1f2: sfcWind derived from uas/vas (no correction available)
+2026-10-05 03:22   computing FWI UKESM1-1/G6-1.5K-SAI/r2i1p1f2 2064-2083
+2026-10-05 03:24 [FWI 32/36] UKESM1-1/G6-1.5K-SAI/r2i1p1f2 ready (67 min)
+2026-10-05 03:24   staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/UKESM1-1/G6-1.5K-SAI/r3i1p1f2_2063-2083.zarr
+2026-10-05 03:26   UKESM1-1/G6-1.5K-SAI/r3i1p1f2: uas/vas on staggered grids (144x192 vs 145x192) -> interpolated to cell centres 144x192
+2026-10-05 03:26   UKESM1-1/G6-1.5K-SAI/r3i1p1f2: sfcWind derived from uas/vas (no correction available)
+2026-10-05 03:27   computing FWI UKESM1-1/G6-1.5K-SAI/r3i1p1f2 2064-2083
+2026-10-05 03:29 [FWI 33/36] UKESM1-1/G6-1.5K-SAI/r3i1p1f2 ready (72 min)
+2026-10-05 03:29   staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/UKESM1-1/G6-1.5K-HiLLA/r12i1p1f2_2063-2083.zarr
+2026-10-05 03:30   [time] dropping 330 duplicated time steps (overlapping files)
+2026-10-05 03:30   [time] dropping 330 duplicated time steps (overlapping files)
+2026-10-05 03:31   [time] dropping 350 duplicated time steps (overlapping files)
+2026-10-05 03:32   [time] dropping 350 duplicated time steps (overlapping files)
+2026-10-05 03:32   UKESM1-1/G6-1.5K-HiLLA/r12i1p1f2: uas/vas on staggered grids (144x192 vs 145x192) -> interpolated to cell centres 144x192
+2026-10-05 03:32   UKESM1-1/G6-1.5K-HiLLA/r12i1p1f2: sfcWind derived from uas/vas (no correction available)
+2026-10-05 03:33   [time] dropping 270 duplicated time steps (overlapping files)
+2026-10-05 03:34   [time] dropping 330 duplicated time steps (overlapping files)
+2026-10-05 03:35   computing FWI UKESM1-1/G6-1.5K-HiLLA/r12i1p1f2 2064-2083
+2026-10-05 03:37 [FWI 34/36] UKESM1-1/G6-1.5K-HiLLA/r12i1p1f2 ready (80 min)
+2026-10-05 03:37   staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/UKESM1-1/G6-1.5K-HiLLA/r2i1p1f2_2063-2083.zarr
+2026-10-05 03:38   [time] dropping 360 duplicated time steps (overlapping files)
+2026-10-05 03:38   [time] dropping 360 duplicated time steps (overlapping files)
+2026-10-05 03:39   [time] dropping 360 duplicated time steps (overlapping files)
+2026-10-05 03:40   [time] dropping 360 duplicated time steps (overlapping files)
+2026-10-05 03:40   UKESM1-1/G6-1.5K-HiLLA/r2i1p1f2: uas/vas on staggered grids (144x192 vs 145x192) -> interpolated to cell centres 144x192
+2026-10-05 03:40   UKESM1-1/G6-1.5K-HiLLA/r2i1p1f2: sfcWind derived from uas/vas (no correction available)
+2026-10-05 03:41   [time] dropping 270 duplicated time steps (overlapping files)
+2026-10-05 03:42   [time] dropping 360 duplicated time steps (overlapping files)
+2026-10-05 03:43   computing FWI UKESM1-1/G6-1.5K-HiLLA/r2i1p1f2 2064-2083
+2026-10-05 03:45 [FWI 35/36] UKESM1-1/G6-1.5K-HiLLA/r2i1p1f2 ready (88 min)
+2026-10-05 03:45   staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/UKESM1-1/G6-1.5K-HiLLA/r3i1p1f2_2063-2083.zarr
+2026-10-05 03:48   UKESM1-1/G6-1.5K-HiLLA/r3i1p1f2: uas/vas on staggered grids (144x192 vs 145x192) -> interpolated to cell centres 144x192
+2026-10-05 03:48   UKESM1-1/G6-1.5K-HiLLA/r3i1p1f2: sfcWind derived from uas/vas (no correction available)
+2026-10-05 03:51   computing FWI UKESM1-1/G6-1.5K-HiLLA/r3i1p1f2 2064-2083
+2026-10-05 03:52 [FWI 36/36] UKESM1-1/G6-1.5K-HiLLA/r3i1p1f2 ready (95 min)
+2026-10-05 04:04 [metrics] CESM2-WACCM done
+2026-10-05 04:04 [metrics] MIROC-ES2H done

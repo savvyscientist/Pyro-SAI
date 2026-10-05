@@ -1,0 +1,726 @@
+
+======== # Pyro SAI — Task 1: Fire Weather Index and P95 extreme fire-weather days
+--- cell 1
+{'numpy': '2.0.2', 'pandas': '2.2.3', 'xarray': '2025.1.1', 'dask': '2025.1.0', 'xclim': '0.54.0', 'regionmask': '0.13.0'}
+
+======== ## Configuration
+--- cell 3
+applied local_config.py
+--- cell 4
+Dask dashboard: /user/savvyscientist/proxy/8787/status
+
+======== ## 1. Catalog and data availability
+--- cell 6
+[catalog] merged 4 extra entries from pyrosai_catalog_extra.json
+--- cell 6
+[catalog] CESM2-WACCM: ignored 298 land/ocean/ice-model file(s) (e.g. CLM LDAY/LMON)
+--- cell 6
+[known issue] MIROC-ES2H: removed 'sfcWind' from 6 member(s) - MIROC-ES2H 'sfcWind' files contain a radiative flux (units W/m**2, mean ~160-200), not wind speed (found 2026-10-01)
+--- cell 6
+[wind] MIROC-ES2H: FWI wind = SSP2-4.5 day-of-year climatology of hypot(uas,vas) in ALL scenarios
+--- cell 6
+scenario              G6-1.5K-HiLLA            G6-1.5K-SAI  \
+model       member                                           
+CESM2-WACCM r1                   ok                     ok   
+            r10                                              
+            r1i1p1f1                                         
+            r2                   ok                     ok   
+            r2i1p1f1                                         
+            r3                   ok                     ok   
+E3SMv3      ?                                hurs, sfcWind   
+            r1               tasmax  tasmax, hurs, sfcWind   
+            r2                   ok  tasmax, hurs, sfcWind   
+            r3                   ok                          
+MIROC-ES2H  r1                   ok                     ok   
+            r2                   ok                     ok   
+            r3                   ok                     ok   
+UKESM1-1    ?                        tasmax, hurs, sfcWind   
+            r12i1p1f1                                        
+            r12i1p1f2            ok                     ok   
+            r2i1p1f1                                         
+            r2i1p1f2             ok                     ok   
+            r3i1p1f2             ok                          
+
+scenario                              ssp245  
+model       member                            
+CESM2-WACCM r1                                
+            r10                hurs, sfcWind  
+            r1i1p1f1                  tasmax  
+            r2                                
+            r2i1p1f1                      ok  
+            r3                                
+E3SMv3      ?                  hurs, sfcWind  
+            r1                            ok  
+            r2                            ok  
+            r3                                
+MIROC-ES2H  r1                            ok  
+            r2                            ok  
+            r3                            ok  
+UKESM1-1    ?          tasmax, hurs, sfcWind  
+            r12i1p1f1                     ok  
+            r12i1p1f2                         
+            r2i1p1f1                      ok  
+            r2i1p1f2                          
+            r3i1p1f2                          
+--- cell 6
+[wind] UKESM1-1: no member has sfcWind+uas+vas; wind from uas/vas in ALL scenarios (consistent; absolute speeds biased low)
+--- cell 6
+  [time] dropping 1 duplicated time steps (overlapping files)
+--- cell 6
+  [time] dropping 1 duplicated time steps (overlapping files)
+--- cell 6
+  [tasmax check] CESM2-WACCM/ssp245/r2i1p1f1: tasmax - tas = 0.00 K -> tasmax looks like tas!
+--- cell 6
+[temp] CESM2-WACCM: using tas in all scenarios (suspicious tasmax)
+--- cell 6
+[temp] E3SMv3: using tas - E3SMv3 G6 TREFHTMX/TREFHTMN were written from TREFHT (model-version bug; Reflective Slack, Oct 2026) - no corrected data will be produced
+--- cell 6
+[skip] E3SMv3: not all scenarios have tas, hurs, sfcWind, pr
+--- cell 6
+  [time] dropping 23742 duplicated time steps (overlapping files)
+--- cell 6
+  [time] dropping 23742 duplicated time steps (overlapping files)
+--- cell 6
+  [vars] using 'air_temperature' (standard_name='air_temperature', cell_methods='time: maximum (interval: 1 hour)') for ['tasmax']: no variable with an expected name in tas_day_UKESM1-1-LL_u-dp691_201501-210012.nc
+--- cell 6
+  [vars] using 'air_temperature_1' (standard_name='air_temperature', cell_methods='time: mean (interval: 1 hour)') for ['tas']: no variable with an expected name in tas_day_UKESM1-1-LL_u-dp691_201501-210012.nc
+--- cell 6
+  [time] dropping 330 duplicated time steps (overlapping files)
+--- cell 6
+  [time] dropping 330 duplicated time steps (overlapping files)
+--- cell 6
+Models ready for Task 1: ['CESM2-WACCM', 'MIROC-ES2H', 'UKESM1-1']
+--- cell 6
+  CESM2-WACCM (FWI temperature = tas): ssp245=['r1i1p1f1', 'r2i1p1f1', 'r3i1p1f1'], G6-1.5K-SAI=['r1', 'r2', 'r3'], G6-1.5K-HiLLA=['r1', 'r2', 'r3']
+  MIROC-ES2H (FWI temperature = tasmax): ssp245=['r1', 'r2', 'r3'], G6-1.5K-SAI=['r1', 'r2', 'r3'], G6-1.5K-HiLLA=['r1', 'r2', 'r3']
+  UKESM1-1 (FWI temperature = tasmax): ssp245=['r12i1p1f1', 'r2i1p1f1', 'r3i1p1f1'], G6-1.5K-SAI=['r12i1p1f2', 'r2i1p1f2', 'r3i1p1f2'], G6-1.5K-HiLLA=['r12i1p1f2', 'r2i1p1f2', 'r3i1p1f2']
+
+======== ## 2. Daily FWI
+--- cell 8
+[FWI 1/36] CESM2-WACCM/target/r1i1p1f1 ready (0 min)
+--- cell 8
+[FWI 2/36] CESM2-WACCM/target/r2i1p1f1 ready (0 min)
+--- cell 8
+[FWI 3/36] CESM2-WACCM/target/r3i1p1f1 ready (0 min)
+--- cell 8
+[FWI 4/36] CESM2-WACCM/ssp245/r1i1p1f1 ready (0 min)
+--- cell 8
+[FWI 5/36] CESM2-WACCM/ssp245/r2i1p1f1 ready (0 min)
+--- cell 8
+[FWI 6/36] CESM2-WACCM/ssp245/r3i1p1f1 ready (0 min)
+--- cell 8
+[FWI 7/36] CESM2-WACCM/G6-1.5K-SAI/r1 ready (0 min)
+--- cell 8
+[FWI 8/36] CESM2-WACCM/G6-1.5K-SAI/r2 ready (0 min)
+--- cell 8
+[FWI 9/36] CESM2-WACCM/G6-1.5K-SAI/r3 ready (0 min)
+--- cell 8
+[FWI 10/36] CESM2-WACCM/G6-1.5K-HiLLA/r1 ready (0 min)
+--- cell 8
+[FWI 11/36] CESM2-WACCM/G6-1.5K-HiLLA/r2 ready (0 min)
+--- cell 8
+[FWI 12/36] CESM2-WACCM/G6-1.5K-HiLLA/r3 ready (0 min)
+--- cell 8
+[FWI 13/36] MIROC-ES2H/target/r1 ready (0 min)
+--- cell 8
+[FWI 14/36] MIROC-ES2H/target/r2 ready (0 min)
+--- cell 8
+[FWI 15/36] MIROC-ES2H/target/r3 ready (0 min)
+--- cell 8
+[FWI 16/36] MIROC-ES2H/ssp245/r1 ready (0 min)
+--- cell 8
+[FWI 17/36] MIROC-ES2H/ssp245/r2 ready (0 min)
+--- cell 8
+[FWI 18/36] MIROC-ES2H/ssp245/r3 ready (0 min)
+--- cell 8
+[FWI 19/36] MIROC-ES2H/G6-1.5K-SAI/r1 ready (0 min)
+--- cell 8
+[FWI 20/36] MIROC-ES2H/G6-1.5K-SAI/r2 ready (0 min)
+--- cell 8
+[FWI 21/36] MIROC-ES2H/G6-1.5K-SAI/r3 ready (0 min)
+--- cell 8
+[FWI 22/36] MIROC-ES2H/G6-1.5K-HiLLA/r1 ready (0 min)
+--- cell 8
+[FWI 23/36] MIROC-ES2H/G6-1.5K-HiLLA/r2 ready (0 min)
+--- cell 8
+[FWI 24/36] MIROC-ES2H/G6-1.5K-HiLLA/r3 ready (0 min)
+--- cell 8
+  [cache] removed empty-grid store s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/UKESM1-1/ssp245/r12i1p1f1_2019-2039.zarr
+--- cell 8
+  staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/UKESM1-1/ssp245/r12i1p1f1_2019-2039.zarr
+--- cell 8
+  UKESM1-1/ssp245/r12i1p1f1: uas/vas on staggered grids (144x192 vs 145x192) -> interpolated to cell centres 144x192
+--- cell 8
+  UKESM1-1/ssp245/r12i1p1f1: sfcWind derived from uas/vas (no correction available)
+--- cell 8
+  computing FWI UKESM1-1/ssp245/r12i1p1f1 2020-2039
+--- cell 8
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+--- cell 8
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+--- cell 8
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:509: RuntimeWarning: overflow encountered in exp
+  0.1 * isi * (1000.0 / (25.0 + 108.64 / np.exp(0.023 * bui))),
+--- cell 8
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:509: RuntimeWarning: overflow encountered in exp
+  0.1 * isi * (1000.0 / (25.0 + 108.64 / np.exp(0.023 * bui))),
+--- cell 8
+[FWI 25/36] UKESM1-1/target/r12i1p1f1 ready (11 min)
+--- cell 8
+  staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/UKESM1-1/ssp245/r2i1p1f1_2019-2039.zarr
+--- cell 8
+  [vars] using 'air_temperature' (standard_name='air_temperature', cell_methods='time: maximum (interval: 1 hour)') for ['tasmax']: no variable with an expected name in tas_mean_min_max_day_UKESM1-0-LL_ssp245_r2i1p1f2_201501-210012.nc
+--- cell 8
+/home/jovyan/GeoMIP_G6-1.5K_cloud_data/pyrosai.py:648: UserWarning: UKESM1-1/ssp245/r2i1p1f1: hurs: missing years [2020, 2021, 2022, 2025, 2026, 2030, 2035]
+--- cell 8
+/home/jovyan/GeoMIP_G6-1.5K_cloud_data/pyrosai.py:648: UserWarning: UKESM1-1/ssp245/r2i1p1f1: uas: missing years [2020, 2021, 2022, 2025, 2026, 2030, 2035]
+--- cell 8
+  UKESM1-1/ssp245/r2i1p1f1: uas/vas on staggered grids (144x192 vs 145x192) -> interpolated to cell centres 144x192
+--- cell 8
+/home/jovyan/GeoMIP_G6-1.5K_cloud_data/pyrosai.py:648: UserWarning: UKESM1-1/ssp245/r2i1p1f1: vas: missing years [2020, 2021, 2022, 2025, 2026, 2030, 2035]
+--- cell 8
+  UKESM1-1/ssp245/r2i1p1f1: sfcWind derived from uas/vas (no correction available)
+--- cell 8
+  [vars] using 'precipitation_flux' (standard_name='precipitation_flux', cell_methods='time: mean (interval: 1 hour)') for ['pr']: no variable with an expected name in pr_day_UKESM1-1-LL_ssp245_r2i1p1f1_201501-210012.nc
+--- cell 8
+  UKESM1-1/ssp245/r2i1p1f1: time lengths {'tasmax': 7560, 'hurs': 5040, 'sfcWind': 5040, 'pr': 7560, 'tas': 7560} -> 5040 common days kept
+--- cell 8
+  computing FWI UKESM1-1/ssp245/r2i1p1f1 2020-2039
+--- cell 8
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+--- cell 8
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+--- cell 8
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:509: RuntimeWarning: overflow encountered in exp
+  0.1 * isi * (1000.0 / (25.0 + 108.64 / np.exp(0.023 * bui))),
+--- cell 8
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:509: RuntimeWarning: overflow encountered in exp
+  0.1 * isi * (1000.0 / (25.0 + 108.64 / np.exp(0.023 * bui))),
+--- cell 8
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+--- cell 8
+[FWI 26/36] UKESM1-1/target/r2i1p1f1 ready (17 min)
+--- cell 8
+  staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/UKESM1-1/ssp245/r3i1p1f1_2019-2039.zarr
+--- cell 8
+  UKESM1-1/ssp245/r3i1p1f1: uas/vas on staggered grids (144x192 vs 145x192) -> interpolated to cell centres 144x192
+--- cell 8
+  UKESM1-1/ssp245/r3i1p1f1: sfcWind derived from uas/vas (no correction available)
+--- cell 8
+  computing FWI UKESM1-1/ssp245/r3i1p1f1 2020-2039
+--- cell 8
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:509: RuntimeWarning: overflow encountered in exp
+  0.1 * isi * (1000.0 / (25.0 + 108.64 / np.exp(0.023 * bui))),
+--- cell 8
+[FWI 27/36] UKESM1-1/target/r3i1p1f1 ready (28 min)
+--- cell 8
+  staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/UKESM1-1/ssp245/r12i1p1f1_2063-2083.zarr
+--- cell 8
+  UKESM1-1/ssp245/r12i1p1f1: uas/vas on staggered grids (144x192 vs 145x192) -> interpolated to cell centres 144x192
+--- cell 8
+  UKESM1-1/ssp245/r12i1p1f1: sfcWind derived from uas/vas (no correction available)
+--- cell 8
+  computing FWI UKESM1-1/ssp245/r12i1p1f1 2064-2083
+--- cell 8
+[FWI 28/36] UKESM1-1/ssp245/r12i1p1f1 ready (39 min)
+--- cell 8
+  staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/UKESM1-1/ssp245/r2i1p1f1_2063-2083.zarr
+--- cell 8
+  UKESM1-1/ssp245/r2i1p1f1: uas/vas on staggered grids (144x192 vs 145x192) -> interpolated to cell centres 144x192
+--- cell 8
+  UKESM1-1/ssp245/r2i1p1f1: sfcWind derived from uas/vas (no correction available)
+--- cell 8
+  computing FWI UKESM1-1/ssp245/r2i1p1f1 2064-2083
+--- cell 8
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+--- cell 8
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+--- cell 8
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:509: RuntimeWarning: overflow encountered in exp
+  0.1 * isi * (1000.0 / (25.0 + 108.64 / np.exp(0.023 * bui))),
+--- cell 8
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:509: RuntimeWarning: overflow encountered in exp
+  0.1 * isi * (1000.0 / (25.0 + 108.64 / np.exp(0.023 * bui))),
+--- cell 8
+[FWI 29/36] UKESM1-1/ssp245/r2i1p1f1 ready (45 min)
+--- cell 8
+  staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/UKESM1-1/ssp245/r3i1p1f1_2063-2083.zarr
+--- cell 8
+  UKESM1-1/ssp245/r3i1p1f1: uas/vas on staggered grids (144x192 vs 145x192) -> interpolated to cell centres 144x192
+--- cell 8
+  UKESM1-1/ssp245/r3i1p1f1: sfcWind derived from uas/vas (no correction available)
+--- cell 8
+  computing FWI UKESM1-1/ssp245/r3i1p1f1 2064-2083
+--- cell 8
+[FWI 30/36] UKESM1-1/ssp245/r3i1p1f1 ready (56 min)
+--- cell 8
+  staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/UKESM1-1/G6-1.5K-SAI/r12i1p1f2_2063-2083.zarr
+--- cell 8
+  UKESM1-1/G6-1.5K-SAI/r12i1p1f2: uas/vas on staggered grids (144x192 vs 145x192) -> interpolated to cell centres 144x192
+--- cell 8
+  UKESM1-1/G6-1.5K-SAI/r12i1p1f2: sfcWind derived from uas/vas (no correction available)
+--- cell 8
+  computing FWI UKESM1-1/G6-1.5K-SAI/r12i1p1f2 2064-2083
+--- cell 8
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+--- cell 8
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+--- cell 8
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:509: RuntimeWarning: overflow encountered in exp
+  0.1 * isi * (1000.0 / (25.0 + 108.64 / np.exp(0.023 * bui))),
+--- cell 8
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:509: RuntimeWarning: overflow encountered in exp
+  0.1 * isi * (1000.0 / (25.0 + 108.64 / np.exp(0.023 * bui))),
+--- cell 8
+[FWI 31/36] UKESM1-1/G6-1.5K-SAI/r12i1p1f2 ready (61 min)
+--- cell 8
+  staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/UKESM1-1/G6-1.5K-SAI/r2i1p1f2_2063-2083.zarr
+--- cell 8
+  UKESM1-1/G6-1.5K-SAI/r2i1p1f2: uas/vas on staggered grids (144x192 vs 145x192) -> interpolated to cell centres 144x192
+--- cell 8
+  UKESM1-1/G6-1.5K-SAI/r2i1p1f2: sfcWind derived from uas/vas (no correction available)
+--- cell 8
+  computing FWI UKESM1-1/G6-1.5K-SAI/r2i1p1f2 2064-2083
+--- cell 8
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+--- cell 8
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+--- cell 8
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:509: RuntimeWarning: overflow encountered in exp
+  0.1 * isi * (1000.0 / (25.0 + 108.64 / np.exp(0.023 * bui))),
+--- cell 8
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:509: RuntimeWarning: overflow encountered in exp
+  0.1 * isi * (1000.0 / (25.0 + 108.64 / np.exp(0.023 * bui))),
+--- cell 8
+[FWI 32/36] UKESM1-1/G6-1.5K-SAI/r2i1p1f2 ready (67 min)
+--- cell 8
+  staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/UKESM1-1/G6-1.5K-SAI/r3i1p1f2_2063-2083.zarr
+--- cell 8
+  UKESM1-1/G6-1.5K-SAI/r3i1p1f2: uas/vas on staggered grids (144x192 vs 145x192) -> interpolated to cell centres 144x192
+--- cell 8
+  UKESM1-1/G6-1.5K-SAI/r3i1p1f2: sfcWind derived from uas/vas (no correction available)
+--- cell 8
+  computing FWI UKESM1-1/G6-1.5K-SAI/r3i1p1f2 2064-2083
+--- cell 8
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+--- cell 8
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:483: RuntimeWarning: invalid value encountered in divide
+  (0.8 * dc * dmc) / (dmc + 0.4 * dc),  # *Eq.27a*#
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:484: RuntimeWarning: invalid value encountered in divide
+  dmc - (1.0 - 0.8 * dc / (dmc + 0.4 * dc)) * (0.92 + (0.0114 * dmc) ** 1.7),
+--- cell 8
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:509: RuntimeWarning: overflow encountered in exp
+  0.1 * isi * (1000.0 / (25.0 + 108.64 / np.exp(0.023 * bui))),
+--- cell 8
+/srv/conda/envs/notebook/lib/python3.12/site-packages/xclim/indices/fire/_cffwis.py:509: RuntimeWarning: overflow encountered in exp
+  0.1 * isi * (1000.0 / (25.0 + 108.64 / np.exp(0.023 * bui))),
+--- cell 8
+[FWI 33/36] UKESM1-1/G6-1.5K-SAI/r3i1p1f2 ready (72 min)
+--- cell 8
+  staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/UKESM1-1/G6-1.5K-HiLLA/r12i1p1f2_2063-2083.zarr
+--- cell 8
+  [time] dropping 330 duplicated time steps (overlapping files)
+--- cell 8
+  [time] dropping 330 duplicated time steps (overlapping files)
+--- cell 8
+  [time] dropping 350 duplicated time steps (overlapping files)
+--- cell 8
+  [time] dropping 350 duplicated time steps (overlapping files)
+--- cell 8
+  UKESM1-1/G6-1.5K-HiLLA/r12i1p1f2: uas/vas on staggered grids (144x192 vs 145x192) -> interpolated to cell centres 144x192
+--- cell 8
+  UKESM1-1/G6-1.5K-HiLLA/r12i1p1f2: sfcWind derived from uas/vas (no correction available)
+--- cell 8
+  [time] dropping 270 duplicated time steps (overlapping files)
+--- cell 8
+  [time] dropping 330 duplicated time steps (overlapping files)
+--- cell 8
+  computing FWI UKESM1-1/G6-1.5K-HiLLA/r12i1p1f2 2064-2083
+--- cell 8
+[FWI 34/36] UKESM1-1/G6-1.5K-HiLLA/r12i1p1f2 ready (80 min)
+--- cell 8
+  staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/UKESM1-1/G6-1.5K-HiLLA/r2i1p1f2_2063-2083.zarr
+--- cell 8
+  [time] dropping 360 duplicated time steps (overlapping files)
+--- cell 8
+  [time] dropping 360 duplicated time steps (overlapping files)
+--- cell 8
+  [time] dropping 360 duplicated time steps (overlapping files)
+--- cell 8
+  [time] dropping 360 duplicated time steps (overlapping files)
+--- cell 8
+  UKESM1-1/G6-1.5K-HiLLA/r2i1p1f2: uas/vas on staggered grids (144x192 vs 145x192) -> interpolated to cell centres 144x192
+--- cell 8
+  UKESM1-1/G6-1.5K-HiLLA/r2i1p1f2: sfcWind derived from uas/vas (no correction available)
+--- cell 8
+  [time] dropping 270 duplicated time steps (overlapping files)
+--- cell 8
+  [time] dropping 360 duplicated time steps (overlapping files)
+--- cell 8
+  computing FWI UKESM1-1/G6-1.5K-HiLLA/r2i1p1f2 2064-2083
+--- cell 8
+[FWI 35/36] UKESM1-1/G6-1.5K-HiLLA/r2i1p1f2 ready (88 min)
+--- cell 8
+  staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/UKESM1-1/G6-1.5K-HiLLA/r3i1p1f2_2063-2083.zarr
+--- cell 8
+  UKESM1-1/G6-1.5K-HiLLA/r3i1p1f2: uas/vas on staggered grids (144x192 vs 145x192) -> interpolated to cell centres 144x192
+--- cell 8
+  UKESM1-1/G6-1.5K-HiLLA/r3i1p1f2: sfcWind derived from uas/vas (no correction available)
+--- cell 8
+  computing FWI UKESM1-1/G6-1.5K-HiLLA/r3i1p1f2 2064-2083
+--- cell 8
+[FWI 36/36] UKESM1-1/G6-1.5K-HiLLA/r3i1p1f2 ready (95 min)
+--- cell 8
+FWI ready (95.5 min)
+--- cell 8
+          model            run     member  tas [K]  hurs [%]  sfcWind [m/s]  \
+0   CESM2-WACCM         target   r1i1p1f1   288.40     63.80           3.55   
+1   CESM2-WACCM         ssp245   r1i1p1f1   290.29     62.56           3.54   
+2   CESM2-WACCM    G6-1.5K-SAI         r1   289.04     63.27           3.51   
+3   CESM2-WACCM  G6-1.5K-HiLLA         r1   289.12     63.13           3.53   
+4    MIROC-ES2H         target         r1   288.20      0.65           2.38   
+5    MIROC-ES2H         ssp245         r1   289.74      0.64           2.38   
+6    MIROC-ES2H    G6-1.5K-SAI         r1   288.91      0.65           2.38   
+7    MIROC-ES2H  G6-1.5K-HiLLA         r1   289.21      0.65           2.38   
+8      UKESM1-1         target  r12i1p1f1   288.02     64.26           2.74   
+9      UKESM1-1         ssp245  r12i1p1f1   290.73     62.47           2.69   
+10     UKESM1-1    G6-1.5K-SAI  r12i1p1f2   288.87     63.30           2.66   
+11     UKESM1-1  G6-1.5K-HiLLA  r12i1p1f2   288.67     63.50           2.69   
+
+    pr [mm/d]              check  tasmax [K]  
+0        2.54                 ok         NaN  
+1        2.48                 ok         NaN  
+2        2.39                 ok      293.59  
+3        2.42                 ok      293.66  
+4        2.62  IMPLAUSIBLE: hurs      294.60  
+5        2.75  IMPLAUSIBLE: hurs      296.14  
+6        2.63  IMPLAUSIBLE: hurs      295.32  
+7        2.59  IMPLAUSIBLE: hurs      295.62  
+8        2.42                 ok      293.30  
+9        2.46                 ok      296.06  
+10       2.43                 ok      294.14  
+11       2.47                 ok      293.97  
+--- cell 8
+[CHECK] implausible inputs - inspect before trusting results:
+     model           run member  tas [K]  hurs [%]  sfcWind [m/s]  pr [mm/d]             check  tasmax [K]
+MIROC-ES2H        target     r1   288.20      0.65           2.38       2.62 IMPLAUSIBLE: hurs      294.60
+MIROC-ES2H        ssp245     r1   289.74      0.64           2.38       2.75 IMPLAUSIBLE: hurs      296.14
+MIROC-ES2H   G6-1.5K-SAI     r1   288.91      0.65           2.38       2.63 IMPLAUSIBLE: hurs      295.32
+MIROC-ES2H G6-1.5K-HiLLA     r1   289.21      0.65           2.38       2.59 IMPLAUSIBLE: hurs      295.62
+<xarray.DataArray 'FWI' (time: 7300, lat: 192, lon: 288)> Size: 2GB
+dask.array<rechunk-merge, shape=(7300, 192, 288), dtype=float32, chunksize=(7300, 48, 48), chunktype=numpy.ndarray>
+Coordinates:
+  * time     (time) object 58kB 2020-01-01 00:00:00 ... 2039-12-31 00:00:00
+  * lon      (lon) float64 2kB -180.0 -178.8 -177.5 -176.2 ... 176.2 177.5 178.8
+  * lat      (lat) float64 2kB -90.0 -89.06 -88.12 -87.17 ... 88.12 89.06 90.0
+Attributes:
+    units:      1
+    long_name:  Canadian FWI system: FWI
+
+======== ## 3. P95 thresholds and per-member metrics
+--- cell 10
+[metrics] CESM2-WACCM done
+--- cell 10
+[metrics] MIROC-ES2H done
+--- cell 10
+### ERROR ValueError: cannot align objects with join='override' with matching indexes along dimension 'time' that don't have the same size
+da.chunk({"member": -1, "time": -1, "lat": space_chunk, "lon": space_chunk})
+    927     thr = da.quantile(q, dim=["member", "time"]).drop_vars("quantile")
+
+File /srv/conda/envs/notebook/lib/python3.12/site-packages/xarray/core/concat.py:264, in concat(objs, dim, data_vars, coords, compat, positions, fill_value, join, combine_attrs, create_index_for_new_dim)
+    259     raise ValueError(
+    260         f"compat={compat!r} invalid: must be 'broadcast_equals', 'equals', 'identical', 'no_conflicts' or 'override'"
+    261     )
+    263 if isinstance(first_obj, DataArray):
+--> 264     return _dataarray_concat(
+    265         objs,
+    266         dim=dim,
+    267         data_vars=data_vars,
+    268         coords=coords,
+    269         compat=compat,
+    270         positions=positions,
+    271         fill_value=fill_value,
+    272         join=join,
+    273         combine_attrs=combine_attrs,
+    274         create_index_for_new_dim=create_index_for_new_dim,
+    275     )
+    276 elif isinstance(first_obj, Dataset):
+    277     return _dataset_concat(
+    278         objs,
+    279         dim=dim,
+   (...)
+    287         create_index_for_new_dim=create_index_for_new_dim,
+    288     )
+
+File /srv/conda/envs/notebook/lib/python3.12/site-packages/xarray/core/concat.py:755, in _dataarray_concat(arrays, dim, data_vars, coords, compat, positions, fill_value, join, combine_attrs, create_index_for_new_dim)
+    752             arr = arr.rename(name)
+    753     datasets.append(arr._to_temp_dataset())
+--> 755 ds = _dataset_concat(
+    756     datasets,
+    757     dim,
+    758     data_vars,
+    759     coords,
+    760     compat,
+    761     positions,
+    762     fill_value=fill_value,
+    763     join=join,
+    764     combine_attrs=combine_attrs,
+    765     create_index_for_new_dim=create_index_for_new_dim,
+    766 )
+    768 merged_attrs = merge_attrs([da.attrs for da in arrays], combine_attrs)
+    770 result = arrays[0]._from_temp_dataset(ds, name)
+
+File /srv/conda/envs/notebook/lib/python3.12/site-packages/xarray/core/concat.py:516, in _dataset_concat(datasets, dim, data_vars, coords, compat, positions, fill_value, join, combine_attrs, create_index_for_new_dim)
+    513 # Make sure we're working on a copy (we'll be loading variables)
+    514 datasets = [ds.copy() for ds in datasets]
+    515 datasets = list(
+--> 516     align(
+    517         *datasets, join=join, copy=False, exclude=[dim_name], fill_value=fill_value
+    518     )
+    519 )
+    521 dim_coords, dims_sizes, coord_names, data_names, vars_order = _parse_datasets(
+    522     datasets
+    523 )
+    524 dim_names = set(dim_coords)
+
+File /srv/conda/envs/notebook/lib/python3.12/site-packages/xarray/core/alignment.py:883, in align(join, copy, indexes, exclude, fill_value, *objects)
+    687 """
+    688 Given any number of Dataset and/or DataArray objects, returns new
+    689 objects with aligned indexes and dimension sizes.
+   (...)
+    873 
+    874 """
+    875 aligner = Aligner(
+    876     objects,
+    877     join=join,
+   (...)
+    881     fill_value=fill_value,
+    882 )
+--> 883 aligner.align()
+    884 return aligner.results
+
+File /srv/conda/envs/notebook/lib/python3.12/site-packages/xarray/core/alignment.py:572, in Aligner.align(self)
+    569     self.results = (obj.copy(deep=self.copy),)
+    570     return
+--> 572 self.find_matching_indexes()
+    573 self.find_matching_unindexed_dims()
+    574 self.assert_no_index_conflict()
+
+File /srv/conda/envs/notebook/lib/python3.12/site-packages/xarray/core/alignment.py:271, in Aligner.find_matching_indexes(self)
+    269 for dim, sizes in dim_sizes.items():
+    270     if len(sizes) > 1:
+--> 271         raise ValueError(
+    272             "cannot align objects with join='override' with matching indexes "
+    273             f"along dimension {dim!r} that don't have the same size"
+    274         )
+
+ValueError: cannot align objects with join='override' with matching indexes along dimension 'time' that don't have the same size
+
+======== ### Sanity checks
+--- cell 12
+### ERROR KeyError: 'UKESM1-1'
+---------------------------------------------------------------------------
+KeyError                                  Traceback (most recent call last)
+Cell In[7], line 3
+      1 rows = []
+      2 for m in models:
+----> 3     land = P.land_mask(thr[m].lon, thr[m].lat)
+      4     w = np.cos(np.deg2rad(thr[m].lat))
+      5     one = fwi[m]["target"][members[m]["ssp245"][0]]
+
+KeyError: 'UKESM1-1'
+
+======== ## 4. Ensemble changes, significance and per-model summary files
+--- cell 14
+CESM2-WACCM: wrote ./pyrosai_output/task1_CESM2-WACCM_summary.nc
+--- cell 14
+MIROC-ES2H: wrote ./pyrosai_output/task1_MIROC-ES2H_summary.nc
+--- cell 14
+### ERROR KeyError: 'UKESM1-1'
+---------------------------------------------------------------------------
+KeyError                                  Traceback (most recent call last)
+Cell In[8], line 19
+     17 summary = {}
+     18 for m in models:
+---> 19     land = P.land_mask(thr[m].lon, thr[m].lat)
+     20     season = P.fire_season_mask(metrics[m]["target"]["mean_month"].mean("member"))
+     21     out = {"p95_threshold": thr[m], "fire_season": season, "land": land}
+
+KeyError: 'UKESM1-1'
+
+======== ## 5. Figures
+--- cell 16
+### ERROR NameError: name 'mm' is not defined
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+Cell In[9], line 19
+     16     fig.savefig(f"{FIG_DIR}/{fname}.png", dpi=200, bbox_inches="tight")
+     17     plt.show()
+---> 19 delta_figure("days_p95", "Δ days/yr with FWI > local P95", "fig1_delta_p95_days", floor=1)
+
+Cell In[9], line 4, in delta_figure(var, label, fname, cmap, floor, per_model)
+      3 def delta_figure(var, label, fname, cmap="RdBu_r", floor=None, per_model=True):
+----> 4     panels = [("Multi-model mean" if len(models) > 1 else models[0], mm, mm_land, "robust_")]
+      5     if per_model and len(models) > 1:
+      6         panels += [(m, summary[m], summary[m]["land"], "sig_") for m in models]
+
+NameError: name 'mm' is not defined
+
+======== ### Figure 2 — Change in fire-season mean FWI
+--- cell 18
+### ERROR NameError: name 'mm' is not defined
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+Cell In[10], line 1
+----> 1 delta_figure("fwi_fs", "Δ fire-season mean FWI", "fig2_delta_fireseason_fwi", floor=0.5)
+
+Cell In[9], line 4, in delta_figure(var, label, fname, cmap, floor, per_model)
+      3 def delta_figure(var, label, fname, cmap="RdBu_r", floor=None, per_model=True):
+----> 4     panels = [("Multi-model mean" if len(models) > 1 else models[0], mm, mm_land, "robust_")]
+      5     if per_model and len(models) > 1:
+      6         panels += [(m, summary[m], summary[m]["land"], "sig_") for m in models]
+
+NameError: name 'mm' is not defined
+
+======== ### Figure 3 — Duration and absolute danger
+--- cell 20
+### ERROR NameError: name 'mm' is not defined
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+Cell In[11], line 1
+----> 1 delta_figure("spell_max", "Δ longest spell above P95 (days)", "fig3a_delta_spell", floor=0.5, per_model=False)
+      2 delta_figure("days_abs", f"Δ days/yr with FWI > {ABS_FWI:g}", "fig3b_delta_abs_days", floor=1, per_model=False)
+
+Cell In[9], line 4, in delta_figure(var, label, fname, cmap, floor, per_model)
+      3 def delta_figure(var, label, fname, cmap="RdBu_r", floor=None, per_model=True):
+----> 4     panels = [("Multi-model mean" if len(models) > 1 else models[0], mm, mm_land, "robust_")]
+      5     if per_model and len(models) > 1:
+      6         panels += [(m, summary[m], summary[m]["land"], "sig_") for m in models]
+
+NameError: name 'mm' is not defined
+
+======== ### Figure S1 — Context: target-period P95 threshold, fire season, and residual change after SAI
+--- cell 22
+### ERROR NameError: name 'mm' is not defined
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+Cell In[12], line 2
+      1 fig, axes = P.map_axes(1, 3)
+----> 2 t = mm["p95_threshold"].where(mm_land)
+      3 P.map_panel(axes[0, 0], t, "YlOrRd", 0, P.symmetric_limit(t, 98), "P95 FWI threshold (target, MMM)",
+      4             cbar_label="FWI", extend="max")
+      5 for k, pair in enumerate(["SAI_minus_target", "HiLLA_minus_target"]):
+
+NameError: name 'mm' is not defined
+--- cell 22
+[figure]
+
+======== ## 6. AR6 regional statistics
+--- cell 24
+### ERROR KeyError: 'UKESM1-1'
+---------------------------------------------------------------------------
+KeyError                                  Traceback (most recent call last)
+Cell In[13], line 3
+      1 recs = []
+      2 for m in models:
+----> 3     s = summary[m]
+      4     for var in ("days_p95", "fwi_fs", "spell_max", "days_abs"):
+      5         for run in RUNS:
+
+KeyError: 'UKESM1-1'
+
+======== ### Figure 4 — Regional change in P95 days (focus regions)
+--- cell 26
+### ERROR NameError: name 'reg_df' is not defined
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+Cell In[14], line 24
+     21     ax.set_title(f"AR6 focus regions ({', '.join(models)})", fontsize=10)
+     22     fig.tight_layout(); fig.savefig(f"{FIG_DIR}/{fname}.png", dpi=200, bbox_inches="tight"); plt.show()
+---> 24 regional_bars("days_p95", ["d_ssp245_minus_target", "d_SAI_minus_ssp245", "d_HiLLA_minus_ssp245"],
+     25               "Δ days/yr with FWI > P95", "fig4_regional_delta_p95_days")
+
+Cell In[14], line 2, in regional_bars(metric, pairs, label, fname)
+      1 def regional_bars(metric, pairs, label, fname):
+----> 2     sub = reg_df[(reg_df.metric == metric) & reg_df.region.isin(FOCUS_REGIONS)]
+      3     regs = [r for r in FOCUS_REGIONS if r in sub.region.values][::-1]
+      4     style = {"d_ssp245_minus_target": P.SCEN_STYLE["ssp245"], "d_SAI_minus_ssp245": P.SCEN_STYLE["G6-1.5K-SAI"],
+      5              "d_HiLLA_minus_ssp245": P.SCEN_STYLE["G6-1.5K-HiLLA"]}
+
+NameError: name 'reg_df' is not defined
+
+======== ### Figure 5 — Seasonality of extreme fire weather (focus regions)
+--- cell 28
+[figure]
+--- cell 28
+[figure]
+--- cell 28
+### ERROR KeyError: 'UKESM1-1'
+---------------------------------------------------------------------------
+KeyError                                  Traceback (most recent call last)
+Cell In[15], line 3
+      1 DAYS_M = np.array([31, 28.25, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31])
+      2 for m in models:
+----> 3     s = summary[m]
+      4     reg = {run: P.regional_means(s[f"exc_freq_{run}"], FOCUS_REGIONS) * xr.DataArray(DAYS_M, dims="month",
+      5            coords={"month": np.arange(1, 13)}) for run in RUNS}
+      6     regs = list(reg["target"].region.values)
+
+KeyError: 'UKESM1-1'
+
+======== ## 7. *(Optional)* Driver attribution: cooling vs. drying
+
+======== ### Figure 6 — Which driver controls the change in fire-season FWI? (focus regions)
+
+======== ## 8. Outputs for the mid-project report and Task 4
+--- cell 34
+Figures:
+   fig1_delta_p95_days.png
+   fig2_delta_fireseason_fwi.png
+   fig3a_delta_spell.png
+   fig3b_delta_abs_days.png
+   fig4_regional_delta_p95_days.png
+   fig5_seasonality_CESM2-WACCM.png
+   fig5_seasonality_MIROC-ES2H.png
+   figS1_context.png
+Files:
+   task1_AR6_regional_stats.csv
+   task1_CESM2-WACCM_summary.nc
+   task1_MIROC-ES2H_summary.nc
+   task1_multimodel_1deg.nc
