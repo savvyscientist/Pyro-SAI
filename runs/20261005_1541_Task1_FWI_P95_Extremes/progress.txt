@@ -1,0 +1,118 @@
+2026-10-05 15:41 [catalog] merged 4 extra entries from pyrosai_catalog_extra.json
+2026-10-05 15:41 [catalog] CESM2-WACCM: ignored 298 land/ocean/ice-model file(s) (e.g. CLM LDAY/LMON)
+2026-10-05 15:41 [known issue] MIROC-ES2H: removed 'sfcWind' from 6 member(s) - MIROC-ES2H 'sfcWind' files contain a radiative flux (units W/m**2, mean ~160-200), not wind speed (found 2026-10-01)
+2026-10-05 15:41 [wind] MIROC-ES2H: FWI wind = SSP2-4.5 day-of-year climatology of hypot(uas,vas) in ALL scenarios
+2026-10-05 15:41 [wind] UKESM1-1: no member has sfcWind+uas+vas; wind from uas/vas in ALL scenarios (consistent; absolute speeds biased low)
+2026-10-05 15:41   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-05 15:42   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-05 15:42   [tasmax check] CESM2-WACCM/ssp245/r2i1p1f1: tasmax - tas = 0.00 K -> tasmax looks like tas!
+2026-10-05 15:42 [temp] CESM2-WACCM: using tas in all scenarios (suspicious tasmax)
+2026-10-05 15:42 [temp] E3SMv3: using tas - E3SMv3 G6 TREFHTMX/TREFHTMN were written from TREFHT (model-version bug; Reflective Slack, Oct 2026) - no corrected data will be produced
+2026-10-05 15:44   [time] dropping 23742 duplicated time steps (overlapping files)
+2026-10-05 15:47   [time] dropping 23742 duplicated time steps (overlapping files)
+2026-10-05 15:54   [vars] using 'air_temperature' (standard_name='air_temperature', cell_methods='time: maximum (interval: 1 hour)') for ['tasmax']: no variable with an expected name in tas_day_UKESM1-1-LL_u-dp691_201501-210012.nc
+2026-10-05 15:54   [vars] using 'air_temperature_1' (standard_name='air_temperature', cell_methods='time: mean (interval: 1 hour)') for ['tas']: no variable with an expected name in tas_day_UKESM1-1-LL_u-dp691_201501-210012.nc
+2026-10-05 15:55   [time] dropping 330 duplicated time steps (overlapping files)
+2026-10-05 15:56   [time] dropping 330 duplicated time steps (overlapping files)
+2026-10-05 15:56   staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/MIROC-ES2H/ssp245/r1_2019-2039.zarr
+2026-10-05 15:58   [time] dropping 23742 duplicated time steps (overlapping files)
+2026-10-05 16:01   [time] dropping 23742 duplicated time steps (overlapping files)
+2026-10-05 16:03   [time] dropping 23742 duplicated time steps (overlapping files)
+2026-10-05 16:06   [time] dropping 23742 duplicated time steps (overlapping files)
+2026-10-05 16:06   MIROC-ES2H/ssp245/r1: sfcWind = SSP2-4.5 day-of-year wind climatology
+2026-10-05 16:08   staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/MIROC-ES2H/ssp245/r2_2019-2039.zarr
+2026-10-05 16:11   [time] dropping 23742 duplicated time steps (overlapping files)
+2026-10-05 16:14   [time] dropping 23742 duplicated time steps (overlapping files)
+2026-10-05 16:17   [time] dropping 23742 duplicated time steps (overlapping files)
+2026-10-05 16:20   [time] dropping 23742 duplicated time steps (overlapping files)
+2026-10-05 16:20   MIROC-ES2H/ssp245/r2: sfcWind = SSP2-4.5 day-of-year wind climatology
+2026-10-05 16:22   staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/MIROC-ES2H/ssp245/r3_2019-2039.zarr
+2026-10-05 16:24   [time] dropping 23742 duplicated time steps (overlapping files)
+2026-10-05 16:27   [time] dropping 23742 duplicated time steps (overlapping files)
+2026-10-05 16:29   [time] dropping 23742 duplicated time steps (overlapping files)
+2026-10-05 16:32   [time] dropping 23742 duplicated time steps (overlapping files)
+2026-10-05 16:32   MIROC-ES2H/ssp245/r3: sfcWind = SSP2-4.5 day-of-year wind climatology
+2026-10-05 16:33   staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/MIROC-ES2H/ssp245/r1_2063-2083.zarr
+2026-10-05 16:36   [time] dropping 23742 duplicated time steps (overlapping files)
+2026-10-05 16:38   [time] dropping 23742 duplicated time steps (overlapping files)
+2026-10-05 16:41   [time] dropping 23742 duplicated time steps (overlapping files)
+2026-10-05 16:43   [time] dropping 23742 duplicated time steps (overlapping files)
+2026-10-05 16:43   MIROC-ES2H/ssp245/r1: sfcWind = SSP2-4.5 day-of-year wind climatology
+2026-10-05 16:45   staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/MIROC-ES2H/ssp245/r2_2063-2083.zarr
+2026-10-05 16:47   [time] dropping 23742 duplicated time steps (overlapping files)
+2026-10-05 16:49   [time] dropping 23742 duplicated time steps (overlapping files)
+2026-10-05 16:52   [time] dropping 23742 duplicated time steps (overlapping files)
+2026-10-05 16:54   [time] dropping 23742 duplicated time steps (overlapping files)
+2026-10-05 16:54   MIROC-ES2H/ssp245/r2: sfcWind = SSP2-4.5 day-of-year wind climatology
+2026-10-05 16:56   staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/MIROC-ES2H/ssp245/r3_2063-2083.zarr
+2026-10-05 16:58   [time] dropping 23742 duplicated time steps (overlapping files)
+2026-10-05 17:01   [time] dropping 23742 duplicated time steps (overlapping files)
+2026-10-05 17:03   [time] dropping 23742 duplicated time steps (overlapping files)
+2026-10-05 17:06   [time] dropping 23742 duplicated time steps (overlapping files)
+2026-10-05 17:06   MIROC-ES2H/ssp245/r3: sfcWind = SSP2-4.5 day-of-year wind climatology
+2026-10-05 17:08   staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/MIROC-ES2H/G6-1.5K-SAI/r1_2063-2083.zarr
+2026-10-05 17:12   MIROC-ES2H/G6-1.5K-SAI/r1: sfcWind = SSP2-4.5 day-of-year wind climatology
+2026-10-05 17:13   staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/MIROC-ES2H/G6-1.5K-SAI/r2_2063-2083.zarr
+2026-10-05 17:17   MIROC-ES2H/G6-1.5K-SAI/r2: sfcWind = SSP2-4.5 day-of-year wind climatology
+2026-10-05 17:19   staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/MIROC-ES2H/G6-1.5K-SAI/r3_2063-2083.zarr
+2026-10-05 17:22   MIROC-ES2H/G6-1.5K-SAI/r3: sfcWind = SSP2-4.5 day-of-year wind climatology
+2026-10-05 17:24   staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/MIROC-ES2H/G6-1.5K-HiLLA/r1_2063-2083.zarr
+2026-10-05 17:28   MIROC-ES2H/G6-1.5K-HiLLA/r1: sfcWind = SSP2-4.5 day-of-year wind climatology
+2026-10-05 17:29   staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/MIROC-ES2H/G6-1.5K-HiLLA/r2_2063-2083.zarr
+2026-10-05 17:33   MIROC-ES2H/G6-1.5K-HiLLA/r2: sfcWind = SSP2-4.5 day-of-year wind climatology
+2026-10-05 17:35   staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/MIROC-ES2H/G6-1.5K-HiLLA/r3_2063-2083.zarr
+2026-10-05 17:38   MIROC-ES2H/G6-1.5K-HiLLA/r3: sfcWind = SSP2-4.5 day-of-year wind climatology
+2026-10-05 17:40 [skip] UKESM1-1/ssp245/r2i1p1f1: inputs miss or have incomplete years [2020, 2021, 2022, 2025, 2026, 2030, 2035] - member dropped from ssp245
+2026-10-05 17:40 Models ready for Task 1: ['CESM2-WACCM', 'MIROC-ES2H', 'UKESM1-1']
+2026-10-05 17:40 [FWI 1/34] CESM2-WACCM/target/r1i1p1f1 ready (0 min)
+2026-10-05 17:40 [FWI 2/34] CESM2-WACCM/target/r2i1p1f1 ready (0 min)
+2026-10-05 17:40 [FWI 3/34] CESM2-WACCM/target/r3i1p1f1 ready (0 min)
+2026-10-05 17:40 [FWI 4/34] CESM2-WACCM/ssp245/r1i1p1f1 ready (0 min)
+2026-10-05 17:40 [FWI 5/34] CESM2-WACCM/ssp245/r2i1p1f1 ready (0 min)
+2026-10-05 17:40 [FWI 6/34] CESM2-WACCM/ssp245/r3i1p1f1 ready (0 min)
+2026-10-05 17:40 [FWI 7/34] CESM2-WACCM/G6-1.5K-SAI/r1 ready (0 min)
+2026-10-05 17:40 [FWI 8/34] CESM2-WACCM/G6-1.5K-SAI/r2 ready (0 min)
+2026-10-05 17:40 [FWI 9/34] CESM2-WACCM/G6-1.5K-SAI/r3 ready (0 min)
+2026-10-05 17:40 [FWI 10/34] CESM2-WACCM/G6-1.5K-HiLLA/r1 ready (0 min)
+2026-10-05 17:40 [FWI 11/34] CESM2-WACCM/G6-1.5K-HiLLA/r2 ready (0 min)
+2026-10-05 17:40 [FWI 12/34] CESM2-WACCM/G6-1.5K-HiLLA/r3 ready (0 min)
+2026-10-05 17:40   computing FWI MIROC-ES2H/ssp245/r1 2020-2039
+2026-10-05 17:40   [spin-up] data start in 2020: using a copy of 2020 as spin-up year
+2026-10-05 17:42 [FWI 13/34] MIROC-ES2H/target/r1 ready (2 min)
+2026-10-05 17:42   computing FWI MIROC-ES2H/ssp245/r2 2020-2039
+2026-10-05 17:42   [spin-up] data start in 2020: using a copy of 2020 as spin-up year
+2026-10-05 17:44 [FWI 14/34] MIROC-ES2H/target/r2 ready (4 min)
+2026-10-05 17:44   computing FWI MIROC-ES2H/ssp245/r3 2020-2039
+2026-10-05 17:44   [spin-up] data start in 2020: using a copy of 2020 as spin-up year
+2026-10-05 17:46 [FWI 15/34] MIROC-ES2H/target/r3 ready (6 min)
+2026-10-05 17:46   computing FWI MIROC-ES2H/ssp245/r1 2064-2083
+2026-10-05 17:47 [FWI 16/34] MIROC-ES2H/ssp245/r1 ready (8 min)
+2026-10-05 17:47   computing FWI MIROC-ES2H/ssp245/r2 2064-2083
+2026-10-05 17:49 [FWI 17/34] MIROC-ES2H/ssp245/r2 ready (10 min)
+2026-10-05 17:49   computing FWI MIROC-ES2H/ssp245/r3 2064-2083
+2026-10-05 17:51 [FWI 18/34] MIROC-ES2H/ssp245/r3 ready (12 min)
+2026-10-05 17:51   computing FWI MIROC-ES2H/G6-1.5K-SAI/r1 2064-2083
+2026-10-05 17:53 [FWI 19/34] MIROC-ES2H/G6-1.5K-SAI/r1 ready (13 min)
+2026-10-05 17:53   computing FWI MIROC-ES2H/G6-1.5K-SAI/r2 2064-2083
+2026-10-05 17:55 [FWI 20/34] MIROC-ES2H/G6-1.5K-SAI/r2 ready (15 min)
+2026-10-05 17:55   computing FWI MIROC-ES2H/G6-1.5K-SAI/r3 2064-2083
+2026-10-05 17:57 [FWI 21/34] MIROC-ES2H/G6-1.5K-SAI/r3 ready (17 min)
+2026-10-05 17:57   computing FWI MIROC-ES2H/G6-1.5K-HiLLA/r1 2064-2083
+2026-10-05 17:59 [FWI 22/34] MIROC-ES2H/G6-1.5K-HiLLA/r1 ready (19 min)
+2026-10-05 17:59   computing FWI MIROC-ES2H/G6-1.5K-HiLLA/r2 2064-2083
+2026-10-05 18:01 [FWI 23/34] MIROC-ES2H/G6-1.5K-HiLLA/r2 ready (21 min)
+2026-10-05 18:01   computing FWI MIROC-ES2H/G6-1.5K-HiLLA/r3 2064-2083
+2026-10-05 18:03 [FWI 24/34] MIROC-ES2H/G6-1.5K-HiLLA/r3 ready (23 min)
+2026-10-05 18:03 [FWI 25/34] UKESM1-1/target/r12i1p1f1 ready (23 min)
+2026-10-05 18:03 [FWI 26/34] UKESM1-1/target/r3i1p1f1 ready (23 min)
+2026-10-05 18:03 [FWI 27/34] UKESM1-1/ssp245/r12i1p1f1 ready (23 min)
+2026-10-05 18:03 [FWI 28/34] UKESM1-1/ssp245/r3i1p1f1 ready (23 min)
+2026-10-05 18:03 [FWI 29/34] UKESM1-1/G6-1.5K-SAI/r12i1p1f2 ready (23 min)
+2026-10-05 18:03 [FWI 30/34] UKESM1-1/G6-1.5K-SAI/r2i1p1f2 ready (23 min)
+2026-10-05 18:03 [FWI 31/34] UKESM1-1/G6-1.5K-SAI/r3i1p1f2 ready (23 min)
+2026-10-05 18:03 [FWI 32/34] UKESM1-1/G6-1.5K-HiLLA/r12i1p1f2 ready (23 min)
+2026-10-05 18:03 [FWI 33/34] UKESM1-1/G6-1.5K-HiLLA/r2i1p1f2 ready (23 min)
+2026-10-05 18:03 [FWI 34/34] UKESM1-1/G6-1.5K-HiLLA/r3i1p1f2 ready (23 min)
+2026-10-05 18:19 [metrics] CESM2-WACCM done
+2026-10-05 18:25 [metrics] MIROC-ES2H done
+2026-10-05 18:29 [metrics] UKESM1-1 done
