@@ -1,0 +1,43 @@
+2026-10-04 20:25 [catalog] merged 4 extra entries from pyrosai_catalog_extra.json
+2026-10-04 20:25 [catalog] CESM2-WACCM: ignored 298 land/ocean/ice-model file(s) (e.g. CLM LDAY/LMON)
+2026-10-04 20:25 [known issue] MIROC-ES2H: removed 'sfcWind' from 6 member(s) - MIROC-ES2H 'sfcWind' files contain a radiative flux (units W/m**2, mean ~160-200), not wind speed (found 2026-10-01)
+2026-10-04 20:25 [wind] MIROC-ES2H: FWI wind = SSP2-4.5 day-of-year climatology of hypot(uas,vas) in ALL scenarios
+2026-10-04 20:25 [wind] UKESM1-1: no member has sfcWind+uas+vas; wind from uas/vas in ALL scenarios (consistent; absolute speeds biased low)
+2026-10-04 20:25   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-04 20:25   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-04 20:25   [tasmax check] CESM2-WACCM/ssp245/r2i1p1f1: tasmax - tas = 0.00 K -> tasmax looks like tas!
+2026-10-04 20:25 [temp] CESM2-WACCM: using tas in all scenarios (suspicious tasmax)
+2026-10-04 20:25 [temp] E3SMv3: using tas - E3SMv3 G6 TREFHTMX/TREFHTMN were written from TREFHT (model-version bug; Reflective Slack, Oct 2026) - no corrected data will be produced
+2026-10-04 20:27   [time] dropping 23742 duplicated time steps (overlapping files)
+2026-10-04 20:29   [time] dropping 23742 duplicated time steps (overlapping files)
+2026-10-04 20:35   [tasmax check] UKESM1-1/G6-1.5K-SAI/r12i1p1f2: could not check (KeyError)
+2026-10-04 20:36   [time] dropping 330 duplicated time steps (overlapping files)
+2026-10-04 20:37   [time] dropping 330 duplicated time steps (overlapping files)
+2026-10-04 20:37 Models ready for Task 1: ['CESM2-WACCM', 'MIROC-ES2H', 'UKESM1-1']
+2026-10-04 20:37 [FWI 1/36] CESM2-WACCM/target/r1i1p1f1 ready (0 min)
+2026-10-04 20:37 [FWI 2/36] CESM2-WACCM/target/r2i1p1f1 ready (0 min)
+2026-10-04 20:37 [FWI 3/36] CESM2-WACCM/target/r3i1p1f1 ready (0 min)
+2026-10-04 20:37 [FWI 4/36] CESM2-WACCM/ssp245/r1i1p1f1 ready (0 min)
+2026-10-04 20:37 [FWI 5/36] CESM2-WACCM/ssp245/r2i1p1f1 ready (0 min)
+2026-10-04 20:37 [FWI 6/36] CESM2-WACCM/ssp245/r3i1p1f1 ready (0 min)
+2026-10-04 20:37 [FWI 7/36] CESM2-WACCM/G6-1.5K-SAI/r1 ready (0 min)
+2026-10-04 20:37 [FWI 8/36] CESM2-WACCM/G6-1.5K-SAI/r2 ready (0 min)
+2026-10-04 20:37 [FWI 9/36] CESM2-WACCM/G6-1.5K-SAI/r3 ready (0 min)
+2026-10-04 20:37 [FWI 10/36] CESM2-WACCM/G6-1.5K-HiLLA/r1 ready (0 min)
+2026-10-04 20:37 [FWI 11/36] CESM2-WACCM/G6-1.5K-HiLLA/r2 ready (0 min)
+2026-10-04 20:37 [FWI 12/36] CESM2-WACCM/G6-1.5K-HiLLA/r3 ready (0 min)
+2026-10-04 20:37 [FWI 13/36] MIROC-ES2H/target/r1 ready (0 min)
+2026-10-04 20:37 [FWI 14/36] MIROC-ES2H/target/r2 ready (0 min)
+2026-10-04 20:37 [FWI 15/36] MIROC-ES2H/target/r3 ready (0 min)
+2026-10-04 20:37 [FWI 16/36] MIROC-ES2H/ssp245/r1 ready (0 min)
+2026-10-04 20:37 [FWI 17/36] MIROC-ES2H/ssp245/r2 ready (0 min)
+2026-10-04 20:37 [FWI 18/36] MIROC-ES2H/ssp245/r3 ready (0 min)
+2026-10-04 20:37 [FWI 19/36] MIROC-ES2H/G6-1.5K-SAI/r1 ready (0 min)
+2026-10-04 20:37 [FWI 20/36] MIROC-ES2H/G6-1.5K-SAI/r2 ready (0 min)
+2026-10-04 20:37 [FWI 21/36] MIROC-ES2H/G6-1.5K-SAI/r3 ready (0 min)
+2026-10-04 20:37 [FWI 22/36] MIROC-ES2H/G6-1.5K-HiLLA/r1 ready (0 min)
+2026-10-04 20:37 [FWI 23/36] MIROC-ES2H/G6-1.5K-HiLLA/r2 ready (0 min)
+2026-10-04 20:37 [FWI 24/36] MIROC-ES2H/G6-1.5K-HiLLA/r3 ready (0 min)
+2026-10-04 20:37   computing FWI UKESM1-1/ssp245/r12i1p1f1 2020-2039
+2026-10-04 20:37 [metrics] CESM2-WACCM done
+2026-10-04 20:37 [metrics] MIROC-ES2H done
