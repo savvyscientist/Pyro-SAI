@@ -385,11 +385,12 @@ def _open_netcdf(entry, var_candidates):
     import tempfile
     so = entry.get("storage_options") or {}
     files = _expand_paths(entry["paths"], so)
-    keep = set(var_candidates) | {"time_bnds", "time_bounds", "time_bnd"}
+    names = set(var_candidates)
+    bounds = {"time_bnds", "time_bounds", "time_bnd"}
     canon = next((c for c, names in ALIASES.items() if var_candidates and var_candidates[0] in names), None)
 
     def pre(ds):
-        dv = [v for v in ds.data_vars if v in keep]
+        dv = [v for v in ds.data_vars if v in names]
         if not dv:
             # files named by variable but with a different internal name (e.g. UKESM output
             # saved as 'air_temperature'): use the standard_name, else the file's only field
@@ -406,7 +407,12 @@ def _open_netcdf(entry, var_candidates):
                 dv = fields
             if dv:
                 _note_renamed(ds, dv[0], var_candidates)
-        ds = ds[dv]
+            else:
+                log(f"  [vars] no usable variable for {list(var_candidates)[:1]} in "
+                    f"{str(ds.encoding.get('source', '?')).split('/')[-1]}: {list(ds.data_vars)}")
+        # time bounds are kept only alongside a data variable (an iris 'time_bnds' alone used to
+        # be mistaken for the field and the real data dropped)
+        ds = ds[dv + [b for b in ds.data_vars if b in bounds]] if dv else ds[[]]
         if "t" in ds.dims and "time" not in ds.dims:
             ds = ds.rename(t="time")
         ds = _per_file_midpoints(ds)
@@ -690,6 +696,27 @@ def _align_grids(das, label="", tol=1e-3):
     return out
 
 
+def _uv_to_centres(u, w, label=""):
+    """uas/vas on a staggered (Arakawa C) grid - UKESM: u at cell-edge longitudes, v at
+    cell-edge latitudes - have NO common points, so hypot(u, v) came out empty. Interpolate
+    both to the cell centres (latitudes of the variable with fewer of them, longitudes of the
+    other) before combining."""
+    same = (u.sizes["lat"] == w.sizes["lat"] and u.sizes["lon"] == w.sizes["lon"]
+            and np.allclose(u.lat, w.lat) and np.allclose(u.lon, w.lon))
+    if same:
+        return u, w
+    a, b = (u, w) if u.sizes["lat"] <= w.sizes["lat"] else (w, u)   # a: centred latitudes
+    lat, lon = a.lat, b.lon
+    log(f"  {label}uas/vas on staggered grids ({u.sizes['lat']}x{u.sizes['lon']} vs "
+        f"{w.sizes['lat']}x{w.sizes['lon']}) -> interpolated to cell centres {lat.size}x{lon.size}")
+
+    def to(da):
+        src = da.chunk({"lat": -1, "lon": -1}) if da.chunks else da
+        x = src.interp(lat=lat, lon=lon)
+        return x.fillna(src.reindex(lat=lat, lon=lon, method="nearest")).astype("float32")
+    return to(u), to(w)
+
+
 def load_inputs(catalog, model, scenario, member, variables, years, bbox=None,
                 optional=("hursmin", "tasmax", "tas")):
     """Return Dataset of canonical daily variables for one model/scenario/member."""
@@ -704,6 +731,7 @@ def load_inputs(catalog, model, scenario, member, variables, years, bbox=None,
         elif v == "sfcWind" and "uas" in entries and "vas" in entries:
             u = load_variable(entries["uas"], "uas", years, bbox, label)
             w = load_variable(entries["vas"], "vas", years, bbox, label)
+            u, w = _uv_to_centres(u, w, label)
             spd = np.hypot(u, w)
             r = WIND_UV_RATIO.get(model)
             if r is not None:

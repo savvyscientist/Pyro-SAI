@@ -9,3 +9,5 @@ test_work/
 .ipynb_checkpoints/
 __pycache__/
 dask-worker-space/
+
+.run_headless.lock
