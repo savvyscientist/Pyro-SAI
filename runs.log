@@ -1,4 +1,3 @@
-[15:41] running Task1_FWI_P95_Extremes -> runs/20261005_1541_Task1_FWI_P95_Extremes
+[00:39] running Task2_VPD_Evaporative_Demand -> runs/20261006_0039_Task2_VPD_Evaporative_Demand
 backed up ./pyrosai_output -> s3://reflective-persistent-prod/savvyscientist/pyrosai_backup/pyrosai_output
-[18:32] done Task1_FWI_P95_Extremes: 0 error(s)
-[18:32] running Task2_VPD_Evaporative_Demand -> runs/20261005_1541_Task2_VPD_Evaporative_Demand
+[00:42] done Task2_VPD_Evaporative_Demand: 0 error(s)
