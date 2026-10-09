@@ -1,0 +1,12 @@
+2026-10-09 02:17 [catalog] merged 4 extra entries from pyrosai_catalog_extra.json
+2026-10-09 02:17 [catalog] CESM2-WACCM: ignored 298 land/ocean/ice-model file(s) (e.g. CLM LDAY/LMON)
+2026-10-09 02:17 [known issue] MIROC-ES2H: removed 'sfcWind' from 6 member(s) - MIROC-ES2H 'sfcWind' files contain a radiative flux (units W/m**2, mean ~160-200), not wind speed (found 2026-10-01)
+2026-10-09 02:17 [wind] MIROC-ES2H: FWI wind = SSP2-4.5 day-of-year climatology of hypot(uas,vas) in ALL scenarios
+2026-10-09 02:17 [wind] UKESM1-1: no member has sfcWind+uas+vas; wind from uas/vas in ALL scenarios (consistent; absolute speeds biased low)
+2026-10-09 02:17   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 02:17   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 02:17   [tasmax check] CESM2-WACCM/ssp245/r2i1p1f1: tasmax - tas = 0.00 K -> tasmax looks like tas!
+2026-10-09 02:17 [temp] CESM2-WACCM: using tas in all scenarios (suspicious tasmax)
+2026-10-09 02:17 [temp] E3SMv3: using tas - E3SMv3 G6 TREFHTMX/TREFHTMN were written from TREFHT (model-version bug; Reflective Slack, Oct 2026) - no corrected data will be produced
+2026-10-09 02:19   [time] dropping 23742 duplicated time steps (overlapping files)
+2026-10-09 02:22   [time] dropping 23742 duplicated time steps (overlapping files)

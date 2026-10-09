@@ -5,4 +5,5 @@ BACKUP_ROOT     = "s3://reflective-persistent-prod/savvyscientist/pyrosai_backup
 MODELS          = None
 MAX_MEMBERS     = 3
 BBOX            = None
-RUN_ATTRIBUTION = True
+RUN_ATTRIBUTION = False
+RUN_ATTRIBUTION = False   # run separately later, per model

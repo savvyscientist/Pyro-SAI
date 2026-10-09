@@ -1,0 +1,196 @@
+
+======== # Pyro SAI — Task 2: Evaporative demand (VPD) under G6-1.5K SAI
+--- cell 1
+{'numpy': '2.0.2', 'pandas': '2.2.3', 'xarray': '2025.1.1', 'dask': '2025.1.0', 'xclim': '0.54.0', 'regionmask': '0.13.0'}
+
+======== ## Configuration
+--- cell 3
+applied local_config.py
+--- cell 4
+Dask dashboard: /user/savvyscientist/proxy/8787/status
+[catalog] merged 4 extra entries from pyrosai_catalog_extra.json
+--- cell 4
+[catalog] CESM2-WACCM: ignored 298 land/ocean/ice-model file(s) (e.g. CLM LDAY/LMON)
+--- cell 4
+[known issue] MIROC-ES2H: removed 'sfcWind' from 6 member(s) - MIROC-ES2H 'sfcWind' files contain a radiative flux (units W/m**2, mean ~160-200), not wind speed (found 2026-10-01)
+--- cell 4
+[wind] MIROC-ES2H: FWI wind = SSP2-4.5 day-of-year climatology of hypot(uas,vas) in ALL scenarios
+--- cell 4
+[wind] UKESM1-1: no member has sfcWind+uas+vas; wind from uas/vas in ALL scenarios (consistent; absolute speeds biased low)
+--- cell 4
+[skip] UKESM1-1/ssp245/r2i1p1f1: inputs miss or have incomplete years [2020, 2021, 2022, 2025, 2026, 2030, 2035] - member dropped from ssp245
+--- cell 4
+Models ready for Task 2: ['CESM2-WACCM', 'MIROC-ES2H', 'UKESM1-1']
+  CESM2-WACCM: ssp245=['r1i1p1f1', 'r2i1p1f1', 'r3i1p1f1'], G6-1.5K-SAI=['r1', 'r2', 'r3'], G6-1.5K-HiLLA=['r1', 'r2', 'r3']
+  MIROC-ES2H: ssp245=['r1', 'r2', 'r3'], G6-1.5K-SAI=['r1', 'r2', 'r3'], G6-1.5K-HiLLA=['r1', 'r2', 'r3']
+  UKESM1-1: ssp245=['r12i1p1f1', 'r3i1p1f1'], G6-1.5K-SAI=['r12i1p1f2', 'r2i1p1f2', 'r3i1p1f2'], G6-1.5K-HiLLA=['r12i1p1f2', 'r2i1p1f2', 'r3i1p1f2']
+
+======== ## 1. Daily VPD and per-member metrics
+--- cell 6
+[VPD metrics] CESM2-WACCM done
+--- cell 6
+[VPD metrics] MIROC-ES2H done
+--- cell 6
+[VPD metrics] UKESM1-1 done
+
+======== ### Sanity checks
+--- cell 8
+model                               CESM2-WACCM  MIROC-ES2H  UKESM1-1
+expected P95 days/yr                     18.250      18.250    18.000
+target P95 days/yr                       18.250      18.267    18.000
+target mean VPD (kPa, land)               1.078       1.182     1.132
+ssp245 P95 days/yr                       34.428      29.539    40.929
+ssp245 mean VPD (kPa, land)               1.203       1.286     1.317
+G6-1.5K-SAI P95 days/yr                  19.813      17.447    13.879
+G6-1.5K-SAI mean VPD (kPa, land)          1.090       1.165     1.102
+G6-1.5K-HiLLA P95 days/yr                19.825      17.675    18.590
+G6-1.5K-HiLLA mean VPD (kPa, land)        1.100       1.177     1.150
+max member-mean VPD (kPa)                 3.917       5.705     4.418
+--- cell 8
+[OK] CESM2-WACCM: target exceedance 18.25
+[OK] MIROC-ES2H: target exceedance 18.27
+[OK] UKESM1-1: target exceedance 18.00
+
+======== ## 2. Fire season, VPD/precipitation changes and decomposition
+--- cell 10
+CESM2-WACCM: wrote ./pyrosai_output/task2_CESM2-WACCM_summary.nc
+--- cell 10
+MIROC-ES2H: wrote ./pyrosai_output/task2_MIROC-ES2H_summary.nc
+--- cell 10
+UKESM1-1: wrote ./pyrosai_output/task2_UKESM1-1_summary.nc
+--- cell 10
+multi-model file written
+
+======== ## 3. Figures
+--- cell 12
+[figure]
+
+======== ### Figure 8 — Change in days per year above the P95 of VPD
+--- cell 14
+[figure]
+
+======== ### Figure 9 — Why does VPD change? Thermodynamic (cooling) and humidity terms, alongside precipitation
+--- cell 16
+[figure]
+
+======== ### Figure 10 — Risk-offset zones: does cooling offset drying?
+--- cell 18
+[figure]
+--- cell 18
+                                                    G6-1.5K-SAI  G6-1.5K-HiLLA
+Cooling + wetting: consistent mitigation                   44.3           48.4
+Risk offset: cooling outweighs drying (VPD↓, P↓...         54.0           45.7
+Fire-weather paradox: drying outweighs cooling ...          1.7            5.9
+Consistent exacerbation (VPD↑, P↓)                          0.0            0.0
+Higher demand, wetter (VPD↑, P↑)                            0.0            0.0
+
+======== ## 4. AR6 regional statistics and Figure 11 — regional VPD decomposition
+--- cell 20
+quantity  vpd_fs_target  vpd_fs_ssp245  d_vpd_fs_SAI_minus_ssp245  \
+region                                                              
+NWN               0.453          0.573                     -0.118   
+NEN               0.418          0.544                     -0.133   
+WSB               1.453          1.714                     -0.294   
+ESB               0.681          0.808                     -0.133   
+WNA               1.673          1.852                     -0.277   
+MED               2.525          2.901                     -0.469   
+NSA               1.658          1.954                     -0.322   
+SAM               1.774          2.100                     -0.390   
+NES               2.014          2.274                     -0.323   
+WAF               2.683          2.980                     -0.273   
+ESAF              1.626          1.861                     -0.236   
+SEA               0.982          1.116                     -0.118   
+NAU               2.271          2.436                     -0.212   
+EAU               1.517          1.605                     -0.213   
+
+quantity  dvpd_fs_T_G6-1.5K-SAI  dvpd_fs_RH_G6-1.5K-SAI  \
+region                                                    
+NWN                      -0.082                  -0.028   
+NEN                      -0.087                  -0.043   
+WSB                      -0.230                  -0.047   
+ESB                      -0.110                  -0.007   
+WNA                      -0.234                  -0.032   
+MED                      -0.360                  -0.108   
+NSA                      -0.200                  -0.120   
+SAM                      -0.237                  -0.156   
+NES                      -0.211                  -0.115   
+WAF                      -0.254                  -0.022   
+ESAF                     -0.164                  -0.066   
+SEA                      -0.085                  -0.030   
+NAU                      -0.197                  -0.014   
+EAU                      -0.148                  -0.056   
+
+quantity  dpct_pr_fs_SAI_minus_ssp245  d_vpd_fs_HiLLA_minus_ssp245  \
+region                                                               
+NWN                            -3.205                       -0.141   
+NEN                            -4.129                       -0.148   
+WSB                            -1.740                       -0.352   
+ESB                            -5.474                       -0.152   
+WNA                            -7.971                       -0.276   
+MED                            29.665                       -0.443   
+NSA                            15.823                       -0.261   
+SAM                            32.524                       -0.327   
+NES                            36.270                       -0.249   
+WAF                             6.126                       -0.223   
+ESAF                           18.920                       -0.181   
+SEA                             0.853                       -0.105   
+NAU                            -1.810                       -0.170   
+EAU                             8.890                       -0.159   
+
+quantity  dvpd_fs_T_G6-1.5K-HiLLA  dvpd_fs_RH_G6-1.5K-HiLLA  \
+region                                                        
+NWN                        -0.096                    -0.043   
+NEN                        -0.096                    -0.052   
+WSB                        -0.276                    -0.074   
+ESB                        -0.122                    -0.023   
+WNA                        -0.241                    -0.032   
+MED                        -0.351                    -0.099   
+NSA                        -0.165                    -0.102   
+SAM                        -0.193                    -0.144   
+NES                        -0.170                    -0.085   
+WAF                        -0.205                    -0.018   
+ESAF                       -0.133                    -0.048   
+SEA                        -0.070                    -0.037   
+NAU                        -0.150                    -0.019   
+EAU                        -0.117                    -0.044   
+
+quantity  dpct_pr_fs_HiLLA_minus_ssp245  
+region                                   
+NWN                              -3.454  
+NEN                              -3.760  
+WSB                              -1.759  
+ESB                              -6.656  
+WNA                              -9.901  
+MED                              20.041  
+NSA                              17.521  
+SAM                              41.369  
+NES                              37.963  
+WAF                              13.309  
+ESAF                             23.148  
+SEA                              16.659  
+NAU                              19.725  
+EAU                              17.381  
+--- cell 20
+[figure]
+
+======== ## 5. Outputs
+--- cell 22
+   fig10_risk_offset_zones.pdf
+   fig10_risk_offset_zones.png
+   fig11_regional_vpd_decomposition.pdf
+   fig11_regional_vpd_decomposition.png
+   fig1_delta_p95_days.png
+   fig2_delta_fireseason_fwi.png
+   fig3a_delta_spell.png
+   fig3b_delta_abs_days.png
+   fig4_regional_delta_p95_days.png
+   fig5_seasonality_CESM2-WACCM.png
+   fig5_seasonality_MIROC-ES2H.png
+   fig5_seasonality_UKESM1-1.png
+   fig7_delta_fireseason_vpd.pdf
+   fig7_delta_fireseason_vpd.png
+   fig8_delta_vpd_p95_days.pdf
+   fig8_delta_vpd_p95_days.png
+   fig9_vpd_decomposition.pdf
+   fig9_vpd_decomposition.png
+   figS1_context.png
