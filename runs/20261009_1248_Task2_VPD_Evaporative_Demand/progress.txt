@@ -4,3 +4,7 @@
 2026-10-09 12:48 [wind] MIROC-ES2H: FWI wind = SSP2-4.5 day-of-year climatology of hypot(uas,vas) in ALL scenarios
 2026-10-09 12:48 [wind] UKESM1-1: no member has sfcWind+uas+vas; wind from uas/vas in ALL scenarios (consistent; absolute speeds biased low)
 2026-10-09 12:48   staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/CESM2-WACCM/ssp245/r1i1p1f1_2019-2039.zarr
+2026-10-09 12:48   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 12:48   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 12:49   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 12:49   [time] dropping 1 duplicated time steps (overlapping files)
