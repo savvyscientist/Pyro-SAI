@@ -24,7 +24,7 @@ for nb in "$@"; do
     echo "### ERROR: no executed notebook - the run was interrupted (server stopped or process killed)" > "$d/summary.txt"
   fi
   outdir=$(python -c "import re,sys;s=open('local_config.py').read() if __import__('os').path.exists('local_config.py') else '';m=re.search(r'^OUT_DIR\s*=\s*[\"\\'](.+?)[\"\\']',s,re.M);print(m.group(1) if m else './pyrosai_output')")
-  if [ -d "$outdir/figures" ]; then mkdir -p "$d/figures"; cp "$outdir"/figures/*.png "$d/figures/" 2>/dev/null; fi
+  if [ -d "$outdir/figures" ]; then mkdir -p "$d/figures"; cp "$outdir"/figures/*.png "$outdir"/figures/*.pdf "$d/figures/" 2>/dev/null; fi
   for f in "$outdir"/*.csv; do [ -f "$f" ] && cp "$f" "$d/"; done
   # durable backup of the results folder (Hub home files can be lost): BACKUP_ROOT in local_config.py
   python - "$outdir" <<'PYEOF'
