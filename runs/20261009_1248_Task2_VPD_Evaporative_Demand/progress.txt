@@ -1,0 +1,6 @@
+2026-10-09 12:48 [catalog] merged 4 extra entries from pyrosai_catalog_extra.json
+2026-10-09 12:48 [catalog] CESM2-WACCM: ignored 298 land/ocean/ice-model file(s) (e.g. CLM LDAY/LMON)
+2026-10-09 12:48 [known issue] MIROC-ES2H: removed 'sfcWind' from 6 member(s) - MIROC-ES2H 'sfcWind' files contain a radiative flux (units W/m**2, mean ~160-200), not wind speed (found 2026-10-01)
+2026-10-09 12:48 [wind] MIROC-ES2H: FWI wind = SSP2-4.5 day-of-year climatology of hypot(uas,vas) in ALL scenarios
+2026-10-09 12:48 [wind] UKESM1-1: no member has sfcWind+uas+vas; wind from uas/vas in ALL scenarios (consistent; absolute speeds biased low)
+2026-10-09 12:48   staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/CESM2-WACCM/ssp245/r1i1p1f1_2019-2039.zarr
