@@ -1442,9 +1442,9 @@ def fire_season_annual(monthly, season):
 
 
 OFFSET_CLASSES = OrderedDict([
-    (1, ("Cooling + wetting: consistent mitigation", "#2166ac")),
-    (2, ("Risk offset: cooling outweighs drying (VPD↓, P↓, FWI↓)", "#2a9d8f")),
-    (3, ("Fire-weather paradox: drying outweighs cooling (VPD↓, P↓, FWI↑)", "#e66101")),
+    (1, ("Consistent mitigation: cooler and wetter (VPD↓, P↑)", "#2166ac")),
+    (2, ("Risk offset: FWI falls despite less rain (VPD↓, P↓, FWI↓)", "#2a9d8f")),
+    (3, ("Fire-weather paradox: FWI rises with less rain (VPD↓, P↓, FWI↑)", "#e66101")),
     (4, ("Consistent exacerbation (VPD↑, P↓)", "#a50026")),
     (5, ("Higher demand, wetter (VPD↑, P↑)", "#762a83")),
 ])
