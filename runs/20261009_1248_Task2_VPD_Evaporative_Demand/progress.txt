@@ -8,3 +8,66 @@
 2026-10-09 12:48   [time] dropping 1 duplicated time steps (overlapping files)
 2026-10-09 12:49   [time] dropping 1 duplicated time steps (overlapping files)
 2026-10-09 12:49   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 12:50   staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/CESM2-WACCM/ssp245/r2i1p1f1_2019-2039.zarr
+2026-10-09 12:50   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 12:50   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 12:50   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 12:50   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 12:50   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 12:51   staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/CESM2-WACCM/ssp245/r3i1p1f1_2019-2039.zarr
+2026-10-09 12:51   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 12:51   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 12:51   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 12:52   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 12:52   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 12:53   staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/CESM2-WACCM/ssp245/r1i1p1f1_2063-2083.zarr
+2026-10-09 12:53   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 12:53   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 12:53   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 12:53   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 12:54   staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/CESM2-WACCM/ssp245/r2i1p1f1_2063-2083.zarr
+2026-10-09 12:54   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 12:54   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 12:54   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 12:54   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 12:55   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 12:56   staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/CESM2-WACCM/ssp245/r3i1p1f1_2063-2083.zarr
+2026-10-09 12:56   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 12:56   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 12:56   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 12:56   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 12:56   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 12:57   staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/CESM2-WACCM/G6-1.5K-SAI/r1_2063-2083.zarr
+2026-10-09 12:58   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 12:59   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 12:59   [units] hurs: label 'fraction' but values (median 84.81) are in percent - using the values
+2026-10-09 12:59   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 13:00   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 13:01   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 13:04   staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/CESM2-WACCM/G6-1.5K-SAI/r2_2063-2083.zarr
+2026-10-09 13:04   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 13:05   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 13:05   [units] hurs: label 'fraction' but values (median 84.95) are in percent - using the values
+2026-10-09 13:06   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 13:07   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 13:08   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 13:10   staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/CESM2-WACCM/G6-1.5K-SAI/r3_2063-2083.zarr
+2026-10-09 13:11   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 13:11   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 13:11   [units] hurs: label 'fraction' but values (median 84.89) are in percent - using the values
+2026-10-09 13:12   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 13:13   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 13:14   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 13:16   staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/CESM2-WACCM/G6-1.5K-HiLLA/r1_2063-2083.zarr
+2026-10-09 13:17   [time] dropping 22 duplicated time steps (overlapping files)
+2026-10-09 13:18   [time] dropping 22 duplicated time steps (overlapping files)
+2026-10-09 13:18   [units] hurs: label 'fraction' but values (median 85.08) are in percent - using the values
+2026-10-09 13:19   [time] dropping 22 duplicated time steps (overlapping files)
+2026-10-09 13:20   [time] dropping 22 duplicated time steps (overlapping files)
+2026-10-09 13:20   [time] dropping 22 duplicated time steps (overlapping files)
+2026-10-09 13:23   staging inputs -> s3://reflective-scratch-prod/savvyscientist/pyrosai/inputs/CESM2-WACCM/G6-1.5K-HiLLA/r2_2063-2083.zarr
+2026-10-09 13:23   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 13:24   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 13:24   [units] hurs: label 'fraction' but values (median 85.07) are in percent - using the values
+2026-10-09 13:25   [time] dropping 1 duplicated time steps (overlapping files)
+2026-10-09 13:26   [time] dropping 1 duplicated time steps (overlapping files)
