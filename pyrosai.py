@@ -1163,6 +1163,12 @@ def coastlines_available():
     return _COAST
 
 
+def save_figure(fig, path_no_ext, dpi=300):
+    """Save a figure as PNG (at `dpi`) and as vector PDF for print-quality use."""
+    fig.savefig(f"{path_no_ext}.png", dpi=dpi, bbox_inches="tight")
+    fig.savefig(f"{path_no_ext}.pdf", bbox_inches="tight")
+
+
 def map_axes(nrows, ncols, figsize=None):
     import matplotlib.pyplot as plt
     import cartopy.crs as ccrs
