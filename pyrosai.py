@@ -1237,7 +1237,7 @@ PAIR_TITLE = {"ssp245_minus_target": "SSP2-4.5 (2064-83) − target", "SAI_minus
               "SAI_minus_target": "G6-SAI − target", "HiLLA_minus_target": "G6-HiLLA − target"}
 
 
-def regional_bars(reg_df, metric, pairs, label, path_no_ext, models, regions, dpi=300):
+def regional_bars(reg_df, metric, pairs, label, path_no_ext, models, regions, dpi=300, title=None):
     """Horizontal bars of the multi-model mean regional change per comparison, with one marker shape
     per model for the individual-model values (Task 1 Figure 4 / report Figure 1)."""
     import matplotlib.pyplot as plt
@@ -1269,7 +1269,7 @@ def regional_bars(reg_df, metric, pairs, label, path_no_ext, models, regions, dp
                       mew=0.4, label=m) for m in models]
     ax.legend(handles=handles, frameon=False, fontsize=8, loc="upper center", bbox_to_anchor=(0.5, -0.135),
               ncol=len(models), handletextpad=0.3)
-    ax.set_title(f"AR6 focus regions ({', '.join(models)})", fontsize=10)
+    ax.set_title(title or f"AR6 focus regions ({', '.join(models)})", fontsize=10)
     fig.tight_layout()
     save_figure(fig, path_no_ext, dpi)
     return fig

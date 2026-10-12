@@ -23,5 +23,6 @@ os.makedirs(FIG_DIR, exist_ok=True)
 reg_df = pd.read_csv(csv)
 models = [m for m in P.MODEL_MARKERS if m in set(reg_df.model)] + sorted(set(reg_df.model) - set(P.MODEL_MARKERS))
 P.regional_bars(reg_df, "days_p95", ["d_ssp245_minus_target", "d_SAI_minus_ssp245", "d_HiLLA_minus_ssp245"],
-                "Δ days/yr with FWI > P95", f"{FIG_DIR}/fig4_regional_delta_p95_days", models, P.FOCUS_REGIONS, 300)
+                "Δ days/yr with FWI > P95", f"{FIG_DIR}/fig4_regional_delta_p95_days", models, P.FOCUS_REGIONS, 300,
+                title="Changes in extreme fire-weather days")
 print(f"wrote {FIG_DIR}/fig4_regional_delta_p95_days.png and .pdf (models: {', '.join(models)})")
