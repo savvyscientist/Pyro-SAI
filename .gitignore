@@ -1,0 +1,18 @@
+# large / regenerable outputs (keep runs/ for sharing logs and figures)
+pyrosai_output*/
+pyrosai_work*/
+test_output/
+test_work/
+*.zarr
+*.nc
+!pyrosai_sample_*.nc
+.ipynb_checkpoints/
+__pycache__/
+dask-worker-space/
+
+.run_headless.lock
+
+# personal settings (copy local_config_example.py to local_config.py)
+local_config.py
+runs.log
+nohup.out

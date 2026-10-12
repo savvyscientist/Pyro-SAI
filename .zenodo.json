@@ -1,0 +1,13 @@
+{
+  "title": "Pyro SAI: fire weather under stratospheric aerosol injection (GeoMIP G6-1.5K analysis code)",
+  "upload_type": "software",
+  "version": "1.0.0",
+  "license": "BSD-3-Clause",
+  "creators": [
+    {"name": "Mezuman, Keren"}
+  ],
+  "description": "Analysis code and results for the Pyro SAI project (funded by Reflective). The pipeline computes daily Canadian Fire Weather Index (FWI) and vapor pressure deficit (VPD) from GeoMIP G6-1.5K-SAI, G6-1.5K-HiLLA and SSP2-4.5 daily output of CESM2-WACCM, MIROC-ES2H and UKESM1-1, quantifies changes in extreme fire-weather days relative to local 95th-percentile thresholds of the 1.5 K target climate (SSP2-4.5, 2020-2039), decomposes VPD changes into temperature and humidity contributions, and classifies regions by whether SAI offsets fire-weather drying.",
+  "keywords": ["stratospheric aerosol injection", "wildfire", "Fire Weather Index", "vapor pressure deficit", "GeoMIP", "G6-1.5K", "solar geoengineering"],
+  "notes": "Funded by Reflective. Mid-project release (October 2026).",
+  "access_right": "open"
+}

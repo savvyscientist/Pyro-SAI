@@ -1,0 +1,41 @@
+{
+ "_note": "Hand-added entries merged by pyrosai.load_catalog (never overwrite). UKESM tasmax: the G6-1.5K-SAI and SSP2-4.5 r2 'tas' files hold daily max, min and mean air_temperature (cell_methods time: maximum/minimum/mean); verified 2026-10-04.",
+ "UKESM1-1": {
+  "G6-1.5K-SAI": {
+   "r12i1p1f2": {
+    "tasmax": {
+     "kind": "netcdf",
+     "paths": [
+      "s3://reflective-persistent-prod-large/UKESM1-1/G6-1.5K-SAI/r12i1p1f2/day/tas/tas_day_UKESM1-1-LL_u-dp691_201501-210012.nc"
+     ]
+    }
+   },
+   "r2i1p1f2": {
+    "tasmax": {
+     "kind": "netcdf",
+     "paths": [
+      "s3://reflective-persistent-prod-large/UKESM1-1/G6-1.5K-SAI/r2i1p1f2/day/tas/tas_day_UKESM1-1-LL_u-dp583_201501-210012.nc"
+     ]
+    }
+   },
+   "r3i1p1f2": {
+    "tasmax": {
+     "kind": "netcdf",
+     "paths": [
+      "s3://reflective-persistent-prod-large/UKESM1-1/G6-1.5K-SAI/r3i1p1f2/day/tas/tas_day_UKESM1-1-LL_u-dp690_201501-210012.nc"
+     ]
+    }
+   }
+  },
+  "ssp245": {
+   "r2i1p1f1": {
+    "tasmax": {
+     "kind": "netcdf",
+     "paths": [
+      "s3://reflective-persistent-prod-large/UKESM1-1/SSP245/r2i1p1f1/ap6/day/tas_mean_min_max_day_UKESM1-0-LL_ssp245_r2i1p1f2_201501-210012.nc"
+     ]
+    }
+   }
+  }
+ }
+}

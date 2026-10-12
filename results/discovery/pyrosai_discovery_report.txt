@@ -1,0 +1,1014 @@
+PYRO SAI DISCOVERY REPORT
+================================================================================
+roots: ['s3://reflective-persistent-prod-large/CESM2-WACCM/', 's3://reflective-persistent-prod-large/UKESM1-1/', 's3://reflective-persistent-prod-large/MIROC-ES2H/', 's3://reflective-persistent-prod-large/E3SMv3/', 's3://reflective-persistent-prod/alistairduffey/']
+
+files per model/frequency:
+freq                         day   mon  nand  unknown
+model                                                
+CESM2-WACCM                 2603  9683     9     4947
+E3SM                         270     0     0        3
+E3SMv3                      1328  3778   182     1080
+MIROC-ES2H                   167  1257     9      494
+UKESM1-1                     253   543    17      699
+reflective-persistent-prod     0     3     0       33
+
+daily coverage (files):
+var                                  hurs  huss  pr  ps  sfcWind  tas  tasmax  uas  vas
+model       scenario      member                                                       
+CESM2-WACCM G6-1.5K-HiLLA r1            7     6   6  80        8    6      10    0    0
+                          r2           10     5   5  44       15    5      16    0    0
+                          r3           10     5   5  44       15    5      17    0    0
+            G6-1.5K-SAI   r1            5     5   5  43        5    5       6    0    0
+                          r2            5     5   5  43        5    5       6    0    0
+                          r3            5     5   5  43        5    5       6    0    0
+            ssp245        r10           0     0   6   0        0    6       6    0    0
+                          r6            0     0   9   0        0    9       9    0    0
+                          r7            0     0   6   0        0    6       6    0    0
+                          r8            0     0   6   0        0    6       6    0    0
+                          r9            0     0   6   0        0    6       6    0    0
+E3SM        G6-1.5K-SAI   r1            0     0   3   3        0    3       0    0    0
+                          r2            0     0   3   3        0    3       0    0    0
+                          r3            0     0   3   3        0    3       0    0    0
+                          ?             0     0  24   3        0    3      21    0    0
+            ssp245        r1            0     0   4   3        0    4       1    0    0
+                          r2            0     0   4   3        0    4       1    0    0
+                          r3            0     0   4   3        0    4       1    0    0
+                          ?             0     0  36   0        0    3      36    0    0
+E3SMv3      G6-1.5K-HiLLA r1            0    10  10  10       10   10       0    0    0
+                          r2            0    10  10  10       10   10      10    0    0
+                          r3            0    10  10  10       10   10      10    0    0
+            G6-1.5K-SAI   ?             0     0  21   0        0   24      21    0    0
+            ssp245        r1            0    28  28  28       28   28      28    0    0
+                          r2            0    14  14  14       14   14      14    0    0
+                          r3            0    13  13  13       13   13      13    0    0
+MIROC-ES2H  G6-1.5K-HiLLA r1            1     1   1   1        0    1       1    1    1
+                          r2            1     1   1   1        0    1       1    1    1
+                          r3            1     1   1   1        0    1       1    1    1
+            G6-1.5K-SAI   r1            1     1   1   0        1    1       1    0    0
+                          r2            1     1   1   0        1    1       1    0    0
+                          r3            1     1   1   0        1    1       1    0    0
+            ssp245        r1            2     2   2   1        1    2       2    1    1
+                          r2            2     2   2   1        1    2       2    1    1
+                          r3            2     2   2   1        1    2       2    1    1
+UKESM1-1    ?             r12i1p1f2     0     0   1   0        0    1       1    0    0
+                          r2i1p1f2      0     0   1   0        0    1       1    0    0
+                          r3i1p1f2      0     0   1   0        0    1       1    0    0
+            G6-1.5K-HiLLA r12i1p1f2     3     3   3   3        0    3       3    3    3
+                          r2i1p1f2      3     3   3   3        0    3       3    3    3
+                          r3i1p1f2      2     2   2   2        0    2       2    2    2
+            G6-1.5K-SAI   ?             0     0   3   0        0    0       0    0    0
+                          r12i1p1f2     2     2   1   2        0    1       0    2    2
+                          r2i1p1f2      2     2   1   2        0    1       0    2    2
+                          r3i1p1f2      2     2   1   2        0    1       0    2    2
+            ssp245        ?             0     0   3   0        0    0       0    0    0
+                          r12i1p1f1     2     2   2   2        0    2       2    2    2
+                          r2i1p1f1      2     2   1   2        0    1       0    2    2
+                          r3i1p1f1      2     2   2   2        0    2       2    2    2
+
+catalog inventory:
+          model       scenario     member tasmax hurs sfcWind pr tas hursmin huss ps
+0   CESM2-WACCM  G6-1.5K-HiLLA         r1      Y    Y       Y  Y   Y            Y  Y
+1   CESM2-WACCM  G6-1.5K-HiLLA         r2      Y    Y       Y  Y   Y            Y  Y
+2   CESM2-WACCM  G6-1.5K-HiLLA         r3      Y    Y       Y  Y   Y            Y  Y
+3   CESM2-WACCM    G6-1.5K-SAI         r1      Y    Y       Y  Y   Y            Y  Y
+4   CESM2-WACCM    G6-1.5K-SAI         r2      Y    Y       Y  Y   Y            Y  Y
+5   CESM2-WACCM    G6-1.5K-SAI         r3      Y    Y       Y  Y   Y            Y  Y
+6   CESM2-WACCM         ssp245        r10      Y               Y   Y                
+7   CESM2-WACCM         ssp245         r6      Y               Y   Y                
+8   CESM2-WACCM         ssp245         r7      Y               Y   Y                
+9   CESM2-WACCM         ssp245         r8      Y               Y   Y                
+10  CESM2-WACCM         ssp245         r9      Y               Y   Y                
+11         E3SM    G6-1.5K-SAI          ?      Y               Y   Y               Y
+12         E3SM    G6-1.5K-SAI         r1                      Y   Y               Y
+13         E3SM    G6-1.5K-SAI         r2                      Y   Y               Y
+14         E3SM    G6-1.5K-SAI         r3                      Y   Y               Y
+15         E3SM         ssp245          ?      Y               Y   Y                
+16         E3SM         ssp245         r1      Y               Y   Y               Y
+17         E3SM         ssp245         r2      Y               Y   Y               Y
+18         E3SM         ssp245         r3      Y               Y   Y               Y
+19       E3SMv3  G6-1.5K-HiLLA         r1                   Y  Y   Y            Y  Y
+20       E3SMv3  G6-1.5K-HiLLA         r2      Y            Y  Y   Y            Y  Y
+21       E3SMv3  G6-1.5K-HiLLA         r3      Y            Y  Y   Y            Y  Y
+22       E3SMv3    G6-1.5K-SAI          ?      Y               Y   Y                
+23       E3SMv3         ssp245         r1      Y            Y  Y   Y            Y  Y
+24       E3SMv3         ssp245         r2      Y            Y  Y   Y            Y  Y
+25       E3SMv3         ssp245         r3      Y            Y  Y   Y            Y  Y
+26   MIROC-ES2H  G6-1.5K-HiLLA         r1      Y    Y          Y   Y            Y  Y
+27   MIROC-ES2H  G6-1.5K-HiLLA         r2      Y    Y          Y   Y            Y  Y
+28   MIROC-ES2H  G6-1.5K-HiLLA         r3      Y    Y          Y   Y            Y  Y
+29   MIROC-ES2H    G6-1.5K-SAI         r1      Y    Y       Y  Y   Y            Y   
+30   MIROC-ES2H    G6-1.5K-SAI         r2      Y    Y       Y  Y   Y            Y   
+31   MIROC-ES2H    G6-1.5K-SAI         r3      Y    Y       Y  Y   Y            Y   
+32   MIROC-ES2H         ssp245         r1      Y    Y       Y  Y   Y            Y  Y
+33   MIROC-ES2H         ssp245         r2      Y    Y       Y  Y   Y            Y  Y
+34   MIROC-ES2H         ssp245         r3      Y    Y       Y  Y   Y            Y  Y
+35     UKESM1-1  G6-1.5K-HiLLA  r12i1p1f2      Y    Y          Y   Y            Y  Y
+36     UKESM1-1  G6-1.5K-HiLLA   r2i1p1f2      Y    Y          Y   Y            Y  Y
+37     UKESM1-1  G6-1.5K-HiLLA   r3i1p1f2      Y    Y          Y   Y            Y  Y
+38     UKESM1-1    G6-1.5K-SAI          ?                      Y                    
+39     UKESM1-1    G6-1.5K-SAI  r12i1p1f2           Y          Y   Y            Y  Y
+40     UKESM1-1    G6-1.5K-SAI   r2i1p1f2           Y          Y   Y            Y  Y
+41     UKESM1-1    G6-1.5K-SAI   r3i1p1f2           Y          Y   Y            Y  Y
+42     UKESM1-1         ssp245          ?                      Y                    
+43     UKESM1-1         ssp245  r12i1p1f1      Y    Y          Y   Y            Y  Y
+44     UKESM1-1         ssp245   r2i1p1f1           Y          Y   Y            Y  Y
+45     UKESM1-1         ssp245   r3i1p1f1      Y    Y          Y   Y            Y  Y
+
+--- CESM2-WACCM / G6-1.5K-HiLLA / r1 / hurs  (7 files) e.g. s3://reflective-persistent-prod-large/CESM2-WACCM/G6-1.5k-HiLLA/r1/ADAY/b.e21.BW.f09_g17.SSP245-G6-1p5K-HiLLA.001.cam.h1.RHREFHT.20350101-20391231.nc
+    OPEN FAILED: TypeError: Error: None is not a valid NetCDF 3 file
+            If this is a NetCDF4 file, you may need to install the
+            netcdf4 library, e.g.,
+
+            $ pip install netcdf4
+            
+--- CESM2-WACCM / G6-1.5K-HiLLA / r1 / huss  (6 files) e.g. s3://reflective-persistent-prod-large/CESM2-WACCM/G6-1.5k-HiLLA/r1/ADAY/b.e21.BW.f09_g17.SSP245-G6-1p5K-HiLLA.001.cam.h1.QREFHT.20350101-20391231.nc
+    OPEN FAILED: TypeError: Error: None is not a valid NetCDF 3 file
+            If this is a NetCDF4 file, you may need to install the
+            netcdf4 library, e.g.,
+
+            $ pip install netcdf4
+            
+--- CESM2-WACCM / G6-1.5K-HiLLA / r1 / pr  (6 files) e.g. s3://reflective-persistent-prod-large/CESM2-WACCM/G6-1.5k-HiLLA/r1/ADAY/b.e21.BW.f09_g17.SSP245-G6-1p5K-HiLLA.001.cam.h1.PRECT.20350101-20391231.nc
+    OPEN FAILED: TypeError: Error: None is not a valid NetCDF 3 file
+            If this is a NetCDF4 file, you may need to install the
+            netcdf4 library, e.g.,
+
+            $ pip install netcdf4
+            
+--- CESM2-WACCM / G6-1.5K-HiLLA / r1 / ps  (80 files) e.g. s3://reflective-persistent-prod-large/CESM2-WACCM/G6-1.5k-HiLLA/r1/ADAY/b.e21.BW.f09_g17.SSP245-G6-1p5K-HiLLA.001.cam.h1.PS.20350101-20391231.nc
+    OPEN FAILED: TypeError: Error: None is not a valid NetCDF 3 file
+            If this is a NetCDF4 file, you may need to install the
+            netcdf4 library, e.g.,
+
+            $ pip install netcdf4
+            
+--- CESM2-WACCM / G6-1.5K-HiLLA / r1 / sfcWind  (8 files) e.g. s3://reflective-persistent-prod-large/CESM2-WACCM/G6-1.5k-HiLLA/r1/ADAY/b.e21.BW.f09_g17.SSP245-G6-1p5K-HiLLA.001.cam.h1.U10.20350101-20391231.nc
+    OPEN FAILED: TypeError: Error: None is not a valid NetCDF 3 file
+            If this is a NetCDF4 file, you may need to install the
+            netcdf4 library, e.g.,
+
+            $ pip install netcdf4
+            
+--- CESM2-WACCM / G6-1.5K-HiLLA / r1 / tas  (6 files) e.g. s3://reflective-persistent-prod-large/CESM2-WACCM/G6-1.5k-HiLLA/r1/ADAY/b.e21.BW.f09_g17.SSP245-G6-1p5K-HiLLA.001.cam.h1.TREFHT.20350101-20391231.nc
+    OPEN FAILED: TypeError: Error: None is not a valid NetCDF 3 file
+            If this is a NetCDF4 file, you may need to install the
+            netcdf4 library, e.g.,
+
+            $ pip install netcdf4
+            
+--- CESM2-WACCM / G6-1.5K-HiLLA / r1 / tasmax  (10 files) e.g. s3://reflective-persistent-prod-large/CESM2-WACCM/G6-1.5k-HiLLA/r1/ADAY/b.e21.BW.f09_g17.SSP245-G6-1p5K-HiLLA.001.cam.h1.TREFHTMX.20350101-20391231.nc
+    OPEN FAILED: TypeError: Error: None is not a valid NetCDF 3 file
+            If this is a NetCDF4 file, you may need to install the
+            netcdf4 library, e.g.,
+
+            $ pip install netcdf4
+            
+--- CESM2-WACCM / G6-1.5K-SAI / r1 / hurs  (5 files) e.g. s3://reflective-persistent-prod-large/CESM2-WACCM/G6-1.5k-SAI/r1/ADAY/b.e21.BW.f09_g17.SSP245-G6-1p5K-SAI.001.cam.h1.RHREFHT.20350101-20441231.nc
+<xarray.Dataset> Size: 4GB
+Dimensions:    (time: 18251, nbnd: 2, lat: 192, lon: 288)
+Coordinates:
+  * lat        (lat) float64 2kB -90.0 -89.06 -88.12 -87.17 ... 88.12 89.06 90.0
+  * lon        (lon) float64 2kB 0.0 1.25 2.5 3.75 ... 355.0 356.2 357.5 358.8
+  * time       (time) object 146kB 2035-01-01 00:00:00 ... 2085-01-01 00:00:00
+Dimensions without coordinates: nbnd
+Data variables:
+    time_bnds  (time, nbnd) object 292kB dask.array<chunksize=(365, 2), meta=np.ndarray>
+    RHREFHT    (time, lat, lon) float32 4GB dask.array<chunksize=(365, 192, 288), meta=np.ndarray>
+Attributes:
+    Conventions:       CF-1.0
+    source:            CAM
+    case:              b.e21.BW.f09_g17.SSP245-G6-SAI-1p5.001
+    logname:           walkerl
+    host:              derecho4
+    initial_file:      b.e21.BWSSP245cmip6.f09_g17.CMIP6-SSP2-4.5-WACCM.001.c...
+    topography_file:   /glade/campaign/cesm/cesmdata/inputdata/atm/cam/topo/f...
+    model_doi_url:     https://doi.org/10.5065/D67H1H0V
+    time_period_freq:  day_1
+    time[0:3]=[cftime.DatetimeNoLeap(2035, 1, 1, 0, 0, 0, 0, has_year_zero=True)
+ cftime.DatetimeNoLeap(2035, 1, 2, 0, 0, 0, 0, has_year_zero=True)
+ cftime.DatetimeNoLeap(2035, 1, 3, 0, 0, 0, 0, has_year_zero=True)]  calendar=noleap
+--- CESM2-WACCM / G6-1.5K-SAI / r1 / huss  (5 files) e.g. s3://reflective-persistent-prod-large/CESM2-WACCM/G6-1.5k-SAI/r1/ADAY/b.e21.BW.f09_g17.SSP245-G6-1p5K-SAI.001.cam.h1.QREFHT.20350101-20441231.nc
+<xarray.Dataset> Size: 4GB
+Dimensions:    (time: 18251, nbnd: 2, lat: 192, lon: 288)
+Coordinates:
+  * lat        (lat) float64 2kB -90.0 -89.06 -88.12 -87.17 ... 88.12 89.06 90.0
+  * lon        (lon) float64 2kB 0.0 1.25 2.5 3.75 ... 355.0 356.2 357.5 358.8
+  * time       (time) object 146kB 2035-01-01 00:00:00 ... 2085-01-01 00:00:00
+Dimensions without coordinates: nbnd
+Data variables:
+    time_bnds  (time, nbnd) object 292kB dask.array<chunksize=(365, 2), meta=np.ndarray>
+    QREFHT     (time, lat, lon) float32 4GB dask.array<chunksize=(365, 192, 288), meta=np.ndarray>
+Attributes:
+    Conventions:       CF-1.0
+    source:            CAM
+    case:              b.e21.BW.f09_g17.SSP245-G6-SAI-1p5.001
+    logname:           walkerl
+    host:              derecho4
+    initial_file:      b.e21.BWSSP245cmip6.f09_g17.CMIP6-SSP2-4.5-WACCM.001.c...
+    topography_file:   /glade/campaign/cesm/cesmdata/inputdata/atm/cam/topo/f...
+    model_doi_url:     https://doi.org/10.5065/D67H1H0V
+    time_period_freq:  day_1
+    time[0:3]=[cftime.DatetimeNoLeap(2035, 1, 1, 0, 0, 0, 0, has_year_zero=True)
+ cftime.DatetimeNoLeap(2035, 1, 2, 0, 0, 0, 0, has_year_zero=True)
+ cftime.DatetimeNoLeap(2035, 1, 3, 0, 0, 0, 0, has_year_zero=True)]  calendar=noleap
+--- CESM2-WACCM / G6-1.5K-SAI / r1 / pr  (5 files) e.g. s3://reflective-persistent-prod-large/CESM2-WACCM/G6-1.5k-SAI/r1/ADAY/b.e21.BW.f09_g17.SSP245-G6-1p5K-SAI.001.cam.h1.PRECT.20350101-20441231.nc
+<xarray.Dataset> Size: 4GB
+Dimensions:    (time: 18251, nbnd: 2, lat: 192, lon: 288)
+Coordinates:
+  * lat        (lat) float64 2kB -90.0 -89.06 -88.12 -87.17 ... 88.12 89.06 90.0
+  * lon        (lon) float64 2kB 0.0 1.25 2.5 3.75 ... 355.0 356.2 357.5 358.8
+  * time       (time) object 146kB 2035-01-01 00:00:00 ... 2085-01-01 00:00:00
+Dimensions without coordinates: nbnd
+Data variables:
+    time_bnds  (time, nbnd) object 292kB dask.array<chunksize=(365, 2), meta=np.ndarray>
+    PRECT      (time, lat, lon) float32 4GB dask.array<chunksize=(365, 192, 288), meta=np.ndarray>
+Attributes:
+    Conventions:       CF-1.0
+    source:            CAM
+    case:              b.e21.BW.f09_g17.SSP245-G6-SAI-1p5.001
+    logname:           walkerl
+    host:              derecho4
+    initial_file:      b.e21.BWSSP245cmip6.f09_g17.CMIP6-SSP2-4.5-WACCM.001.c...
+    topography_file:   /glade/campaign/cesm/cesmdata/inputdata/atm/cam/topo/f...
+    model_doi_url:     https://doi.org/10.5065/D67H1H0V
+    time_period_freq:  day_1
+    time[0:3]=[cftime.DatetimeNoLeap(2035, 1, 1, 0, 0, 0, 0, has_year_zero=True)
+ cftime.DatetimeNoLeap(2035, 1, 2, 0, 0, 0, 0, has_year_zero=True)
+ cftime.DatetimeNoLeap(2035, 1, 3, 0, 0, 0, 0, has_year_zero=True)]  calendar=noleap
+--- CESM2-WACCM / G6-1.5K-SAI / r1 / ps  (43 files) e.g. s3://reflective-persistent-prod-large/CESM2-WACCM/G6-1.5k-SAI/r1/ADAY/b.e21.BW.f09_g17.SSP245-G6-1p5K-SAI.001.cam.h1.PS.20350101-20441231.nc
+    OPEN FAILED: TypeError: Error: None is not a valid NetCDF 3 file
+            If this is a NetCDF4 file, you may need to install the
+            netcdf4 library, e.g.,
+
+            $ pip install netcdf4
+            
+--- CESM2-WACCM / G6-1.5K-SAI / r1 / sfcWind  (5 files) e.g. s3://reflective-persistent-prod-large/CESM2-WACCM/G6-1.5k-SAI/r1/ADAY/b.e21.BW.f09_g17.SSP245-G6-1p5K-SAI.001.cam.h1.U10.20350101-20441231.nc
+<xarray.Dataset> Size: 4GB
+Dimensions:    (time: 18251, nbnd: 2, lat: 192, lon: 288)
+Coordinates:
+  * lat        (lat) float64 2kB -90.0 -89.06 -88.12 -87.17 ... 88.12 89.06 90.0
+  * lon        (lon) float64 2kB 0.0 1.25 2.5 3.75 ... 355.0 356.2 357.5 358.8
+  * time       (time) object 146kB 2035-01-01 00:00:00 ... 2085-01-01 00:00:00
+Dimensions without coordinates: nbnd
+Data variables:
+    time_bnds  (time, nbnd) object 292kB dask.array<chunksize=(365, 2), meta=np.ndarray>
+    U10        (time, lat, lon) float32 4GB dask.array<chunksize=(365, 192, 288), meta=np.ndarray>
+Attributes:
+    Conventions:       CF-1.0
+    source:            CAM
+    case:              b.e21.BW.f09_g17.SSP245-G6-SAI-1p5.001
+    logname:           walkerl
+    host:              derecho4
+    initial_file:      b.e21.BWSSP245cmip6.f09_g17.CMIP6-SSP2-4.5-WACCM.001.c...
+    topography_file:   /glade/campaign/cesm/cesmdata/inputdata/atm/cam/topo/f...
+    model_doi_url:     https://doi.org/10.5065/D67H1H0V
+    time_period_freq:  day_1
+    time[0:3]=[cftime.DatetimeNoLeap(2035, 1, 1, 0, 0, 0, 0, has_year_zero=True)
+ cftime.DatetimeNoLeap(2035, 1, 2, 0, 0, 0, 0, has_year_zero=True)
+ cftime.DatetimeNoLeap(2035, 1, 3, 0, 0, 0, 0, has_year_zero=True)]  calendar=noleap
+--- CESM2-WACCM / G6-1.5K-SAI / r1 / tas  (5 files) e.g. s3://reflective-persistent-prod-large/CESM2-WACCM/G6-1.5k-SAI/r1/ADAY/b.e21.BW.f09_g17.SSP245-G6-1p5K-SAI.001.cam.h1.TREFHT.20350101-20441231.nc
+<xarray.Dataset> Size: 4GB
+Dimensions:    (time: 18251, nbnd: 2, lat: 192, lon: 288)
+Coordinates:
+  * lat        (lat) float64 2kB -90.0 -89.06 -88.12 -87.17 ... 88.12 89.06 90.0
+  * lon        (lon) float64 2kB 0.0 1.25 2.5 3.75 ... 355.0 356.2 357.5 358.8
+  * time       (time) object 146kB 2035-01-01 00:00:00 ... 2085-01-01 00:00:00
+Dimensions without coordinates: nbnd
+Data variables:
+    time_bnds  (time, nbnd) object 292kB dask.array<chunksize=(365, 2), meta=np.ndarray>
+    TREFHT     (time, lat, lon) float32 4GB dask.array<chunksize=(365, 192, 288), meta=np.ndarray>
+Attributes:
+    Conventions:       CF-1.0
+    source:            CAM
+    case:              b.e21.BW.f09_g17.SSP245-G6-SAI-1p5.001
+    logname:           walkerl
+    host:              derecho4
+    initial_file:      b.e21.BWSSP245cmip6.f09_g17.CMIP6-SSP2-4.5-WACCM.001.c...
+    topography_file:   /glade/campaign/cesm/cesmdata/inputdata/atm/cam/topo/f...
+    model_doi_url:     https://doi.org/10.5065/D67H1H0V
+    time_period_freq:  day_1
+    time[0:3]=[cftime.DatetimeNoLeap(2035, 1, 1, 0, 0, 0, 0, has_year_zero=True)
+ cftime.DatetimeNoLeap(2035, 1, 2, 0, 0, 0, 0, has_year_zero=True)
+ cftime.DatetimeNoLeap(2035, 1, 3, 0, 0, 0, 0, has_year_zero=True)]  calendar=noleap
+--- CESM2-WACCM / G6-1.5K-SAI / r1 / tasmax  (6 files) e.g. s3://reflective-persistent-prod-large/CESM2-WACCM/G6-1.5k-SAI/r1/ADAY/b.e21.BW.f09_g17.SSP245-G6-1p5K-SAI.001.cam.h1.TREFHTMX.20350101-20441231.nc
+<xarray.Dataset> Size: 62GB
+Dimensions:      (lat: 192, lon: 288, time: 18251, nbnd: 2, hist_interval: 2,
+                  pft: 800154)
+Coordinates:
+  * lat          (lat) float64 2kB -90.0 -89.06 -88.12 ... 88.12 89.06 90.0
+  * lon          (lon) float64 2kB 0.0 1.25 2.5 3.75 ... 355.0 356.2 357.5 358.8
+  * time         (time) object 146kB 2035-01-01 00:00:00 ... 2085-01-01 00:00:00
+Dimensions without coordinates: nbnd, hist_interval, pft
+Data variables:
+    time_bnds    (time, nbnd) object 292kB dask.array<chunksize=(365, 2), meta=np.ndarray>
+    TREFHTMX     (time, lat, lon) float32 4GB dask.array<chunksize=(365, 192, 288), meta=np.ndarray>
+    time_bounds  (time, hist_interval) object 292kB dask.array<chunksize=(300, 2), meta=np.ndarray>
+    TREFMXAV     (time, pft) float32 58GB dask.array<chunksize=(300, 800154), meta=np.ndarray>
+Attributes:
+    Conventions:       CF-1.0
+    source:            CAM
+    case:              b.e21.BW.f09_g17.SSP245-G6-SAI-1p5.001
+    logname:           walkerl
+    host:              derecho4
+    initial_file:      b.e21.BWSSP245cmip6.f09_g17.CMIP6-SSP2-4.5-WACCM.001.c...
+    topography_file:   /glade/campaign/cesm/cesmdata/inputdata/atm/cam/topo/f...
+    model_doi_url:     https://doi.org/10.5065/D67H1H0V
+    time_period_freq:  day_1
+    time[0:3]=[cftime.DatetimeNoLeap(2035, 1, 1, 0, 0, 0, 0, has_year_zero=True)
+ cftime.DatetimeNoLeap(2035, 1, 2, 0, 0, 0, 0, has_year_zero=True)
+ cftime.DatetimeNoLeap(2035, 1, 3, 0, 0, 0, 0, has_year_zero=True)]  calendar=noleap
+--- CESM2-WACCM / ssp245 / r10 / pr  (6 files) e.g. s3://reflective-persistent-prod-large/CESM2-WACCM/SSP2-4.5/r10/day/b.e21.BWSSP245cmip6.f09_g17.CMIP6-SSP2-4.5-WACCM.010.cam.h1.PRECT.20150101-20241231.nc
+<xarray.Dataset> Size: 4GB
+Dimensions:    (time: 20076, nbnd: 2, lat: 192, lon: 288)
+Coordinates:
+  * lat        (lat) float64 2kB -90.0 -89.06 -88.12 -87.17 ... 88.12 89.06 90.0
+  * lon        (lon) float64 2kB 0.0 1.25 2.5 3.75 ... 355.0 356.2 357.5 358.8
+  * time       (time) object 161kB 2015-01-01 00:00:00 ... 2070-01-01 00:00:00
+Dimensions without coordinates: nbnd
+Data variables:
+    time_bnds  (time, nbnd) object 321kB dask.array<chunksize=(365, 2), meta=np.ndarray>
+    PRECT      (time, lat, lon) float32 4GB dask.array<chunksize=(365, 192, 288), meta=np.ndarray>
+Attributes:
+    Conventions:       CF-1.0
+    source:            CAM
+    case:              b.e21.BWSSP245cmip6.f09_g17.CMIP6-SSP2-4.5-WACCM.010
+    logname:           geostrat
+    host:              cheyenne1
+    initial_file:      /glade/p/cesmdata/cseg/inputdata/cesm2_init/b.e21.BWHI...
+    topography_file:   /glade/p/cesmdata/cseg/inputdata/atm/cam/topo/fv_0.9x1...
+    model_doi_url:     https://doi.org/10.5065/D67H1H0V
+    time_period_freq:  day_1
+    time[0:3]=[cftime.DatetimeNoLeap(2015, 1, 1, 0, 0, 0, 0, has_year_zero=True)
+ cftime.DatetimeNoLeap(2015, 1, 2, 0, 0, 0, 0, has_year_zero=True)
+ cftime.DatetimeNoLeap(2015, 1, 3, 0, 0, 0, 0, has_year_zero=True)]  calendar=noleap
+--- CESM2-WACCM / ssp245 / r10 / tas  (6 files) e.g. s3://reflective-persistent-prod-large/CESM2-WACCM/SSP2-4.5/r10/day/b.e21.BWSSP245cmip6.f09_g17.CMIP6-SSP2-4.5-WACCM.010.cam.h1.TREFHT.20150101-20241231.nc
+<xarray.Dataset> Size: 4GB
+Dimensions:    (time: 20076, nbnd: 2, lat: 192, lon: 288)
+Coordinates:
+  * lat        (lat) float64 2kB -90.0 -89.06 -88.12 -87.17 ... 88.12 89.06 90.0
+  * lon        (lon) float64 2kB 0.0 1.25 2.5 3.75 ... 355.0 356.2 357.5 358.8
+  * time       (time) object 161kB 2015-01-01 00:00:00 ... 2070-01-01 00:00:00
+Dimensions without coordinates: nbnd
+Data variables:
+    time_bnds  (time, nbnd) object 321kB dask.array<chunksize=(365, 2), meta=np.ndarray>
+    TREFHT     (time, lat, lon) float32 4GB dask.array<chunksize=(365, 192, 288), meta=np.ndarray>
+Attributes:
+    Conventions:       CF-1.0
+    source:            CAM
+    case:              b.e21.BWSSP245cmip6.f09_g17.CMIP6-SSP2-4.5-WACCM.010
+    logname:           geostrat
+    host:              cheyenne1
+    initial_file:      /glade/p/cesmdata/cseg/inputdata/cesm2_init/b.e21.BWHI...
+    topography_file:   /glade/p/cesmdata/cseg/inputdata/atm/cam/topo/fv_0.9x1...
+    model_doi_url:     https://doi.org/10.5065/D67H1H0V
+    time_period_freq:  day_1
+    time[0:3]=[cftime.DatetimeNoLeap(2015, 1, 1, 0, 0, 0, 0, has_year_zero=True)
+ cftime.DatetimeNoLeap(2015, 1, 2, 0, 0, 0, 0, has_year_zero=True)
+ cftime.DatetimeNoLeap(2015, 1, 3, 0, 0, 0, 0, has_year_zero=True)]  calendar=noleap
+--- CESM2-WACCM / ssp245 / r10 / tasmax  (6 files) e.g. s3://reflective-persistent-prod-large/CESM2-WACCM/SSP2-4.5/r10/day/b.e21.BWSSP245cmip6.f09_g17.CMIP6-SSP2-4.5-WACCM.010.cam.h1.TREFHTMX.20150101-20241231.nc
+<xarray.Dataset> Size: 4GB
+Dimensions:    (time: 20076, nbnd: 2, lat: 192, lon: 288)
+Coordinates:
+  * lat        (lat) float64 2kB -90.0 -89.06 -88.12 -87.17 ... 88.12 89.06 90.0
+  * lon        (lon) float64 2kB 0.0 1.25 2.5 3.75 ... 355.0 356.2 357.5 358.8
+  * time       (time) object 161kB 2015-01-01 00:00:00 ... 2070-01-01 00:00:00
+Dimensions without coordinates: nbnd
+Data variables:
+    time_bnds  (time, nbnd) object 321kB dask.array<chunksize=(365, 2), meta=np.ndarray>
+    TREFHTMX   (time, lat, lon) float32 4GB dask.array<chunksize=(365, 192, 288), meta=np.ndarray>
+Attributes:
+    Conventions:       CF-1.0
+    source:            CAM
+    case:              b.e21.BWSSP245cmip6.f09_g17.CMIP6-SSP2-4.5-WACCM.010
+    logname:           geostrat
+    host:              cheyenne1
+    initial_file:      /glade/p/cesmdata/cseg/inputdata/cesm2_init/b.e21.BWHI...
+    topography_file:   /glade/p/cesmdata/cseg/inputdata/atm/cam/topo/fv_0.9x1...
+    model_doi_url:     https://doi.org/10.5065/D67H1H0V
+    time_period_freq:  day_1
+    time[0:3]=[cftime.DatetimeNoLeap(2015, 1, 1, 0, 0, 0, 0, has_year_zero=True)
+ cftime.DatetimeNoLeap(2015, 1, 2, 0, 0, 0, 0, has_year_zero=True)
+ cftime.DatetimeNoLeap(2015, 1, 3, 0, 0, 0, 0, has_year_zero=True)]  calendar=noleap
+--- E3SM / G6-1.5K-SAI / ? / pr  (24 files) e.g. s3://reflective-persistent-prod/alistairduffey/E3SM_daily_T_P/G6-1.5K-SAI/daily/PRECT/001/PRECT_203501_203912.nc
+    OPEN FAILED: ValueError: Unexpected header.
+--- E3SM / G6-1.5K-SAI / ? / ps  (3 files) e.g. s3://reflective-persistent-prod/alistairduffey/E3SM_daily_T_P/G6-1.5K-SAI/daily/not_gridded/post/atm/native/ts/daily/5yr/PS_207001_207412.nc
+    OPEN FAILED: ValueError: Unexpected header.
+--- E3SM / G6-1.5K-SAI / ? / tas  (3 files) e.g. s3://reflective-persistent-prod/alistairduffey/E3SM_daily_T_P/G6-1.5K-SAI/daily/not_gridded/post/atm/native/ts/daily/5yr/TREFHT_207001_207412.nc
+    OPEN FAILED: ValueError: Unexpected header.
+--- E3SM / G6-1.5K-SAI / ? / tasmax  (21 files) e.g. s3://reflective-persistent-prod/alistairduffey/E3SM_daily_T_P/G6-1.5K-SAI/daily/TREFHTMX/001/TREFHTMX_203501_203912.nc
+    OPEN FAILED: ValueError: Unexpected header.
+--- E3SM / ssp245 / ? / pr  (36 files) e.g. s3://reflective-persistent-prod/alistairduffey/E3SM_daily_T_P/SSP2-4.5-M/daily_notgrid/PRECT/20221014.v2.LR.WCYCLSSP245.E2_CNTL_01.eam.h1.PRECT.nc
+    OPEN FAILED: TypeError: Error: None is not a valid NetCDF 3 file
+            If this is a NetCDF4 file, you may need to install the
+            netcdf4 library, e.g.,
+
+            $ pip install netcdf4
+            
+--- E3SM / ssp245 / ? / tas  (3 files) e.g. s3://reflective-persistent-prod/alistairduffey/E3SM_daily_T_P/SSP2-4.5-M/daily_notgrid/TREFHT/20221014.v2.LR.WCYCLSSP245.E2_CNTL_01.eam.h1.TREFHT.nc
+<xarray.Dataset> Size: 3GB
+Dimensions:    (time: 31026, ncol: 21600, nbnd: 2)
+Coordinates:
+  * time       (time) object 248kB 2015-01-01 00:00:00 ... 2100-01-01 00:00:00
+Dimensions without coordinates: ncol, nbnd
+Data variables:
+    TREFHT     (time, ncol) float32 3GB dask.array<chunksize=(365, 21600), meta=np.ndarray>
+    lat        (ncol) float64 173kB dask.array<chunksize=(21600,), meta=np.ndarray>
+    lon        (ncol) float64 173kB dask.array<chunksize=(21600,), meta=np.ndarray>
+    time_bnds  (time, nbnd) object 496kB dask.array<chunksize=(365, 2), meta=np.ndarray>
+Attributes: (12/19)
+    Conventions:       CF-1.7
+    case:              20230277.v2.LR.WCYCLSSP245.E2_CNTL_03
+    contact:           e3sm-data-support@listserv.llnl.gov
+    fv_nphys:          2
+    git_version:       unknown
+    history:           created on 04/01/23 05:04:13
+    ...                ...
+    source:            E3SM Atmosphere Model
+    source_id:         unknown
+    time_period_freq:  day_1
+    title:             EAM History file information
+    topography_file:   /scratch/haruki/inputdata/atm/cam/topo/USGS-gtopo30_ne...
+    username:          haruki
+    time[0:3]=[cftime.DatetimeNoLeap(2015, 1, 1, 0, 0, 0, 0, has_year_zero=True)
+ cftime.DatetimeNoLeap(2015, 1, 2, 0, 0, 0, 0, has_year_zero=True)
+ cftime.DatetimeNoLeap(2015, 1, 3, 0, 0, 0, 0, has_year_zero=True)]  calendar=noleap
+--- E3SM / ssp245 / ? / tasmax  (36 files) e.g. s3://reflective-persistent-prod/alistairduffey/E3SM_daily_T_P/SSP2-4.5-M/daily_notgrid/TREFHTMX/20221014.v2.LR.WCYCLSSP245.E2_CNTL_01.eam.h1.TREFHTMX.nc
+    OPEN FAILED: TypeError: Error: None is not a valid NetCDF 3 file
+            If this is a NetCDF4 file, you may need to install the
+            netcdf4 library, e.g.,
+
+            $ pip install netcdf4
+            
+--- E3SMv3 / G6-1.5K-HiLLA / r1 / huss  (10 files) e.g. s3://reflective-persistent-prod-large/E3SMv3/G6-1.5K-HiLLA/v3.LR.ssp245.g6_hilla.sai.0101/day/QREFHT/gn/13112025/QREFHT_203501_203912.nc
+    OPEN FAILED: ValueError: Unexpected header.
+--- E3SMv3 / G6-1.5K-HiLLA / r1 / pr  (10 files) e.g. s3://reflective-persistent-prod-large/E3SMv3/G6-1.5K-HiLLA/v3.LR.ssp245.g6_hilla.sai.0101/day/PRECT/gn/13112025/PRECT_203501_203912.nc
+    OPEN FAILED: ValueError: Unexpected header.
+--- E3SMv3 / G6-1.5K-HiLLA / r1 / ps  (10 files) e.g. s3://reflective-persistent-prod-large/E3SMv3/G6-1.5K-HiLLA/v3.LR.ssp245.g6_hilla.sai.0101/day/PS/gn/13112025/PS_203501_203912.nc
+    OPEN FAILED: ValueError: Unexpected header.
+--- E3SMv3 / G6-1.5K-HiLLA / r1 / sfcWind  (10 files) e.g. s3://reflective-persistent-prod-large/E3SMv3/G6-1.5K-HiLLA/v3.LR.ssp245.g6_hilla.sai.0101/day/U10/gn/13112025/U10_203501_203912.nc
+    OPEN FAILED: ValueError: Unexpected header.
+--- E3SMv3 / G6-1.5K-HiLLA / r1 / tas  (10 files) e.g. s3://reflective-persistent-prod-large/E3SMv3/G6-1.5K-HiLLA/v3.LR.ssp245.g6_hilla.sai.0101/day/TREFHT/gn/13112025/TREFHT_203501_203912.nc
+    OPEN FAILED: ValueError: Unexpected header.
+--- E3SMv3 / G6-1.5K-SAI / ? / pr  (21 files) e.g. s3://reflective-persistent-prod/alistairduffey/E3SMv3/G6-1.5K-SAI/daily_pr/001/PRECT_203501_203912.nc
+    OPEN FAILED: ValueError: Unexpected header.
+--- E3SMv3 / G6-1.5K-SAI / ? / tas  (24 files) e.g. s3://reflective-persistent-prod/alistairduffey/E3SMv3/G6-1.5K-SAI/daily_T/001/TREFHT_203501_203912.nc
+    OPEN FAILED: ValueError: Unexpected header.
+--- E3SMv3 / G6-1.5K-SAI / ? / tasmax  (21 files) e.g. s3://reflective-persistent-prod/alistairduffey/E3SMv3/G6-1.5K-SAI/daily_T_max/001/TREFHTMX_203501_203912.nc
+    OPEN FAILED: ValueError: Unexpected header.
+--- E3SMv3 / ssp245 / r1 / huss  (28 files) e.g. s3://reflective-persistent-prod-large/E3SMv3/G6-1.5K-HiLLA/v3.LR.ssp245_0101/day/QREFHT/gn/10112025/QREFHT_201501_201912.nc
+    OPEN FAILED: ValueError: Unexpected header.
+--- E3SMv3 / ssp245 / r1 / pr  (28 files) e.g. s3://reflective-persistent-prod-large/E3SMv3/G6-1.5K-HiLLA/v3.LR.ssp245_0101/day/PRECT/gn/10112025/PRECT_201501_201912.nc
+    OPEN FAILED: ValueError: Unexpected header.
+--- E3SMv3 / ssp245 / r1 / ps  (28 files) e.g. s3://reflective-persistent-prod-large/E3SMv3/G6-1.5K-HiLLA/v3.LR.ssp245_0101/day/PS/gn/10112025/PS_201501_201912.nc
+    OPEN FAILED: ValueError: Unexpected header.
+--- E3SMv3 / ssp245 / r1 / sfcWind  (28 files) e.g. s3://reflective-persistent-prod-large/E3SMv3/G6-1.5K-HiLLA/v3.LR.ssp245_0101/day/U10/gn/10112025/U10_201501_201912.nc
+    OPEN FAILED: ValueError: Unexpected header.
+--- E3SMv3 / ssp245 / r1 / tas  (28 files) e.g. s3://reflective-persistent-prod-large/E3SMv3/G6-1.5K-HiLLA/v3.LR.ssp245_0101/day/TREFHT/gn/10112025/TREFHT_201501_201912.nc
+    OPEN FAILED: ValueError: Unexpected header.
+--- E3SMv3 / ssp245 / r1 / tasmax  (28 files) e.g. s3://reflective-persistent-prod-large/E3SMv3/G6-1.5K-HiLLA/v3.LR.ssp245_0101/day/TREFHTMX/gn/10112025/TREFHTMX_201501_201912.nc
+    OPEN FAILED: ValueError: Unexpected header.
+--- MIROC-ES2H / G6-1.5K-HiLLA / r1 / hurs  (1 files) e.g. s3://reflective-persistent-prod-large/MIROC-ES2H/G6-1.5K-HiLLA/day/hurs_G6-1.5K-HiLLA_r01.nc
+<xarray.Dataset> Size: 2GB
+Dimensions:    (time: 18263, bnds: 2, lat: 128, lon: 256)
+Coordinates:
+  * lon        (lon) float64 2kB 0.0 1.406 2.812 4.219 ... 355.8 357.2 358.6
+  * lat        (lat) float64 1kB 88.93 87.54 86.14 ... -86.14 -87.54 -88.93
+  * time       (time) datetime64[ns] 146kB 2035-01-01T12:00:00 ... 2084-12-31...
+Dimensions without coordinates: bnds
+Data variables:
+    time_bnds  (time, bnds) datetime64[ns] 292kB dask.array<chunksize=(365, 2), meta=np.ndarray>
+    hurs       (time, lat, lon) float32 2GB dask.array<chunksize=(365, 128, 256), meta=np.ndarray>
+Attributes:
+    Conventions:    CF-1.0
+    title:          MIROC-ES2H GeoMIP EXPERIMENT DATA
+    model_id:       MIROC-ES2H
+    source:         MIROC-ES2H (2025): \naerosol: SPRINTARS6.0 including stra...
+    institute_id:   MIROC
+    instituion:     JAMSTEC (Japan Agency for Marine-Earth Science and Techno...
+    contact:        Shingo Watanabe (wnabe@jamstec.go.jp)
+    history:        Dec 2025 - Conversion from original format to netCDF at J...
+    references:     MIROC-ES2H : Kawamiya, M., Hajima, T., Tachiiri, K. et al...
+    experiment_id:  GeoMIP
+    license:        GeoMIP simulation data produced by MIROC-team is licensed...
+    time[0:3]=['2035-01-01T12:00:00.000000000' '2035-01-02T12:00:00.000000000'
+ '2035-01-03T12:00:00.000000000']  calendar=proleptic_gregorian
+--- MIROC-ES2H / G6-1.5K-HiLLA / r1 / huss  (1 files) e.g. s3://reflective-persistent-prod-large/MIROC-ES2H/G6-1.5K-HiLLA/day/huss_G6-1.5K-HiLLA_r01.nc
+<xarray.Dataset> Size: 2GB
+Dimensions:    (time: 18263, bnds: 2, lat: 128, lon: 256)
+Coordinates:
+  * lon        (lon) float64 2kB 0.0 1.406 2.812 4.219 ... 355.8 357.2 358.6
+  * lat        (lat) float64 1kB 88.93 87.54 86.14 ... -86.14 -87.54 -88.93
+  * time       (time) datetime64[ns] 146kB 2035-01-01T12:00:00 ... 2084-12-31...
+Dimensions without coordinates: bnds
+Data variables:
+    time_bnds  (time, bnds) datetime64[ns] 292kB dask.array<chunksize=(365, 2), meta=np.ndarray>
+    huss       (time, lat, lon) float32 2GB dask.array<chunksize=(365, 128, 256), meta=np.ndarray>
+Attributes:
+    Conventions:    CF-1.0
+    title:          MIROC-ES2H GeoMIP EXPERIMENT DATA
+    model_id:       MIROC-ES2H
+    source:         MIROC-ES2H (2025): \naerosol: SPRINTARS6.0 including stra...
+    institute_id:   MIROC
+    instituion:     JAMSTEC (Japan Agency for Marine-Earth Science and Techno...
+    contact:        Shingo Watanabe (wnabe@jamstec.go.jp)
+    history:        Dec 2025 - Conversion from original format to netCDF at J...
+    references:     MIROC-ES2H : Kawamiya, M., Hajima, T., Tachiiri, K. et al...
+    experiment_id:  GeoMIP
+    license:        GeoMIP simulation data produced by MIROC-team is licensed...
+    time[0:3]=['2035-01-01T12:00:00.000000000' '2035-01-02T12:00:00.000000000'
+ '2035-01-03T12:00:00.000000000']  calendar=proleptic_gregorian
+--- MIROC-ES2H / G6-1.5K-HiLLA / r1 / pr  (1 files) e.g. s3://reflective-persistent-prod-large/MIROC-ES2H/G6-1.5K-HiLLA/day/pr_G6-1.5K-HiLLA_r01.nc
+<xarray.Dataset> Size: 2GB
+Dimensions:    (time: 18263, bnds: 2, lat: 128, lon: 256)
+Coordinates:
+  * lon        (lon) float64 2kB 0.0 1.406 2.812 4.219 ... 355.8 357.2 358.6
+  * lat        (lat) float64 1kB 88.93 87.54 86.14 ... -86.14 -87.54 -88.93
+  * time       (time) datetime64[ns] 146kB 2035-01-01T12:00:00 ... 2084-12-31...
+Dimensions without coordinates: bnds
+Data variables:
+    time_bnds  (time, bnds) datetime64[ns] 292kB dask.array<chunksize=(365, 2), meta=np.ndarray>
+    pr         (time, lat, lon) float32 2GB dask.array<chunksize=(365, 128, 256), meta=np.ndarray>
+Attributes:
+    Conventions:    CF-1.0
+    title:          MIROC-ES2H GeoMIP EXPERIMENT DATA
+    model_id:       MIROC-ES2H
+    source:         MIROC-ES2H (2025): \naerosol: SPRINTARS6.0 including stra...
+    institute_id:   MIROC
+    instituion:     JAMSTEC (Japan Agency for Marine-Earth Science and Techno...
+    contact:        Shingo Watanabe (wnabe@jamstec.go.jp)
+    history:        Dec 2025 - Conversion from original format to netCDF at J...
+    references:     MIROC-ES2H : Kawamiya, M., Hajima, T., Tachiiri, K. et al...
+    experiment_id:  GeoMIP
+    license:        GeoMIP simulation data produced by MIROC-team is licensed...
+    time[0:3]=['2035-01-01T12:00:00.000000000' '2035-01-02T12:00:00.000000000'
+ '2035-01-03T12:00:00.000000000']  calendar=proleptic_gregorian
+--- MIROC-ES2H / G6-1.5K-HiLLA / r1 / ps  (1 files) e.g. s3://reflective-persistent-prod-large/MIROC-ES2H/G6-1.5K-HiLLA/day/ps_G6-1.5K-HiLLA_r01.nc
+<xarray.Dataset> Size: 2GB
+Dimensions:    (time: 18263, bnds: 2, lat: 128, lon: 256)
+Coordinates:
+  * lon        (lon) float64 2kB 0.0 1.406 2.812 4.219 ... 355.8 357.2 358.6
+  * lat        (lat) float64 1kB 88.93 87.54 86.14 ... -86.14 -87.54 -88.93
+  * time       (time) datetime64[ns] 146kB 2035-01-01T12:00:00 ... 2084-12-31...
+Dimensions without coordinates: bnds
+Data variables:
+    time_bnds  (time, bnds) datetime64[ns] 292kB dask.array<chunksize=(365, 2), meta=np.ndarray>
+    ps         (time, lat, lon) float32 2GB dask.array<chunksize=(365, 128, 256), meta=np.ndarray>
+Attributes:
+    Conventions:    CF-1.0
+    title:          MIROC-ES2H GeoMIP EXPERIMENT DATA
+    model_id:       MIROC-ES2H
+    source:         MIROC-ES2H (2025): \naerosol: SPRINTARS6.0 including stra...
+    institute_id:   MIROC
+    instituion:     JAMSTEC (Japan Agency for Marine-Earth Science and Techno...
+    contact:        Shingo Watanabe (wnabe@jamstec.go.jp)
+    history:        Dec 2025 - Conversion from original format to netCDF at J...
+    references:     MIROC-ES2H : Kawamiya, M., Hajima, T., Tachiiri, K. et al...
+    experiment_id:  GeoMIP
+    license:        GeoMIP simulation data produced by MIROC-team is licensed...
+    time[0:3]=['2035-01-01T12:00:00.000000000' '2035-01-02T12:00:00.000000000'
+ '2035-01-03T12:00:00.000000000']  calendar=proleptic_gregorian
+--- MIROC-ES2H / G6-1.5K-HiLLA / r1 / tas  (1 files) e.g. s3://reflective-persistent-prod-large/MIROC-ES2H/G6-1.5K-HiLLA/day/tas_G6-1.5K-HiLLA_r01.nc
+<xarray.Dataset> Size: 2GB
+Dimensions:    (time: 18263, bnds: 2, lat: 128, lon: 256)
+Coordinates:
+  * lon        (lon) float64 2kB 0.0 1.406 2.812 4.219 ... 355.8 357.2 358.6
+  * lat        (lat) float64 1kB 88.93 87.54 86.14 ... -86.14 -87.54 -88.93
+  * time       (time) datetime64[ns] 146kB 2035-01-01T12:00:00 ... 2084-12-31...
+Dimensions without coordinates: bnds
+Data variables:
+    time_bnds  (time, bnds) datetime64[ns] 292kB dask.array<chunksize=(365, 2), meta=np.ndarray>
+    tas        (time, lat, lon) float32 2GB dask.array<chunksize=(365, 128, 256), meta=np.ndarray>
+Attributes:
+    Conventions:    CF-1.0
+    title:          MIROC-ES2H GeoMIP EXPERIMENT DATA
+    model_id:       MIROC-ES2H
+    source:         MIROC-ES2H (2025): \naerosol: SPRINTARS6.0 including stra...
+    institute_id:   MIROC
+    instituion:     JAMSTEC (Japan Agency for Marine-Earth Science and Techno...
+    contact:        Shingo Watanabe (wnabe@jamstec.go.jp)
+    history:        Dec 2025 - Conversion from original format to netCDF at J...
+    references:     MIROC-ES2H : Kawamiya, M., Hajima, T., Tachiiri, K. et al...
+    experiment_id:  GeoMIP
+    license:        GeoMIP simulation data produced by MIROC-team is licensed...
+    time[0:3]=['2035-01-01T12:00:00.000000000' '2035-01-02T12:00:00.000000000'
+ '2035-01-03T12:00:00.000000000']  calendar=proleptic_gregorian
+--- MIROC-ES2H / G6-1.5K-HiLLA / r1 / tasmax  (1 files) e.g. s3://reflective-persistent-prod-large/MIROC-ES2H/G6-1.5K-HiLLA/day/tasmax_G6-1.5K-HiLLA_r01.nc
+<xarray.Dataset> Size: 2GB
+Dimensions:    (time: 18263, bnds: 2, lat: 128, lon: 256)
+Coordinates:
+  * lon        (lon) float64 2kB 0.0 1.406 2.812 4.219 ... 355.8 357.2 358.6
+  * lat        (lat) float64 1kB 88.93 87.54 86.14 ... -86.14 -87.54 -88.93
+  * time       (time) datetime64[ns] 146kB 2035-01-01T12:00:00 ... 2084-12-31...
+Dimensions without coordinates: bnds
+Data variables:
+    time_bnds  (time, bnds) datetime64[ns] 292kB dask.array<chunksize=(365, 2), meta=np.ndarray>
+    tasmax     (time, lat, lon) float32 2GB dask.array<chunksize=(365, 128, 256), meta=np.ndarray>
+Attributes:
+    Conventions:    CF-1.0
+    title:          MIROC-ES2H GeoMIP EXPERIMENT DATA
+    model_id:       MIROC-ES2H
+    source:         MIROC-ES2H (2025): \naerosol: SPRINTARS6.0 including stra...
+    institute_id:   MIROC
+    instituion:     JAMSTEC (Japan Agency for Marine-Earth Science and Techno...
+    contact:        Shingo Watanabe (wnabe@jamstec.go.jp)
+    history:        Dec 2025 - Conversion from original format to netCDF at J...
+    references:     MIROC-ES2H : Kawamiya, M., Hajima, T., Tachiiri, K. et al...
+    experiment_id:  GeoMIP
+    license:        GeoMIP simulation data produced by MIROC-team is licensed...
+    time[0:3]=['2035-01-01T12:00:00.000000000' '2035-01-02T12:00:00.000000000'
+ '2035-01-03T12:00:00.000000000']  calendar=proleptic_gregorian
+--- MIROC-ES2H / G6-1.5K-HiLLA / r1 / uas  (1 files) e.g. s3://reflective-persistent-prod-large/MIROC-ES2H/G6-1.5K-HiLLA/day/uas_G6-1.5K-HiLLA_r01.nc
+<xarray.Dataset> Size: 2GB
+Dimensions:    (time: 18263, bnds: 2, lat: 128, lon: 256)
+Coordinates:
+  * lon        (lon) float64 2kB 0.0 1.406 2.812 4.219 ... 355.8 357.2 358.6
+  * lat        (lat) float64 1kB 88.93 87.54 86.14 ... -86.14 -87.54 -88.93
+  * time       (time) datetime64[ns] 146kB 2035-01-01T12:00:00 ... 2084-12-31...
+Dimensions without coordinates: bnds
+Data variables:
+    time_bnds  (time, bnds) datetime64[ns] 292kB dask.array<chunksize=(365, 2), meta=np.ndarray>
+    uas        (time, lat, lon) float32 2GB dask.array<chunksize=(365, 128, 256), meta=np.ndarray>
+Attributes:
+    Conventions:    CF-1.0
+    title:          MIROC-ES2H GeoMIP EXPERIMENT DATA
+    model_id:       MIROC-ES2H
+    source:         MIROC-ES2H (2025): \naerosol: SPRINTARS6.0 including stra...
+    institute_id:   MIROC
+    instituion:     JAMSTEC (Japan Agency for Marine-Earth Science and Techno...
+    contact:        Shingo Watanabe (wnabe@jamstec.go.jp)
+    history:        Dec 2025 - Conversion from original format to netCDF at J...
+    references:     MIROC-ES2H : Kawamiya, M., Hajima, T., Tachiiri, K. et al...
+    experiment_id:  GeoMIP
+    license:        GeoMIP simulation data produced by MIROC-team is licensed...
+    time[0:3]=['2035-01-01T12:00:00.000000000' '2035-01-02T12:00:00.000000000'
+ '2035-01-03T12:00:00.000000000']  calendar=proleptic_gregorian
+--- MIROC-ES2H / G6-1.5K-HiLLA / r1 / vas  (1 files) e.g. s3://reflective-persistent-prod-large/MIROC-ES2H/G6-1.5K-HiLLA/day/vas_G6-1.5K-HiLLA_r01.nc
+<xarray.Dataset> Size: 2GB
+Dimensions:    (time: 18263, bnds: 2, lat: 128, lon: 256)
+Coordinates:
+  * lon        (lon) float64 2kB 0.0 1.406 2.812 4.219 ... 355.8 357.2 358.6
+  * lat        (lat) float64 1kB 88.93 87.54 86.14 ... -86.14 -87.54 -88.93
+  * time       (time) datetime64[ns] 146kB 2035-01-01T12:00:00 ... 2084-12-31...
+Dimensions without coordinates: bnds
+Data variables:
+    time_bnds  (time, bnds) datetime64[ns] 292kB dask.array<chunksize=(365, 2), meta=np.ndarray>
+    vas        (time, lat, lon) float32 2GB dask.array<chunksize=(365, 128, 256), meta=np.ndarray>
+Attributes:
+    Conventions:    CF-1.0
+    title:          MIROC-ES2H GeoMIP EXPERIMENT DATA
+    model_id:       MIROC-ES2H
+    source:         MIROC-ES2H (2025): \naerosol: SPRINTARS6.0 including stra...
+    institute_id:   MIROC
+    instituion:     JAMSTEC (Japan Agency for Marine-Earth Science and Techno...
+    contact:        Shingo Watanabe (wnabe@jamstec.go.jp)
+    history:        Dec 2025 - Conversion from original format to netCDF at J...
+    references:     MIROC-ES2H : Kawamiya, M., Hajima, T., Tachiiri, K. et al...
+    experiment_id:  GeoMIP
+    license:        GeoMIP simulation data produced by MIROC-team is licensed...
+    time[0:3]=['2035-01-01T12:00:00.000000000' '2035-01-02T12:00:00.000000000'
+ '2035-01-03T12:00:00.000000000']  calendar=proleptic_gregorian
+--- MIROC-ES2H / G6-1.5K-SAI / r1 / hurs  (1 files) e.g. s3://reflective-persistent-prod-large/MIROC-ES2H/G6-1.5K-SAI/day/hurs_G6-1.5K-SAI_r01.nc
+<xarray.Dataset> Size: 2GB
+Dimensions:    (time: 18263, bnds: 2, lat: 128, lon: 256)
+Coordinates:
+  * lon        (lon) float64 2kB 0.0 1.406 2.812 4.219 ... 355.8 357.2 358.6
+  * lat        (lat) float64 1kB 88.93 87.54 86.14 ... -86.14 -87.54 -88.93
+  * time       (time) datetime64[ns] 146kB 2035-01-01T12:00:00 ... 2084-12-31...
+Dimensions without coordinates: bnds
+Data variables:
+    time_bnds  (time, bnds) datetime64[ns] 292kB dask.array<chunksize=(365, 2), meta=np.ndarray>
+    hurs       (time, lat, lon) float32 2GB dask.array<chunksize=(365, 128, 256), meta=np.ndarray>
+Attributes:
+    Conventions:    CF-1.0
+    title:          MIROC-ES2H GeoMIP EXPERIMENT DATA
+    model_id:       MIROC-ES2H
+    source:         MIROC-ES2H (2023): \naerosol: SPRINTARS6.0\natmos: CCSR A...
+    institute_id:   MIROC
+    instituion:     JAMSTEC (Japan Agency for Marine-Earth Science and Techno...
+    contact:        Shingo Watanabe (wnabe@jamstec.go.jp)
+    history:        Dec 2023 - Conversion from original format to netCDF at J...
+    references:     MIROC-ES2H : Kawamiya, M., Hajima, T., Tachiiri, K. et al...
+    experiment_id:  GeoMIP
+    license:        GeoMIP simulation data produced by MIROC-team is licensed...
+    time[0:3]=['2035-01-01T12:00:00.000000000' '2035-01-02T12:00:00.000000000'
+ '2035-01-03T12:00:00.000000000']  calendar=proleptic_gregorian
+--- MIROC-ES2H / G6-1.5K-SAI / r1 / huss  (1 files) e.g. s3://reflective-persistent-prod-large/MIROC-ES2H/G6-1.5K-SAI/day/huss_G6-1.5K-SAI_r01.nc
+<xarray.Dataset> Size: 2GB
+Dimensions:    (time: 18263, bnds: 2, lat: 128, lon: 256)
+Coordinates:
+  * lon        (lon) float64 2kB 0.0 1.406 2.812 4.219 ... 355.8 357.2 358.6
+  * lat        (lat) float64 1kB 88.93 87.54 86.14 ... -86.14 -87.54 -88.93
+  * time       (time) datetime64[ns] 146kB 2035-01-01T12:00:00 ... 2084-12-31...
+Dimensions without coordinates: bnds
+Data variables:
+    time_bnds  (time, bnds) datetime64[ns] 292kB dask.array<chunksize=(365, 2), meta=np.ndarray>
+    huss       (time, lat, lon) float32 2GB dask.array<chunksize=(365, 128, 256), meta=np.ndarray>
+Attributes:
+    Conventions:    CF-1.0
+    title:          MIROC-ES2H GeoMIP EXPERIMENT DATA
+    model_id:       MIROC-ES2H
+    source:         MIROC-ES2H (2023): \naerosol: SPRINTARS6.0\natmos: CCSR A...
+    institute_id:   MIROC
+    instituion:     JAMSTEC (Japan Agency for Marine-Earth Science and Techno...
+    contact:        Shingo Watanabe (wnabe@jamstec.go.jp)
+    history:        Dec 2023 - Conversion from original format to netCDF at J...
+    references:     MIROC-ES2H : Kawamiya, M., Hajima, T., Tachiiri, K. et al...
+    experiment_id:  GeoMIP
+    license:        GeoMIP simulation data produced by MIROC-team is licensed...
+    time[0:3]=['2035-01-01T12:00:00.000000000' '2035-01-02T12:00:00.000000000'
+ '2035-01-03T12:00:00.000000000']  calendar=proleptic_gregorian
+--- MIROC-ES2H / G6-1.5K-SAI / r1 / pr  (1 files) e.g. s3://reflective-persistent-prod-large/MIROC-ES2H/G6-1.5K-SAI/day/pr_G6-1.5K-SAI_r01.nc
+<xarray.Dataset> Size: 2GB
+Dimensions:    (time: 18263, bnds: 2, lat: 128, lon: 256)
+Coordinates:
+  * lon        (lon) float64 2kB 0.0 1.406 2.812 4.219 ... 355.8 357.2 358.6
+  * lat        (lat) float64 1kB 88.93 87.54 86.14 ... -86.14 -87.54 -88.93
+  * time       (time) datetime64[ns] 146kB 2035-01-01T12:00:00 ... 2084-12-31...
+Dimensions without coordinates: bnds
+Data variables:
+    time_bnds  (time, bnds) datetime64[ns] 292kB dask.array<chunksize=(365, 2), meta=np.ndarray>
+    pr         (time, lat, lon) float32 2GB dask.array<chunksize=(365, 128, 256), meta=np.ndarray>
+Attributes:
+    Conventions:    CF-1.0
+    title:          MIROC-ES2H GeoMIP EXPERIMENT DATA
+    model_id:       MIROC-ES2H
+    source:         MIROC-ES2H (2023): \naerosol: SPRINTARS6.0\natmos: CCSR A...
+    institute_id:   MIROC
+    instituion:     JAMSTEC (Japan Agency for Marine-Earth Science and Techno...
+    contact:        Shingo Watanabe (wnabe@jamstec.go.jp)
+    history:        Dec 2023 - Conversion from original format to netCDF at J...
+    references:     MIROC-ES2H : Kawamiya, M., Hajima, T., Tachiiri, K. et al...
+    experiment_id:  GeoMIP
+    license:        GeoMIP simulation data produced by MIROC-team is licensed...
+    time[0:3]=['2035-01-01T12:00:00.000000000' '2035-01-02T12:00:00.000000000'
+ '2035-01-03T12:00:00.000000000']  calendar=proleptic_gregorian
+--- MIROC-ES2H / G6-1.5K-SAI / r1 / sfcWind  (1 files) e.g. s3://reflective-persistent-prod-large/MIROC-ES2H/G6-1.5K-SAI/day/sfcWind_G6-1.5K-SAI_r01.nc
+<xarray.Dataset> Size: 2GB
+Dimensions:    (time: 18263, bnds: 2, lat: 128, lon: 256)
+Coordinates:
+  * lon        (lon) float64 2kB 0.0 1.406 2.812 4.219 ... 355.8 357.2 358.6
+  * lat        (lat) float64 1kB 88.93 87.54 86.14 ... -86.14 -87.54 -88.93
+  * time       (time) datetime64[ns] 146kB 2035-01-01T12:00:00 ... 2084-12-31...
+Dimensions without coordinates: bnds
+Data variables:
+    time_bnds  (time, bnds) datetime64[ns] 292kB dask.array<chunksize=(365, 2), meta=np.ndarray>
+    sfcWind    (time, lat, lon) float32 2GB dask.array<chunksize=(365, 128, 256), meta=np.ndarray>
+Attributes:
+    Conventions:    CF-1.0
+    title:          MIROC-ES2H GeoMIP EXPERIMENT DATA
+    model_id:       MIROC-ES2H
+    source:         MIROC-ES2H (2023): \naerosol: SPRINTARS6.0\natmos: CCSR A...
+    institute_id:   MIROC
+    instituion:     JAMSTEC (Japan Agency for Marine-Earth Science and Techno...
+    contact:        Shingo Watanabe (wnabe@jamstec.go.jp)
+    history:        Dec 2023 - Conversion from original format to netCDF at J...
+    references:     MIROC-ES2H : Kawamiya, M., Hajima, T., Tachiiri, K. et al...
+    experiment_id:  GeoMIP
+    license:        GeoMIP simulation data produced by MIROC-team is licensed...
+    time[0:3]=['2035-01-01T12:00:00.000000000' '2035-01-02T12:00:00.000000000'
+ '2035-01-03T12:00:00.000000000']  calendar=proleptic_gregorian
+--- MIROC-ES2H / G6-1.5K-SAI / r1 / tas  (1 files) e.g. s3://reflective-persistent-prod-large/MIROC-ES2H/G6-1.5K-SAI/day/tas_G6-1.5K-SAI_r01.nc
+<xarray.Dataset> Size: 2GB
+Dimensions:    (time: 18263, bnds: 2, lat: 128, lon: 256)
+Coordinates:
+  * lon        (lon) float64 2kB 0.0 1.406 2.812 4.219 ... 355.8 357.2 358.6
+  * lat        (lat) float64 1kB 88.93 87.54 86.14 ... -86.14 -87.54 -88.93
+  * time       (time) datetime64[ns] 146kB 2035-01-01T12:00:00 ... 2084-12-31...
+Dimensions without coordinates: bnds
+Data variables:
+    time_bnds  (time, bnds) datetime64[ns] 292kB dask.array<chunksize=(365, 2), meta=np.ndarray>
+    tas        (time, lat, lon) float32 2GB dask.array<chunksize=(365, 128, 256), meta=np.ndarray>
+Attributes:
+    Conventions:    CF-1.0
+    title:          MIROC-ES2H GeoMIP EXPERIMENT DATA
+    model_id:       MIROC-ES2H
+    source:         MIROC-ES2H (2023): \naerosol: SPRINTARS6.0\natmos: CCSR A...
+    institute_id:   MIROC
+    instituion:     JAMSTEC (Japan Agency for Marine-Earth Science and Techno...
+    contact:        Shingo Watanabe (wnabe@jamstec.go.jp)
+    history:        Dec 2023 - Conversion from original format to netCDF at J...
+    references:     MIROC-ES2H : Kawamiya, M., Hajima, T., Tachiiri, K. et al...
+    experiment_id:  GeoMIP
+    license:        GeoMIP simulation data produced by MIROC-team is licensed...
+    time[0:3]=['2035-01-01T12:00:00.000000000' '2035-01-02T12:00:00.000000000'
+ '2035-01-03T12:00:00.000000000']  calendar=proleptic_gregorian
+--- MIROC-ES2H / G6-1.5K-SAI / r1 / tasmax  (1 files) e.g. s3://reflective-persistent-prod-large/MIROC-ES2H/G6-1.5K-SAI/day/tasmax_G6-1.5K-SAI_r01.nc
+<xarray.Dataset> Size: 2GB
+Dimensions:    (time: 18263, bnds: 2, lat: 128, lon: 256)
+Coordinates:
+  * lon        (lon) float64 2kB 0.0 1.406 2.812 4.219 ... 355.8 357.2 358.6
+  * lat        (lat) float64 1kB 88.93 87.54 86.14 ... -86.14 -87.54 -88.93
+  * time       (time) datetime64[ns] 146kB 2035-01-01T12:00:00 ... 2084-12-31...
+Dimensions without coordinates: bnds
+Data variables:
+    time_bnds  (time, bnds) datetime64[ns] 292kB dask.array<chunksize=(365, 2), meta=np.ndarray>
+    tasmax     (time, lat, lon) float32 2GB dask.array<chunksize=(365, 128, 256), meta=np.ndarray>
+Attributes:
+    Conventions:    CF-1.0
+    title:          MIROC-ES2H GeoMIP EXPERIMENT DATA
+    model_id:       MIROC-ES2H
+    source:         MIROC-ES2H (2023): \naerosol: SPRINTARS6.0\natmos: CCSR A...
+    institute_id:   MIROC
+    instituion:     JAMSTEC (Japan Agency for Marine-Earth Science and Techno...
+    contact:        Shingo Watanabe (wnabe@jamstec.go.jp)
+    history:        Dec 2023 - Conversion from original format to netCDF at J...
+    references:     MIROC-ES2H : Kawamiya, M., Hajima, T., Tachiiri, K. et al...
+    experiment_id:  GeoMIP
+    license:        GeoMIP simulation data produced by MIROC-team is licensed...
+    time[0:3]=['2035-01-01T12:00:00.000000000' '2035-01-02T12:00:00.000000000'
+ '2035-01-03T12:00:00.000000000']  calendar=proleptic_gregorian
+--- MIROC-ES2H / ssp245 / r1 / hurs  (2 files) e.g. s3://reflective-persistent-prod-large/MIROC-ES2H/G6-1.5K-HiLLA/day/hurs_baseline_r01.nc
+    OPEN FAILED: TypeError: Error: None is not a valid NetCDF 3 file
+            If this is a NetCDF4 file, you may need to install the
+            netcdf4 library, e.g.,
+
+            $ pip install netcdf4
+            
+--- MIROC-ES2H / ssp245 / r1 / huss  (2 files) e.g. s3://reflective-persistent-prod-large/MIROC-ES2H/G6-1.5K-HiLLA/day/huss_baseline_r01.nc
+    OPEN FAILED: TypeError: Error: None is not a valid NetCDF 3 file
+            If this is a NetCDF4 file, you may need to install the
+            netcdf4 library, e.g.,
+
+            $ pip install netcdf4
+            
+--- MIROC-ES2H / ssp245 / r1 / pr  (2 files) e.g. s3://reflective-persistent-prod-large/MIROC-ES2H/G6-1.5K-HiLLA/day/pr_baseline_r01.nc
+    OPEN FAILED: TypeError: Error: None is not a valid NetCDF 3 file
+            If this is a NetCDF4 file, you may need to install the
+            netcdf4 library, e.g.,
+
+            $ pip install netcdf4
+            
+--- MIROC-ES2H / ssp245 / r1 / ps  (1 files) e.g. s3://reflective-persistent-prod-large/MIROC-ES2H/G6-1.5K-HiLLA/day/ps_baseline_r01.nc
+<xarray.Dataset> Size: 3GB
+Dimensions:    (time: 23742, bnds: 2, lat: 128, lon: 256)
+Coordinates:
+  * lon        (lon) float64 2kB 0.0 1.406 2.812 4.219 ... 355.8 357.2 358.6
+  * lat        (lat) float64 1kB 88.93 87.54 86.14 ... -86.14 -87.54 -88.93
+  * time       (time) datetime64[ns] 190kB 2020-01-01T12:00:00 ... 2084-12-31...
+Dimensions without coordinates: bnds
+Data variables:
+    time_bnds  (time, bnds) datetime64[ns] 380kB dask.array<chunksize=(365, 2), meta=np.ndarray>
+    ps         (time, lat, lon) float32 3GB dask.array<chunksize=(365, 128, 256), meta=np.ndarray>
+Attributes:
+    Conventions:    CF-1.0
+    title:          MIROC-ES2H GeoMIP EXPERIMENT DATA
+    model_id:       MIROC-ES2H
+    source:         MIROC-ES2H (2025): \naerosol: SPRINTARS6.0 including stra...
+    institute_id:   MIROC
+    instituion:     JAMSTEC (Japan Agency for Marine-Earth Science and Techno...
+    contact:        Shingo Watanabe (wnabe@jamstec.go.jp)
+    history:        Dec 2025 - Conversion from original format to netCDF at J...
+    references:     MIROC-ES2H : Kawamiya, M., Hajima, T., Tachiiri, K. et al...
+    experiment_id:  GeoMIP
+    license:        GeoMIP simulation data produced by MIROC-team is licensed...
+    time[0:3]=['2020-01-01T12:00:00.000000000' '2020-01-02T12:00:00.000000000'
+ '2020-01-03T12:00:00.000000000']  calendar=proleptic_gregorian
+--- MIROC-ES2H / ssp245 / r1 / sfcWind  (1 files) e.g. s3://reflective-persistent-prod-large/MIROC-ES2H/G6-1.5K-SAI/day/sfcWind_baseline_r01.nc
+<xarray.Dataset> Size: 3GB
+Dimensions:    (time: 23742, bnds: 2, lat: 128, lon: 256)
+Coordinates:
+  * lon        (lon) float64 2kB 0.0 1.406 2.812 4.219 ... 355.8 357.2 358.6
+  * lat        (lat) float64 1kB 88.93 87.54 86.14 ... -86.14 -87.54 -88.93
+  * time       (time) datetime64[ns] 190kB 2020-01-01T12:00:00 ... 2084-12-31...
+Dimensions without coordinates: bnds
+Data variables:
+    time_bnds  (time, bnds) datetime64[ns] 380kB dask.array<chunksize=(365, 2), meta=np.ndarray>
+    sfcWind    (time, lat, lon) float32 3GB dask.array<chunksize=(365, 128, 256), meta=np.ndarray>
+Attributes:
+    Conventions:    CF-1.0
+    title:          MIROC-ES2H GeoMIP EXPERIMENT DATA
+    model_id:       MIROC-ES2H
+    source:         MIROC-ES2H (2023): \naerosol: SPRINTARS6.0\natmos: CCSR A...
+    institute_id:   MIROC
+    instituion:     JAMSTEC (Japan Agency for Marine-Earth Science and Techno...
+    contact:        Shingo Watanabe (wnabe@jamstec.go.jp)
+    history:        Dec 2023 - Conversion from original format to netCDF at J...
+    references:     MIROC-ES2H : Kawamiya, M., Hajima, T., Tachiiri, K. et al...
+    experiment_id:  GeoMIP
+    license:        GeoMIP simulation data produced by MIROC-team is licensed...
+    time[0:3]=['2020-01-01T12:00:00.000000000' '2020-01-02T12:00:00.000000000'
+ '2020-01-03T12:00:00.000000000']  calendar=proleptic_gregorian
+--- MIROC-ES2H / ssp245 / r1 / tas  (2 files) e.g. s3://reflective-persistent-prod-large/MIROC-ES2H/G6-1.5K-HiLLA/day/tas_baseline_r01.nc
+    OPEN FAILED: TypeError: Error: None is not a valid NetCDF 3 file
+            If this is a NetCDF4 file, you may need to install the
+            netcdf4 library, e.g.,
+
+            $ pip install netcdf4
+            
+--- MIROC-ES2H / ssp245 / r1 / tasmax  (2 files) e.g. s3://reflective-persistent-prod-large/MIROC-ES2H/G6-1.5K-HiLLA/day/tasmax_baseline_r01.nc
+    OPEN FAILED: TypeError: Error: None is not a valid NetCDF 3 file
+            If this is a NetCDF4 file, you may need to install the
+            netcdf4 library, e.g.,
+
+            $ pip install netcdf4
+            
+--- MIROC-ES2H / ssp245 / r1 / uas  (1 files) e.g. s3://reflective-persistent-prod-large/MIROC-ES2H/G6-1.5K-HiLLA/day/uas_baseline_r01.nc
+<xarray.Dataset> Size: 3GB
+Dimensions:    (time: 23742, bnds: 2, lat: 128, lon: 256)
+Coordinates:
+  * lon        (lon) float64 2kB 0.0 1.406 2.812 4.219 ... 355.8 357.2 358.6
+  * lat        (lat) float64 1kB 88.93 87.54 86.14 ... -86.14 -87.54 -88.93
+  * time       (time) datetime64[ns] 190kB 2020-01-01T12:00:00 ... 2084-12-31...
+Dimensions without coordinates: bnds
+Data variables:
+    time_bnds  (time, bnds) datetime64[ns] 380kB dask.array<chunksize=(365, 2), meta=np.ndarray>
+    uas        (time, lat, lon) float32 3GB dask.array<chunksize=(365, 128, 256), meta=np.ndarray>
+Attributes:
+    Conventions:    CF-1.0
+    title:          MIROC-ES2H GeoMIP EXPERIMENT DATA
+    model_id:       MIROC-ES2H
+    source:         MIROC-ES2H (2025): \naerosol: SPRINTARS6.0 including stra...
+    institute_id:   MIROC
+    instituion:     JAMSTEC (Japan Agency for Marine-Earth Science and Techno...
+    contact:        Shingo Watanabe (wnabe@jamstec.go.jp)
+    history:        Dec 2025 - Conversion from original format to netCDF at J...
+    references:     MIROC-ES2H : Kawamiya, M., Hajima, T., Tachiiri, K. et al...
+    experiment_id:  GeoMIP
+    license:        GeoMIP simulation data produced by MIROC-team is licensed...
+    time[0:3]=['2020-01-01T12:00:00.000000000' '2020-01-02T12:00:00.000000000'
+ '2020-01-03T12:00:00.000000000']  calendar=proleptic_gregorian
+--- MIROC-ES2H / ssp245 / r1 / vas  (1 files) e.g. s3://reflective-persistent-prod-large/MIROC-ES2H/G6-1.5K-HiLLA/day/vas_baseline_r01.nc
+<xarray.Dataset> Size: 3GB
+Dimensions:    (time: 23742, bnds: 2, lat: 128, lon: 256)
+Coordinates:
+  * lon        (lon) float64 2kB 0.0 1.406 2.812 4.219 ... 355.8 357.2 358.6
+  * lat        (lat) float64 1kB 88.93 87.54 86.14 ... -86.14 -87.54 -88.93
+  * time       (time) datetime64[ns] 190kB 2020-01-01T12:00:00 ... 2084-12-31...
+Dimensions without coordinates: bnds
+Data variables:
+    time_bnds  (time, bnds) datetime64[ns] 380kB dask.array<chunksize=(365, 2), meta=np.ndarray>
+    vas        (time, lat, lon) float32 3GB dask.array<chunksize=(365, 128, 256), meta=np.ndarray>
+Attributes:
+    Conventions:    CF-1.0
+    title:          MIROC-ES2H GeoMIP EXPERIMENT DATA
+    model_id:       MIROC-ES2H
+    source:         MIROC-ES2H (2025): \naerosol: SPRINTARS6.0 including stra...
+    institute_id:   MIROC
+    instituion:     JAMSTEC (Japan Agency for Marine-Earth Science and Techno...
+    contact:        Shingo Watanabe (wnabe@jamstec.go.jp)
+    history:        Dec 2025 - Conversion from original format to netCDF at J...
+    references:     MIROC-ES2H : Kawamiya, M., Hajima, T., Tachiiri, K. et al...
+    experiment_id:  GeoMIP
+    license:        GeoMIP simulation data produced by MIROC-team is licensed...
+    time[0:3]=['2020-01-01T12:00:00.000000000' '2020-01-02T12:00:00.000000000'
+ '2020-01-03T12:00:00.000000000']  calendar=proleptic_gregorian
+--- UKESM1-1 / G6-1.5K-HiLLA / r12i1p1f2 / hurs  (3 files) e.g. s3://reflective-persistent-prod-large/UKESM1-1/G6-1p5K-HiLLA/r12i1p1f2/apd/day/hurs/hurs_day_UKESM1-1-LL_g6-1p5-hilla_r12i1p1f2_gn_20340101-20491230.nc
+    OPEN FAILED: TypeError: Error: None is not a valid NetCDF 3 file
+            If this is a NetCDF4 file, you may need to install the
+            netcdf4 library, e.g.,
+
+            $ pip install netcdf4
+            
+--- UKESM1-1 / G6-1.5K-HiLLA / r12i1p1f2 / huss  (3 files) e.g. s3://reflective-persistent-prod-large/UKESM1-1/G6-1p5K-HiLLA/r12i1p1f2/apd/day/huss/huss_day_UKESM1-1-LL_g6-1p5-hilla_r12i1p1f2_gn_20340101-20491230.nc
+    OPEN FAILED: TypeError: Error: None is not a valid NetCDF 3 file
+            If this is a NetCDF4 file, you may need to install the
+            netcdf4 library, e.g.,
+
+            $ pip install netcdf4
+            
+--- UKESM1-1 / G6-1.5K-HiLLA / r12i1p1f2 / pr  (3 files) e.g. s3://reflective-persistent-prod-large/UKESM1-1/G6-1p5K-HiLLA/r12i1p1f2/apj/day/pr/pr_day_UKESM1-1-LL_g6-1p5-hilla_r12i1p1f2_gn_20340101-20491230.nc
+    OPEN FAILED: TypeError: Error: None is not a valid NetCDF 3 file
+            If this is a NetCDF4 file, you may need to install the
+            netcdf4 library, e.g.,
+
+            $ pip install netcdf4
+            
+--- UKESM1-1 / G6-1.5K-HiLLA / r12i1p1f2 / ps  (3 files) e.g. s3://reflective-persistent-prod-large/UKESM1-1/G6-1p5K-HiLLA/r12i1p1f2/ap6/CFday/ps/ps_CFday_UKESM1-1-LL_g6-1p5-hilla_r12i1p1f2_gn_20340101-20491230.nc
+    OPEN FAILED: TypeError: Error: None is not a valid NetCDF 3 file
+            If this is a NetCDF4 file, you may need to install the
+            netcdf4 library, e.g.,
+
+            $ pip install netcdf4
+            
+--- UKESM1-1 / G6-1.5K-HiLLA / r12i1p1f2 / tas  (3 files) e.g. s3://reflective-persistent-prod-large/UKESM1-1/G6-1p5K-HiLLA/r12i1p1f2/apd/day/tas/tas_day_UKESM1-1-LL_g6-1p5-hilla_r12i1p1f2_gn_20340101-20491230.nc
+    OPEN FAILED: TypeError: Error: None is not a valid NetCDF 3 file
+            If this is a NetCDF4 file, you may need to install the
+            netcdf4 library, e.g.,
+
+            $ pip install netcdf4
+            
+--- UKESM1-1 / G6-1.5K-HiLLA / r12i1p1f2 / tasmax  (3 files) e.g. s3://reflective-persistent-prod-large/UKESM1-1/G6-1p5K-HiLLA/r12i1p1f2/apd/day/tasmax/tasmax_day_UKESM1-1-LL_g6-1p5-hilla_r12i1p1f2_gn_20340101-20491230.nc
+    OPEN FAILED: TypeError: Error: None is not a valid NetCDF 3 file
+            If this is a NetCDF4 file, you may need to install the
+            netcdf4 library, e.g.,
+
+            $ pip install netcdf4
+            
+--- UKESM1-1 / G6-1.5K-HiLLA / r12i1p1f2 / uas  (3 files) e.g. s3://reflective-persistent-prod-large/UKESM1-1/G6-1p5K-HiLLA/r12i1p1f2/ap6/day/uas/uas_day_UKESM1-1-LL_g6-1p5-hilla_r12i1p1f2_gn_20340101-20491230.nc
+    OPEN FAILED: TypeError: Error: None is not a valid NetCDF 3 file
+            If this is a NetCDF4 file, you may need to install the
+            netcdf4 library, e.g.,
+
+            $ pip install netcdf4
+            
+--- UKESM1-1 / G6-1.5K-HiLLA / r12i1p1f2 / vas  (3 files) e.g. s3://reflective-persistent-prod-large/UKESM1-1/G6-1p5K-HiLLA/r12i1p1f2/ap6/day/vas/vas_day_UKESM1-1-LL_g6-1p5-hilla_r12i1p1f2_gn_20340101-20491230.nc
+    OPEN FAILED: TypeError: Error: None is not a valid NetCDF 3 file
+            If this is a NetCDF4 file, you may need to install the
+            netcdf4 library, e.g.,
+
+            $ pip install netcdf4
+            
+--- UKESM1-1 / G6-1.5K-SAI / ? / pr  (3 files) e.g. s3://reflective-persistent-prod/alistairduffey/UKESM1-1/G6-1.5K-SAI/daily_pr/PRECT_001.nc
+    OPEN FAILED: ValueError: Could not find any dimension coordinates to use to order the datasets for concatenation
+--- UKESM1-1 / ssp245 / ? / pr  (3 files) e.g. s3://reflective-persistent-prod/alistairduffey/UKESM1-1/SSP245/daily_pr/PRECT_001.nc
+    OPEN FAILED: ValueError: Could not find any dimension coordinates to use to order the datasets for concatenation

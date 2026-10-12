@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "Pyro SAI: fire weather under stratospheric aerosol injection (GeoMIP G6-1.5K analysis code)"
+version: 1.0.0
+date-released: 2026-10-12
+license: BSD-3-Clause
+repository-code: "https://github.com/savvyscientist/Pyro-SAI"
+authors:
+  - family-names: Mezuman
+    given-names: Keren
+    # orcid: "https://orcid.org/0000-0000-0000-0000"
+keywords:
+  - stratospheric aerosol injection
+  - wildfire
+  - Fire Weather Index
+  - vapor pressure deficit
+  - GeoMIP
+  - G6-1.5K
