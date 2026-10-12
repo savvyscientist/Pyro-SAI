@@ -1221,8 +1221,8 @@ def symmetric_limit(da, pct=98, floor=None):
 
 
 # marker per model for individual-model points (shape, not colour, so bars keep their colours)
-MODEL_MARKERS = {"CESM2-WACCM": "o", "MIROC-ES2H": "^", "UKESM1-1": "s", "E3SMv3": "D"}
-_EXTRA_MARKERS = ["v", "P", "X", "*", "<", ">"]
+MODEL_MARKERS = {"CESM2-WACCM": "o", "MIROC-ES2H": "^", "UKESM1-1": "*", "E3SMv3": "D"}
+_EXTRA_MARKERS = ["v", "P", "X", "s", "<", ">"]
 
 
 def model_marker(model, models=()):
@@ -1255,7 +1255,8 @@ def regional_bars(reg_df, metric, pairs, label, path_no_ext, models, regions, dp
         ax.barh(y, mean, height=h * 0.9, color=style[q]["color"], label=PAIR_TITLE[q[2:]])
         for mdl in models:
             vals = [d[(d.region == r) & (d.model == mdl)].value.mean() for r in regs]
-            ax.plot(vals, y, linestyle="none", marker=model_marker(mdl, models), ms=4, mfc="#222222",
+            mk = model_marker(mdl, models)
+            ax.plot(vals, y, linestyle="none", marker=mk, ms=6 if mk == "*" else 4, mfc="#222222",
                     mec="white", mew=0.4, alpha=0.85, zorder=3)
     ax.axvline(0, color="#444444", lw=0.8)
     ax.set_yticks(np.arange(len(regs)), regs)
@@ -1263,7 +1264,8 @@ def regional_bars(reg_df, metric, pairs, label, path_no_ext, models, regions, dp
     style_axes(ax)
     bars = ax.legend(frameon=False, fontsize=8, loc="upper center", bbox_to_anchor=(0.5, -0.08), ncol=len(pairs))
     ax.add_artist(bars)
-    handles = [Line2D([], [], linestyle="none", marker=model_marker(m, models), ms=5, mfc="#222222", mec="white",
+    handles = [Line2D([], [], linestyle="none", marker=model_marker(m, models),
+                      ms=7 if model_marker(m, models) == "*" else 5, mfc="#222222", mec="white",
                       mew=0.4, label=m) for m in models]
     ax.legend(handles=handles, frameon=False, fontsize=8, loc="upper center", bbox_to_anchor=(0.5, -0.135),
               ncol=len(models), handletextpad=0.3)
