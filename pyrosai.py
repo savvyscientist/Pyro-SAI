@@ -1220,6 +1220,59 @@ def symmetric_limit(da, pct=98, floor=None):
     return float(np.ceil(v / mag * 2) / 2 * mag)
 
 
+# marker per model for individual-model points (shape, not colour, so bars keep their colours)
+MODEL_MARKERS = {"CESM2-WACCM": "o", "MIROC-ES2H": "^", "UKESM1-1": "s", "E3SMv3": "D"}
+_EXTRA_MARKERS = ["v", "P", "X", "*", "<", ">"]
+
+
+def model_marker(model, models=()):
+    if model in MODEL_MARKERS:
+        return MODEL_MARKERS[model]
+    others = [m for m in models if m not in MODEL_MARKERS]
+    return _EXTRA_MARKERS[others.index(model) % len(_EXTRA_MARKERS)] if model in others else "o"
+
+
+PAIR_TITLE = {"ssp245_minus_target": "SSP2-4.5 (2064-83) − target", "SAI_minus_ssp245": "G6-SAI − SSP2-4.5",
+              "HiLLA_minus_ssp245": "G6-HiLLA − SSP2-4.5", "HiLLA_minus_SAI": "G6-HiLLA − G6-SAI",
+              "SAI_minus_target": "G6-SAI − target", "HiLLA_minus_target": "G6-HiLLA − target"}
+
+
+def regional_bars(reg_df, metric, pairs, label, path_no_ext, models, regions, dpi=300):
+    """Horizontal bars of the multi-model mean regional change per comparison, with one marker shape
+    per model for the individual-model values (Task 1 Figure 4 / report Figure 1)."""
+    import matplotlib.pyplot as plt
+    from matplotlib.lines import Line2D
+    sub = reg_df[(reg_df.metric == metric) & reg_df.region.isin(regions)]
+    regs = [r for r in regions if r in sub.region.values][::-1]
+    style = {"d_ssp245_minus_target": SCEN_STYLE["ssp245"], "d_SAI_minus_ssp245": SCEN_STYLE["G6-1.5K-SAI"],
+             "d_HiLLA_minus_ssp245": SCEN_STYLE["G6-1.5K-HiLLA"]}
+    fig, ax = plt.subplots(figsize=(7.5, 0.42 * len(regs) + 1.4))
+    h = 0.8 / len(pairs)
+    for k, q in enumerate(pairs):
+        d = sub[sub.quantity == q]
+        y = np.arange(len(regs)) + (k - (len(pairs) - 1) / 2) * h
+        mean = [d[d.region == r].value.mean() for r in regs]
+        ax.barh(y, mean, height=h * 0.9, color=style[q]["color"], label=PAIR_TITLE[q[2:]])
+        for mdl in models:
+            vals = [d[(d.region == r) & (d.model == mdl)].value.mean() for r in regs]
+            ax.plot(vals, y, linestyle="none", marker=model_marker(mdl, models), ms=4, mfc="#222222",
+                    mec="white", mew=0.4, alpha=0.85, zorder=3)
+    ax.axvline(0, color="#444444", lw=0.8)
+    ax.set_yticks(np.arange(len(regs)), regs)
+    ax.set_xlabel(label)
+    style_axes(ax)
+    bars = ax.legend(frameon=False, fontsize=8, loc="upper center", bbox_to_anchor=(0.5, -0.08), ncol=len(pairs))
+    ax.add_artist(bars)
+    handles = [Line2D([], [], linestyle="none", marker=model_marker(m, models), ms=5, mfc="#222222", mec="white",
+                      mew=0.4, label=m) for m in models]
+    ax.legend(handles=handles, frameon=False, fontsize=8, loc="upper center", bbox_to_anchor=(0.5, -0.135),
+              ncol=len(models), handletextpad=0.3)
+    ax.set_title(f"AR6 focus regions ({', '.join(models)})", fontsize=10)
+    fig.tight_layout()
+    save_figure(fig, path_no_ext, dpi)
+    return fig
+
+
 def style_axes(ax):
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
